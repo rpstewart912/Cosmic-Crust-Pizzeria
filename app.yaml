@@ -1,0 +1,5 @@
+runtime: python39  # Or another supported runtime like nodejs
+handlers:
+- url: /.*
+  static_files: index.html  # Or your main HTML file
+  upload: index.html
