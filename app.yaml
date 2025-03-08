@@ -1,5 +1,8 @@
-runtime: python39  # Or another supported runtime like nodejs
+runtime: python39
 handlers:
+- url: /(.*\.css)
+  static_files: style.css
+  upload: style.css
 - url: /.*
-  static_files: index.html  # Or your main HTML file
+  static_files: index.html
   upload: index.html
