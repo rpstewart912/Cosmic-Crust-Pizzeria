@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmic Crust Pizzeria - Login/Create Account</title>
+    <style>
+        /*BASE STYLES */
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column; /* Stack items vertically */
+            min-height: 100vh; /* Ensure full viewport height */
+            justify-content: center; /* Center content vertically */
+            align-items: center; /* Center content horizontally */
+        }
+
+        /* Center content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* HEADER & NAVIGATION */
+        header {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid #00BFFF;
+            position: fixed; /* Fix header to the top */
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 10; /* Ensure header is above other elements */
+            display: none; /* Hide the header */
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        nav a {
+            color: #00BFFF;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+
+        nav a:hover {
+            color: #ADD8E6;
+        }
+
+        /* MAIN CONTENT */
+        main {
+            padding-top: 0; /* Remove top padding */
+            padding-bottom: 0;
+            flex: 1; /* Allow main to take up remaining vertical space */
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center content horizontally */
+            justify-content: center; /* Center content vertically */
+        }
+
+        /* Home Section */
+        #home h1 {
+            color: #00BFFF;
+            text-align: center;
+            font-size: 2.5rem;
+            text-shadow: 0 0 10px #00BFFF; /* Glowing effect */
+        }
+
+        /* Mission Statement */
+        .mission-statement {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 10px;
+            border: 1px solid #00BFFF;
+        }
+
+        .mission-statement h2 {
+            color: #ADD8E6;
+            margin-top: 0;
+        }
+
+        /* Menu Section (Placeholder) */
+        #menu {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+
+        #menu h2 {
+            color: #00BFFF;
+        }
+
+        #menu ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        #menu li {
+            color: #ADD8E6;
+            margin: 10px 0;
+        }
+
+        /* FOOTER */
+        footer {
+            background-color: rgba(0, 0, 0, 0.8);
+            text-align: center;
+            padding: 20px;
+            border-top: 2px solid #00BFFF;
+            display: none; /* Hide the footer */
+        }
+
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column; /* Stack nav links vertically on mobile */
+                gap: 10px;
+            }
+
+            #home h1 {
+                font-size: 2rem; /* Smaller title on mobile */
+            }
+        }
+
+        body {
+            font-family: sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Align items to the center */
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            margin-bottom: 20px; /* Add some margin below the form */
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="email"],
+        input[type="password"],
+        input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .form-switch {
+            text-align: center;
+            margin-top: 15px;
+            color: #777;
+        }
+        .form-switch a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .form-switch a:hover {
+            text-decoration: underline;
+        }
+
+        #login-form {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            margin-bottom: 20px;
+        }
+
+        #login-form h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        #login-form .form-group {
+            margin-bottom: 15px;
+        }
+
+        #login-form label {
+            display: block;
+            font-size: 0.9rem;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        #login-form input[type="email"],
+        #login-form input[type="password"] {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        #login-form button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            width: 100%;
+        }
+
+        #login-form button:hover {
+            background-color: #0056b3;
+        }
+
+        #login-form .form-switch {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        #login-form .form-switch a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        #login-form .form-switch a:hover {
+            text-decoration: underline;
+        }
+
+        #create-account-form {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        #create-account-form h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        #create-account-form .form-group {
+            margin-bottom: 15px;
+        }
+
+        #create-account-form label {
+            display: block;
+            font-size: 0.9rem;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        #create-account-form input[type="text"],
+        #create-account-form input[type="email"],
+        #create-account-form input[type="password"] {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        #create-account-form button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            width: 100%;
+        }
+
+        #create-account-form button:hover {
+            background-color: #0056b3;
+        }
+
+        #create-account-form .form-switch {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        #create-account-form .form-switch a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        #create-account-form .form-switch a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div  style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+            <div id="login-form">
+                <h2>Login to Cosmic Crust</h2>
+                <div class="form-group">
+                    <label for="login-email">Email:</label>
+                    <input type="email" id="login-email" name="login-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password:</label>
+                    <input type="password" id="login-password" name="login-password" required>
+                </div>
+                <button type="submit">Login</button>
+                <div class="form-switch">
+                    Don't have an account? <a href="#" onclick="showCreateAccount()">Create one</a>
+                </div>
+            </div>
+
+            <div id="create-account-form" style="display: none;">
+                <h2>Create Your Cosmic Crust Account</h2>
+                <div class="form-group">
+                    <label for="create-name">Full Name:</label>
+                    <input type="text" id="create-name" name="create-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="create-email">Email:</label>
+                    <input type="email" id="create-email" name="create-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="create-password">Password:</label>
+                    <input type="password" id="create-password" name="create-password" required>
+                </div>
+                <button type="submit">Create Account</button>
+                <div class="form-switch">
+                    Already have an account? <a href="#" onclick="showLogin()">Login</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+    <script>
+        function showCreateAccount() {
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('create-account-form').style.display = 'block';
+        }
+
+        function showLogin() {
+            document.getElementById('create-account-form').style.display = 'none';
+            document.getElementById('login-form').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
