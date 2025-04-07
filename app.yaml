@@ -3,6 +3,29 @@ handlers:
 - url: /(.*\.css)
   static_files: style.css
   upload: style.css
+- url: /mpstyles.css
+  static_files: mpstyles.css
+  upload: mpstyles.css
+- url: /account.html
+  static_files: account.html
+  upload: account.html
+- url: /contact.html
+  static_files: contact.html
+  upload: contact.html
+- url: /disclaimer.html
+  static_files: disclaimer.html
+  upload: disclaimer.html  
+- url: /menu.html
+  static_files: menu.html
+  upload: menu.html
+- url: /order.html
+  static_files: order.html
+  upload: order.html
+- url: /privacy.html
+  static_files: privacy.html
+  upload: privacy.html  
+- url: /images
+  static_dir: images
 - url: /.*
   static_files: index.html
   upload: index.html

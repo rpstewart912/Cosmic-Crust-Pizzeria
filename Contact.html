@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cosmic Crust Pizzeria - Intergalactic Pizza Experience">
+    <title>Contact Us - Cosmic Crust Pizzeria</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Skip Navigation Link -->
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <header role="banner">
+        <h1>Cosmic Crust Pizzeria</h1>
+        <nav aria-label="Main navigation" role="navigation">
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#order">Place Order</a></li>
+                <li><a href="#account">Create/Login Account</a></li>
+                <li><a href="#contact" aria-current="page">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main-content" role="main">
+        <section aria-labelledby="contact-heading">
+            <h2 id="contact-heading">Contact Cosmic Crust</h2>
+            
+            <div class="contact-container">
+                <!-- Cosmic-Themed Contact Information -->
+                <div class="contact-info" role="region" aria-labelledby="info-heading">
+                    <h3 id="info-heading">Our Cosmic Headquarters</h3>
+                    <address>
+                        <p>
+                            42 Cosmic Crust Avenue<br>
+                            Nebula City, PC 11111<br>
+                            (Pizza Cosmos)
+                        </p>
+                        <p>
+                            Phone: <a href="tel:+11111111111" aria-label="Phone number">(111) 111-1111</a>
+                        </p>
+                        <p>
+                            Email: <a href="mailto:contact@cosmiccrust.pizza" aria-label="Email address">contact@cosmiccrust.pizza</a>
+                        </p>
+                    </address>
+                </div>
+
+                <!-- Contact Form -->
+                <form id="contact-form" method="POST" action="https://secure.cosmiccrust.pizza/contact" aria-label="Contact form">
+                    <div class="form-group">
+                        <label for="name">Full Name:</label>
+                        <input type="text" id="name" name="name" required
+                            aria-required="true"
+                            minlength="2"
+                            maxlength="50"
+                            pattern="[A-Za-z -]+"
+                            title="Please enter your full name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address:</label>
+                        <input type="email" id="email" name="email" required
+                            aria-required="true"
+                            autocomplete="email">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject">Subject:</label>
+                        <select id="subject" name="subject" required aria-required="true">
+                            <option value="">Select a subject</option>
+                            <option value="order">Order Inquiry</option>
+                            <option value="feedback">Feedback</option>
+                            <option value="allergy">Allergy Information</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Message:</label>
+                        <textarea id="message" name="message" rows="5" required
+                            aria-required="true"
+                            minlength="10"
+                            maxlength="500"></textarea>
+                    </div>
+
+                    <!-- Security Features -->
+                    <div class="security-features">
+                        <div class="h-captcha" data-sitekey="YOUR_SITE_KEY" aria-label="Security verification"></div>
+                        
+                        <div class="form-group">
+                            <input type="checkbox" id="privacy-consent" name="privacy_consent" required>
+                            <label for="privacy-consent">
+                                I agree to the <a href="/privacy" target="_blank">Privacy Policy</a>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-controls">
+                        <button type="submit">Send Message</button>
+                        <button type="reset">Clear Form</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer role="contentinfo">
+        <address>
+            Contact us at: 
+            <a href="tel:+11111111111">(111) 111-1111</a><br>
+            42 Cosmic Crust Avenue, Nebula City, PC 11111
+        </address>
+        <p>&copy; 2025 Cosmic Crust Pizzeria. All rights reserved.</p>
+        <ul>
+            <li><a href="#accessibility" aria-label="Accessibility statement">Accessibility</a></li>
+            <li><a href="#privacy" aria-label="Privacy policy">Privacy Policy</a></li>
+        </ul>
+    </footer>
+</body>
+</html>

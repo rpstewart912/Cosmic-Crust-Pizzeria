@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://fonts.google.com/specimen/Orbitron?utm_source=chatgpt.com">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="mpstyles.css">
+
+  <title>CS492-Menu.html</title>
+</head>
+<body>
+  <div class = 'menupage'>
+    
+    <!-- Title and Subtitle -->
+    <div class = "jumbotron">
+
+      <div class = 'title'>
+        <div class = 'row'>
+          <div class = 'col'>
+            <h1 class = 'ccp-title'>Cosmic Crust Pizzeria</h1>
+            <h4 class ='subtitle' >Pizza per le stelle</h4>
+          </div>
+
+          <div class = 'login_register'>
+            <button type="button" href="#" class="btn btn-primary">Register</button>
+            <button type="button" href="#" class="btn btn-primary">Login</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nav Menu -->
+      <nav class="navbar navbar-expand-sm bg-light justify-content-center">
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#menu">Menu</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="Contact.html">Contact Us</a>
+          </li>
+        </ul>
+      </nav>
+      <!-- End of Nav -->
+    </div>
+    <!-- End of Title and Subtitle-->
+
+    <!-- Meat, potatoes, etc. -->
+    <div class="main-content">
+      <div class="row main-pies">
+        <!-- 50% on all screen sizes except small -->
+        <!-- Pizza Menu -->
+        <div class="col-xl">
+          <h3>Traditional Pies</h3>
+          <div class="row pizza-container">
+            <div class="col"> <img src="#" class="img-thumbnail" alt="pizza_pic_art"/></div>
+            <div  class="col" id="pizza1">
+              🍕PEPPERONI: "Bold pepperoni, cosmic crust, timeless sauce—flavor beyond stars,
+              crafted with love, tradition, fire, and interstellar inspiration.."
+            </div>
+            <div class="col">
+              <button type="button" href="#" class="btn btn-success" style = "height: 35px;">Add to cart</button>
+            </div>
+          </div>
+
+          <div class="row pizza-container">
+            <div class="col"> <img src="#" class="img-thumbnail" alt="pizza_pic_art"/></div>
+            <div  class="col" id="pizza2">
+              🍕3 MEATS ITALIAN: "Savory meats, cosmic crust, rich sauce—flavor constellation ignites,
+              crafted with passion, tradition, spice, and celestial indulgence.."
+            </div>
+            <div class="col">
+              <button type="button" href="#" class="btn btn-success" style = "height: 35px;">Add to cart</button>
+            </div>
+          </div>
+
+          <div class="row pizza-container">
+            <div class="col"> <img src="#" class="img-thumbnail" alt="pizza_pic_art"/></div>
+            <div  class="col" id="pizza3">
+              🍕NEAPOLITAN: "Slightly charred & thinly crust on the edges and a simple topping of San Marzano tomatoes, mozzarella cheese, fresh basil, salt, and olive oil.."
+            </div>
+            <div class="col">
+              <button type="button" href="#" class="btn btn-success" style = "height: 35px;">Add to cart</button>
+            </div>
+          </div>
+
+        </div>
+        <!-- End of Pizza-->
+
+        <!-- Dessert -->
+        <div class="row">
+          <div class="col-xl">
+            <h3>Desserts</h3>
+            <!-- Desserts descriptions -->
+            <div class="row dessert-container">
+              <div class="col"> <img src="./images/sweets.png" class="img-thumbnail" alt="pizza_pic_art"/></div>
+              <div  class="col" id="pizza1">
+                CACTUS BREAD: "Featuring a soft crust topped with a blend of cinnamon, sugar, and sweet glaze.."
+              </div>
+              <div class="col">
+                <button type="button" href="#" class="btn btn-success" style = "height: 35px;">Add to cart</button>
+              </div>
+            </div>
+
+            <div class="row dessert-container">
+              <div class="col"> <img src="./images/sweets.png" class="img-thumbnail" alt="pizza_pic_art"/></div>
+              <div  class="col" id="pizza2">
+                S'MORES DESSERT PIZZA: "A pizza-shaped dessert with graham cracker crust, chocolate, and marshmallows.."
+              </div>
+              <div class="col">
+                <button type="button" href="#" class="btn btn-success" style = "height: 35px;">Add to cart</button>
+              </div>
+            </div>
+
+            <div class="row dessert-container">
+              <div class="col"> <img src="./images/sweets.png" class="img-thumbnail" alt="pizza_pic_art"/></div>
+              <div  class="col" id="pizza3">
+                TRIPLE BROWNIE CHOCOLATE: "A brownie that is rich in chocolate.."
+              </div>
+              <div class="col">
+                <button type="button" href="#" class="btn btn-success" style = "height: 35px;">Add to cart</button>
+              </div>
+            </div>
+
+            <div class="row dessert-container">
+              <div class="col"> <img src="./images/sweets.png" class="img-thumbnail" alt="pizza_pic_art"/></div>
+              <div  class="col" id="pizza3">
+                FRUIT PIZZA: "A pastry with a pizza-shaped cookie crust, frosting, and various fruit toppings, known for its colorful designs.."
+              </div>
+              <div class="col">
+                <button type="button" href="#" class="btn btn-success" style = "height: 35px;">Add to cart</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- End of Dessert-->
+      </div>
+
+      <!-- Drinks, Menu Items, and Sauces -->
+      <div class="sub-items">
+        <div class="row">
+
+          <!-- Drinks Menu -->
+          <div class="col-xl">
+            <h3>Drinks</h3>
+
+            <div class="row-drinks">
+                <input type="checkbox" id="drink1" name="drink1", value="Pepsi">
+                <label for="drink1">&nbsp Pepsi &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
+                <input type="checkbox" id="drink2" name="drink2", value="Mountain Dew">
+                <label for="drink2">&nbsp Mountain Dew</label>
+            </div>
+
+            <div class="row-drinks">
+              <input type="checkbox" id="drink3" name="drink3", value="Crush">
+              <label for="drink3">&nbsp Crush &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
+              <input type="checkbox" id="drink4" name="drink4", value="Mug">
+              <label for="drink4">&nbsp Mug</label>
+            </div>
+
+            <div class="row-drinks">
+              <input type="checkbox" id="drink5" name="drink5", value="Lemonade">
+              <label for="drink5">&nbsp Lemonade &nbsp</label>
+              <input type="checkbox" id="drink6" name="drink6", value="Aquafina">
+              <label for="drink6">&nbsp Aquafina</label>
+            </div>
+
+            <div class="row-drinks">
+              <input type="checkbox" id="drink7" name="drink7", value="Fanta">
+              <label for="drink7">&nbsp Fanta &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
+              <input type="checkbox" id="drink8" name="drink8", value="Starry">
+              <label for="drink8">&nbsp Starry</label>
+            </div>
+
+            <div class="row-drinks">
+              <div class="col">
+                <button type="button" href="#" class="btn btn-success" style = "height: 35px;">Add to cart</button>
+              </div>
+            </div>
+          </div>
+          <!-- End of Drinks Menu -->
+
+          <!-- Menu Items -->
+          <div class="col-xl">
+            <h3>Menu Items</h3>
+            
+              <div class="row menu-container">
+                <div class="col"> <img src="./images/chicken.png" class="img-thumbnail" alt="chicken_pic_art"/></div>
+                <div  class="col" id="chicken">
+                  🐔BBQ CHIPOTLE: “Tangy bbq sauce, mild heat with a citrus flavor” 
+                </div>
+                <div class="col">
+                  <button type="button" href="#" class="btn btn-success" style = "height: 35px;">Add to cart</button>
+                </div>
+              </div>
+            
+              <div class="row menu-container">
+                <div class="col"> <img src="./images/salad.png" class="img-thumbnail" alt="salad_pic_art"/></div>
+                <div  class="col" id="salad">
+                  🌿SALAD BAR: "various greens, vegetables, fruits, proteins, grains, and dressings.."
+                </div>
+                <div class="col">
+                  <button type="button" href="#" class="btn btn-success" style = "height: 35px;">Add to cart</button>
+                </div>
+              </div>
+          </div>
+          <!-- End of Menu Items -->
+
+          <!-- Sauces Menu -->
+          <div class="col-xl">
+            <h3>Sauces</h3>
+
+            <div class="row-sauces">
+              <input type="checkbox" id="sauce1" name="sauce1", value="Ranch">
+              <label for="sauce1">&nbsp Ranch &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
+              <input type="checkbox" id="sauce2" name="sauce2", value="Marinara">
+              <label for="sauce2">&nbsp Marinara</label>
+            </div>
+
+            <div class="row-sauces">
+              <input type="checkbox" id="sauce3" name="sauce3", value="Aioli">
+              <label for="sauce3">&nbsp Aioli &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
+              <input type="checkbox" id="sauce4" name="sauce4", value="Garlic">
+              <label for="sauce4">&nbsp Garlic</label>
+            </div>
+
+            <div class="row-sauces">
+              <input type="checkbox" id="sauce5" name="sauce5", value="Onion">
+              <label for="sauce5">&nbsp Onion &nbsp</label>
+              <input type="checkbox" id="sauce6" name="sauce6", value="Buffalo">
+              <label for="sauce6">&nbsp Buffalo</label>
+            </div>
+
+            <div class="row-sauces">
+              <input type="checkbox" id="sauce7" name="sauce7", value="Bang Bang">
+              <label for="sauce7">&nbsp Bang Bang &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
+              <input type="checkbox" id="sauce8" name="sauce8", value="Tahini">
+              <label for="sauce8">&nbsp Tahini</label>
+            </div>
+
+            <div class="row-sauces">
+              <div class="col">
+                <button type="button" href="#" class="btn btn-success" style = "height: 35px;">Add to cart</button>
+              </div>
+            </div>
+          </div>
+          <!-- End of sauces-->
+        </div>
+      </div>
+      <!-- End of Drinks, Menu, and Sauces -->
+
+      <!-- Take me to my cart -->
+      <button type="button" id="sticky-section" class="btn btn-primary btn-block">Review your cart.</button>
+
+
+
+      
+  </div>
+  <!-- End of Main-->
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <p>&copy; 2025 Cosmic Crust Pizzeria. All rights reserved.</p>
+    <div class="social-media">
+      <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+      <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+      <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+    </div>
+    <p><a href="disclaimer.html">Disclaimer</a> | <a href="privacy.html">Privacy Policy</a></p>
+  </footer>
+  <!--End of MenuPage-->
+
+
+</body>
+</html>
