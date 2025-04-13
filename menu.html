@@ -24,21 +24,55 @@
       </ul>
     </nav>
   </header>
-    <!-- End of Title and Nav-->
-    
+  <!-- End of Title and Nav-->
+
   <div class = 'menupage'>
-    <!-- Meat, potatoes, etc. -->
+
+    <!-- Main content -->
     <div class="main-content">
       <div class="row main-pies">
-        <!-- 50% on all screen sizes except small -->
-        <!-- Pizza Menu -->
+
         <div class="col-xl">
-          <h3>Traditional Pies</h3>
+
+          <!-- Search and filter options -->
+          <section aria-label="Search and filter options">
+            <form id="searchForm" role="search" aria-label="Search menu items">
+              <label for="search" class="visually-hidden">Search menu items</label>
+              <input type="text" id="search" name="search" placeholder="Search for pizza, sides, desserts..." aria-label="Search menu">
+            </form>
+
+            <fieldset>
+              <legend>Filter by Dietary Options</legend>
+              <label><input type="checkbox" name="diet" value="nut-free"> Nut-Free &nbsp</label>
+              <label><input type="checkbox" name="diet" value="vegetarian"> Vegetarian &nbsp</label>
+              <label><input type="checkbox" name="diet" value="gluten-free"> Gluten-Free</label>
+            </fieldset>
+          </section>
+
+          <hr>
+
+          <!-- Pies and Desserts -->
+          <h3>Pies</h3>
           <div class="row pizza-container">
             <div class="col"> <img src="#" class="img-thumbnail" alt="pizza_pic_art"/></div>
             <div  class="col" id="pizza1">
-              🍕PEPPERONI: "Bold pepperoni, cosmic crust, timeless sauce—flavor beyond stars,
-              crafted with love, tradition, fire, and interstellar inspiration.."
+              <article tabindex="0">
+                <p>🍕ASTEROID MELT: "Mozzarella and smoked provolone blend over a garlic-infused white sauce, topped with roasted red peppers, onions, savory sausage. Bold, melty, and ready for launch.."</p>
+                <p><strong>Diet: </strong> Nut-Free</p>
+                </article>
+            </div>
+            <div class="col">
+              <button type="button" href="#" class="btn btn-success" style = "height: 35px;">Add to cart</button>
+            </div>
+          </div>
+
+          <div class="row pizza-container">
+            <div class="col"> <img src="#" class="img-thumbnail" alt="pizza_pic_art"/></div>
+            <div  class="col" id="pizza1">
+              <article tabindex="0">
+                <p>🍕NEPTUNE'S FIRE: "Bold, spicy pepperoni, cosmic crust, timeless sauce—flavor beyond stars, crafted with love, tradition, fire, and interstellar inspiration.."</p>
+                <p><strong>Diet: </strong> None</p>
+                </article>
             </div>
             <div class="col">
               <button type="button" href="#" class="btn btn-success" style = "height: 35px;">Add to cart</button>
@@ -48,8 +82,23 @@
           <div class="row pizza-container">
             <div class="col"> <img src="#" class="img-thumbnail" alt="pizza_pic_art"/></div>
             <div  class="col" id="pizza2">
-              🍕3 MEATS ITALIAN: "Savory meats, cosmic crust, rich sauce—flavor constellation ignites,
-              crafted with passion, tradition, spice, and celestial indulgence.."
+              <article tabindex="0" aria-labelledby="pizza2">
+                <p>🍕ORION'S ITALIAN MEATS: "Savory meats, cosmic crust, rich sauce—flavor constellation ignites, crafted with passion, tradition, spice, and celestial indulgence.."</p>
+                <p><strong>Diet: </strong> None</p>
+              </article>
+            </div>
+            <div class="col">
+              <button type="button" href="#" class="btn btn-success" style = "height: 35px;">Add to cart</button>
+            </div>
+          </div>
+
+          <div class="row pizza-container">
+            <div class="col"> <img src="#" class="img-thumbnail" alt="pizza_pic_art"/></div>
+            <div  class="col" id="pizza2">
+              <article tabindex="0" aria-labelledby="pizza2">
+                <p>🍕GALACTIC GARDEN: "Artichokes, olives, spinach, mushrooms, and mozzarella on thin cauliflower crust.."</p>
+                <p><strong>Diet: </strong> Vegetarian</p>
+              </article>
             </div>
             <div class="col">
               <button type="button" href="#" class="btn btn-success" style = "height: 35px;">Add to cart</button>
@@ -59,19 +108,22 @@
           <div class="row pizza-container">
             <div class="col"> <img src="#" class="img-thumbnail" alt="pizza_pic_art"/></div>
             <div  class="col" id="pizza3">
-              🍕NEAPOLITAN: "Slightly charred & thinly crust on the edges and a simple topping of San Marzano tomatoes, mozzarella cheese, fresh basil, salt, and olive oil.."
+              <article tabindex="0">
+                <p>🍕LUNAR LIGHT: "A crispy gluten-free crust topped with fire-roasted tomatoes, vegan mozzarella, fresh basil, olive oil, and a sprinkle of sea salt. No dairy, no nuts, no gluten—just plant-powered flavor from this side of the galaxy.."</p>
+                <p><strong>Diet: </strong> Gluten-Free</p>
+              </article>
             </div>
             <div class="col">
               <button type="button" href="#" class="btn btn-success" style = "height: 35px;">Add to cart</button>
             </div>
           </div>
-
+          
         </div>
         <!-- End of Pizza-->
-
         <!-- Dessert -->
         <div class="row">
           <div class="col-xl">
+            <hr>
             <h3>Desserts</h3>
             <!-- Desserts descriptions -->
             <div class="row dessert-container">
@@ -118,143 +170,220 @@
         </div>
         <!-- End of Dessert-->
       </div>
+    </div>
 
-      <hr>
+    <hr>
 
-      <!-- Drinks, Menu Items, and Sauces -->
-      <div class="sub-items">
-        <div class="row">
-
-          <!-- Drinks Menu -->
-          <div class="col-xl">
-            <h3>Drinks</h3>
-
-            <div class="row-drinks">
-                <input type="checkbox" id="drink1" name="drink1", value="Pepsi">
-                <label for="drink1">&nbsp Pepsi &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
-                <input type="checkbox" id="drink2" name="drink2", value="Mountain Dew">
-                <label for="drink2">&nbsp Mountain Dew</label>
-            </div>
-
-            <div class="row-drinks">
-              <input type="checkbox" id="drink3" name="drink3", value="Crush">
-              <label for="drink3">&nbsp Crush &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
-              <input type="checkbox" id="drink4" name="drink4", value="Mug">
-              <label for="drink4">&nbsp Mug</label>
-            </div>
-
-            <div class="row-drinks">
-              <input type="checkbox" id="drink5" name="drink5", value="Lemonade">
-              <label for="drink5">&nbsp Lemonade &nbsp</label>
-              <input type="checkbox" id="drink6" name="drink6", value="Aquafina">
-              <label for="drink6">&nbsp Aquafina</label>
-            </div>
-
-            <div class="row-drinks">
-              <input type="checkbox" id="drink7" name="drink7", value="Fanta">
-              <label for="drink7">&nbsp Fanta &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
-              <input type="checkbox" id="drink8" name="drink8", value="Starry">
-              <label for="drink8">&nbsp Starry</label>
-            </div>
-
-            <div class="row-drinks">
+    <!-- Menu Items -->
+    <div class="menu-items">
+      <div class="row">
+        <div class="col-xl">
+          <h3>Menu Items</h3>
+          
+            <div class="row menu-container">
+              <div class="col"> <img src="./images/chicken.png" class="img-thumbnail" alt="chicken_pic_art"/></div>
+              <div  class="col" id="chicken">
+                🐔BBQ CHIPOTLE: “Tangy bbq sauce, mild heat with a citrus flavor” 
+              </div>
               <div class="col">
                 <button type="button" href="#" class="btn btn-success" style = "height: 35px;">Add to cart</button>
               </div>
             </div>
-          </div>
-          <!-- End of Drinks Menu -->
-
-          <!-- Menu Items -->
-          <div class="col-xl">
-            <h3>Menu Items</h3>
-            
-              <div class="row menu-container">
-                <div class="col"> <img src="./images/chicken.png" class="img-thumbnail" alt="chicken_pic_art"/></div>
-                <div  class="col" id="chicken">
-                  🐔BBQ CHIPOTLE: “Tangy bbq sauce, mild heat with a citrus flavor” 
-                </div>
-                <div class="col">
-                  <button type="button" href="#" class="btn btn-success" style = "height: 35px;">Add to cart</button>
-                </div>
+          
+            <div class="row menu-container">
+              <div class="col"> <img src="./images/salad.png" class="img-thumbnail" alt="salad_pic_art"/></div>
+              <div  class="col" id="salad">
+                🌿SALAD BAR: "various greens, vegetables, fruits, proteins, grains, and dressings.."
               </div>
-            
-              <div class="row menu-container">
-                <div class="col"> <img src="./images/salad.png" class="img-thumbnail" alt="salad_pic_art"/></div>
-                <div  class="col" id="salad">
-                  🌿SALAD BAR: "various greens, vegetables, fruits, proteins, grains, and dressings.."
-                </div>
-                <div class="col">
-                  <button type="button" href="#" class="btn btn-success" style = "height: 35px;">Add to cart</button>
-                </div>
-              </div>
-          </div>
-          <!-- End of Menu Items -->
-
-          <!-- Sauces Menu -->
-          <div class="col-xl">
-            <h3>Sauces</h3>
-
-            <div class="row-sauces">
-              <input type="checkbox" id="sauce1" name="sauce1", value="Ranch">
-              <label for="sauce1">&nbsp Ranch &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
-              <input type="checkbox" id="sauce2" name="sauce2", value="Marinara">
-              <label for="sauce2">&nbsp Marinara</label>
-            </div>
-
-            <div class="row-sauces">
-              <input type="checkbox" id="sauce3" name="sauce3", value="Aioli">
-              <label for="sauce3">&nbsp Aioli &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
-              <input type="checkbox" id="sauce4" name="sauce4", value="Garlic">
-              <label for="sauce4">&nbsp Garlic</label>
-            </div>
-
-            <div class="row-sauces">
-              <input type="checkbox" id="sauce5" name="sauce5", value="Onion">
-              <label for="sauce5">&nbsp Onion &nbsp</label>
-              <input type="checkbox" id="sauce6" name="sauce6", value="Buffalo">
-              <label for="sauce6">&nbsp Buffalo</label>
-            </div>
-
-            <div class="row-sauces">
-              <input type="checkbox" id="sauce7" name="sauce7", value="Bang Bang">
-              <label for="sauce7">&nbsp Bang Bang &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
-              <input type="checkbox" id="sauce8" name="sauce8", value="Tahini">
-              <label for="sauce8">&nbsp Tahini</label>
-            </div>
-
-            <div class="row-sauces">
               <div class="col">
                 <button type="button" href="#" class="btn btn-success" style = "height: 35px;">Add to cart</button>
               </div>
             </div>
-          </div>
-          <!-- End of sauces-->
         </div>
       </div>
-      <!-- End of Drinks, Menu, and Sauces -->
-
-      <!-- Take me to my cart -->
-      <button type="button" id="sticky-section" class="btn btn-primary btn-block">Review your cart.</button>
-
-
-
-      
-  </div>
-  <!-- End of Main-->
-
-  <!-- Footer -->
-  <footer class="site-footer">
-    <p>&copy; 2025 Cosmic Crust Pizzeria. All rights reserved.</p>
-    <div class="social-media">
-      <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-      <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-      <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
     </div>
-    <p><a href="disclaimer.html">Disclaimer</a> | <a href="privacy.html">Privacy Policy</a></p>
-  </footer>
-  <!--End of MenuPage-->
+      <!-- End of Menu Items -->
 
+    <hr>
+
+    <!-- Drinks -->
+    <div class="drink-items">
+      <div class="row">
+
+        <!-- Drinks Menu -->
+        <div class="col-xl" id="drinks">
+          <h3>Drinks ($0.99 for 1 Liter)</h3>
+
+          <div class="row-drinks">
+            <div class="drink-option">
+              <input type="checkbox" id="drink1" name="drink1", value="Pepsi">
+              <label for="drink1">&nbsp Pepsi &nbsp&nbsp</label>
+              <input type="number" id="drink1" name="drink1" min="0" max="10" value="0"/>
+            </div>
+          </div>
+          <div class="row-drinks">
+            <div class="drink-option">
+              <input type="checkbox" id="drink2" name="drink2", value="Mountain Dew">
+              <label for="drink2">&nbsp Mountain Dew &nbsp&nbsp</label>
+              <input type="number" id="drink2" name="drink2" min="0" max="10" value="0"/>
+            </div>
+          </div>
+
+          <div class="row-drinks">
+            <div class="drink-option">
+              <input type="checkbox" id="drink3" name="drink3", value="Crush">
+              <label for="drink3">&nbsp Crush &nbsp&nbsp</label>
+              <input type="number" id="drink3" name="drink3" min="0" max="10" value="0"/>
+            </div>
+          </div>
+          <div class="row-drinks">
+            <div class="drink-option">
+              <input type="checkbox" id="drink4" name="drink4", value="Mug">
+              <label for="drink4">&nbsp Mug &nbsp&nbsp</label>
+              <input type="number" id="drink4" name="drink4" min="0" max="10" value="0"/>
+            </div>
+          </div>
+
+          <div class="row-drinks">
+            <div class="drink-option">
+              <input type="checkbox" id="drink5" name="drink5", value="Lemonade">
+              <label for="drink5">&nbsp Lemonade &nbsp&nbsp</label>
+              <input type="number" id="drink4" name="drink4" min="0" max="10" value="0"/>
+            </div>
+          </div>
+          <div class="row-drinks">
+            <div class="drink-option">
+              <input type="checkbox" id="drink6" name="drink6", value="Aquafina">
+              <label for="drink6">&nbsp Aquafina &nbsp&nbsp</label>
+              <input type="number" id="drink4" name="drink4" min="0" max="10" value="0"/>
+            </div>
+          </div>
+
+          <div class="row-drinks">
+            <div class="drink-option">
+              <input type="checkbox" id="drink7" name="drink7", value="Fanta">
+              <label for="drink7">&nbsp Fanta &nbsp&nbsp</label>
+              <input type="number" id="drink4" name="drink4" min="0" max="10" value="0"/>
+            </div>
+          </div>
+          <div class="row-drinks">
+            <div class="drink-option">
+              <input type="checkbox" id="drink8" name="drink8", value="Starry">
+              <label for="drink8">&nbsp Starry &nbsp&nbsp</label>
+              <input type="number" id="drink4" name="drink4" min="0" max="10" value="0"/>
+            </div>
+          </div>
+
+          <div class="col">
+            <button type="button" href="#" class="btn btn-success" style="height: 35px;">Add to cart</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End of Drinks Menu -->
+
+    <hr>
+
+    <!-- Sauces -->
+    <div class="sauces-items">
+      <div class="row">
+
+        <!-- Sauces Menu -->
+        <div class="col-xl" id="sauces">
+          <h3>Sauces ($0.25 per cup)</h3>
+          
+          <div class="row-sauces">
+            <div class="sauce-option">
+              <input type="checkbox" id="sauce1" name="sauce1", value="Ranch">
+              <label for="sauce1">&nbsp Ranch &nbsp&nbsp</label>
+              <input type="number" id="sauce1" name="sauce1" min="0" max="0" value="0"/>
+            </div>
+          </div>
+          <div class="row-sauces">
+            <div class="sauce-option">
+              <input type="checkbox" id="sauce2" name="sauce2", value="Marinara">
+              <label for="sauce2">&nbsp Marinara &nbsp&nbsp</label>
+              <input type="number" id="sauce2" name="sauce2" min="0" max="0" value="0"/>
+            </div>
+          </div>
+
+          <div class="row-sauces">
+            <div class="sauce-option">
+              <input type="checkbox" id="sauce3" name="sauce3", value="Aioli">
+              <label for="sauce3">&nbsp Aioli &nbsp&nbsp</label>
+              <input type="number" id="sauce3" name="sauce3" min="0" max="0" value="0"/>
+            </div>
+          </div>
+          <div class="row-sauces">
+            <div class="sauce-option">
+              <input type="checkbox" id="sauce4" name="sauce4", value="Garlic">
+              <label for="sauce4">&nbsp Garlic &nbsp&nbsp</label>
+              <input type="number" id="sauce4" name="sauce4" min="0" max="0" value="0"/>
+            </div>
+          </div>
+          
+          <div class="row-sauces">
+            <div class="sauce-option">
+              <input type="checkbox" id="sauce5" name="sauce5", value="Onion">
+              <label for="sauce5">&nbsp Onion &nbsp&nbsp</label>
+              <input type="number" id="sauce5" name="sauce5" min="0" max="0" value="0"/>
+            </div>
+          </div>
+          <div class="row-sauces">
+            <div class="sauce-option">
+              <input type="checkbox" id="sauce6" name="sauce6", value="Buffalo">
+              <label for="sauce6">&nbsp Buffalo &nbsp&nbsp</label>
+              <input type="number" id="sauce6" name="sauce6" min="0" max="0" value="0"/>
+            </div>
+          </div>
+          
+          <div class="row-sauces">
+            <div class="sauce-option">
+              <input type="checkbox" id="sauce7" name="sauce7", value="Bang Bang">
+              <label for="sauce7">&nbsp Bang Bang &nbsp&nbsp</label>
+              <input type="number" id="sauce7" name="sauce7" min="0" max="0" value="0"/>
+            </div>
+          </div>
+          <div class="row-sauces">
+            <div class="sauce-option">
+              <input type="checkbox" id="sauce8" name="sauce8", value="Tahini">
+              <label for="sauce8">&nbsp Tahini &nbsp&nbsp</label>
+              <input type="number" id="sauce8" name="sauce8" min="0" max="0" value="0"/>
+            </div>
+          </div>
+          
+          <div class="row-sauces">
+            <div class="col">
+              <button type="button" href="#" class="btn btn-success" style = "height: 35px;">Add to cart</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End of sauces-->
+
+    <!-- Take me to my cart -->
+    <div class="row review-cart-button">
+      <div class="col-xl">
+        <button type="button" id="sticky-section" class="btn btn-primary btn-block" style="width: 600px; height: 80px;">Review your cart.</button>
+      </div>
+    </div>
+  <!-- End of main content -->
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <p>&copy; 2025 Cosmic Crust Pizzeria. All rights reserved.</p>
+      <div class="social-media">
+        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      </div>
+      <p><a href="disclaimer.html">Disclaimer</a> | <a href="privacy.html">Privacy Policy</a></p>
+    </footer>
+  <!--End of MenuPage-->
+  </div>
+
+  <script src="filter.js"></script>
 
 </body>
 </html>

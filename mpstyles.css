@@ -6,19 +6,28 @@ body {
   margin: 0;
   padding: 0;
   line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
 }
 
 /* Center content */
-.container {
-  max-width: 1200px;
+.menupage {
   margin: 0 auto;
-  padding: 20px;
+  padding: 5px;
+  width: 800px;
 }
 
 /* HEADER & NAVIGATION */
 header {
   background-color: rgba(0, 0, 0, 0.8);
-  padding: 20px;
+  padding: 40px 20px 20px 20px;
   text-align: center;
   border-bottom: 2px solid #00BFFF;
 }
@@ -41,61 +50,13 @@ nav a:hover {
   color: #ADD8E6;
 }
 
-/* MAIN CONTENT */
-main {
-  padding: 40px 0;
-}
-
-/* Home Section */
-#home h1 {
-  color: #00BFFF;
-  text-align: center;
-  font-size: 2.5rem;
-  text-shadow: 0 0 10px #00BFFF; /* Glowing effect */
-}
-
-/* Mission Statement */
-.mission-statement {
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 20px;
-  margin: 30px 0;
-  border-radius: 10px;
-  border: 1px solid #00BFFF;
-}
-
-.mission-statement h2 {
-  color: #ADD8E6;
-  margin-top: 0;
-}
-
-/* Menu Section (Placeholder) */
-#menu {
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 20px;
-  border-radius: 10px;
-  margin: 30px 0;
-}
-
-#menu h2 {
-  color: #00BFFF;
-}
-
-#menu ul {
-  list-style: none;
-  padding: 0;
-}
-
-#menu li {
-  color: #ADD8E6;
-  margin: 10px 0;
-}
-
 /* FOOTER */
 footer {
   background-color: rgba(0, 0, 0, 0.8);
   text-align: center;
   padding: 20px;
   border-top: 2px solid #00BFFF;
+  margin-top: 20px;
 }
 
 /* RESPONSIVE DESIGN */
@@ -111,42 +72,22 @@ footer {
 }
 
 /* CSS for the menu page */
-.menupage {
-  margin: 0;
-  padding: 0;
-  margin: 0;
-  height:100vh;
-  width: 100%;
-  font-family: 'Orbitron';
-  background-color: #000000;
-}
 
-/* Content for the Jumbotron */
-.jumbotron {
-  padding-bottom: 10px;
-  background-color: #000;
-}
-
-.title {
-  font-family: "Orbitron";
-  padding-left: 50px;
-  color: #fff;
-}
-
-.login_register {
-  padding-right: 50px;
+.main-content {
+  max-width: 1200px;
 }
 
 /* Content for the headers in each section */
-.main-content h3 {
+h3 {
   display: flex;
   justify-content: center;
   margin-bottom: 4%;
-  font-family: 'Orbitron';
+  margin-top: 4%;
+  /* font-family: 'Orbitron'; */
 }
 
 /* Content to set items in the center of their elements */
-.main-content .row .col {
+.main-content, .row, .row .col {
   display: flex;
   justify-content: center;
 }
@@ -155,30 +96,23 @@ footer {
 .main-content .row img {
   height: 4em;
   width: 4em;
+  margin: 4% 0 4% 0;
 }
 
-/* Content for individual pizza and dessert descriptions */
-#pizza1, #pizza2, #pizza3, #chicken, #salad {
-  font-size: 0.7em;
+.main-content .row {
+  margin-top: 4%;
 }
 
-/* Content for spacing between pizza, dessert, and menu items */
-.row .pizza-container, .dessert-container, .menu-container {
-  margin-bottom: 20px;
+img {
+  height: 4em;
+  width: 4em;
+  margin: 4% 0 4% 0;
 }
 
-/* Content to set sub-item sections in the center of their elements */
-.sub-items .row .col-lg {
-  display: flex;
-  justify-content: space-around;
+.review-cart-button{
+  margin-top: 4%;
+  justify-self: center;
 }
-
-/* Content to set sub-item elements in the center of their sections */
-.row-drinks, .row-sauces, .row-footer {
-  display: flex;
-  justify-content: center;
-}
-
 /* Content for the view cart button */
 #sticky-section {
   padding: 1rem;
@@ -187,15 +121,24 @@ footer {
   margin-top: 40px;
 }
 
-/* Content for the Footer */
-.row-footer {
-  font-size: 12px;
-}
-.row-footer ul{
+.sub-items h3, .row-drinks, .row-sauces{
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
 }
 
-hr{
-  background-color: #fff;
+.row-drinks h3 {
+  font-size: 12rem;
+}
+
+.drink-items .row {
+  display: block;
+}
+
+.drink-option, .sauce-option {
+  margin: 5px 0 0 0;
+}
+
+hr {
+  background-color: #00BFFF;
+  border-bottom: 1px solid #00BFFF;
 }
