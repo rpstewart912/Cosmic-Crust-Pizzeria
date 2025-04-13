@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cosmic Crust Pizzeria - Intergalactic Pizza Experience">
+    <title>Cosmic Crust Pizzeria - Menu</title>
+    <link rel="stylesheet" href="UpdatedCSSstyle.css">
+    <style>
+        /* Additional menu-specific styles */
+        .menu-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            padding: 2rem 0;
+        }
+
+        .menu-item {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 1.5rem;
+            border: 1px solid var(--star-blue);
+            box-shadow: 0 4px 15px rgba(0,191,255,0.1);
+            color: var(--milky-white);
+        }
+
+        .menu-item h3 {
+            color: var(--star-blue);
+            margin-top: 0;
+            text-shadow: 0 0 8px var(--star-blue);
+        }
+
+        .price {
+            color: var(--nebula-blue);
+            font-weight: bold;
+            margin: 1rem 0;
+            font-size: 1.2rem;
+        }
+
+        .dietary-labels {
+            margin: 0.5rem 0;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .dietary-label {
+            font-size: 0.8rem;
+            padding: 0.3rem 0.6rem;
+            border-radius: 15px;
+            background: rgba(0,191,255,0.1);
+            border: 1px solid var(--star-blue);
+            color: var(--nebula-blue);
+        }
+
+        button {
+            background: var(--star-blue);
+            color: var(--space-blue);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            width: 100%;
+        }
+
+        button:hover {
+            background: var(--nebula-blue);
+            box-shadow: 0 0 10px var(--star-blue);
+        }
+
+        .toppings-grid {
+            display: grid;
+            gap: 0.8rem;
+            margin: 1rem 0;
+        }
+
+        .topping {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem;
+            background: rgba(0,191,255,0.05);
+            border-radius: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .menu-container {
+                padding: 1rem;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Skip Navigation Link -->
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <header role="banner">
+        <h1>Cosmic Crust Pizzeria</h1>
+        <nav aria-label="Main navigation" role="navigation">
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#menu" aria-current="page">Menu</a></li>
+                <li><a href="#order">Place Order</a></li>
+                <li><a href="#account">Create/Login Account</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main-content" role="main" class="container">
+        <div class="menu-container">
+            <!-- Pizzas -->
+            <div class="menu-item">
+                <h3>Solar Flare Supreme 🌞</h3>
+                <p>Tomato sauce, mozzarella, pepperoni, mushrooms, cosmic peppers</p>
+                <div class="dietary-labels">
+                    <span class="dietary-label vegetarian">Vegetarian</span>
+                </div>
+                <div class="price">$16.99</div>
+                <button>Add to Order</button>
+            </div>
+
+            <div class="menu-item">
+                <h3>Galactic Garden Vegan 🌱</h3>
+                <p>Vegan cheese, roasted veggies, pesto, stardust seasoning</p>
+                <div class="dietary-labels">
+                    <span class="dietary-label vegan">Vegan</span>
+                    <span class="dietary-label gluten-free">Gluten Free</span>
+                </div>
+                <div class="price">$18.99</div>
+                <button>Add to Order</button>
+            </div>
+    
+            <div class="menu-item">
+                <h3>Black Hole Hot & Spicy 🌶️</h3>
+                <p>Spicy marinara, ghost peppers, chorizo, jalapeños</p>
+                <div class="price">$17.99</div>
+                <button>Add to Order</button>
+            </div>
+    
+            <!-- Sides -->
+            <div class="menu-item">
+                <h3>Stellar Garlic Breadsticks 🥖</h3>
+                <p>Fresh-baked with garlic butter and parmesan</p>
+                <div class="dietary-labels">
+                    <span class="dietary-label vegetarian">Vegetarian</span>
+                </div>
+                <div class="price">$6.99</div>
+                <button>Add to Order</button>
+            </div>
+    
+            <div class="menu-item">
+                <h3>Meteor Mozzarella Sticks 🧀</h3>
+                <p>Crispy breaded mozzarella with marinara</p>
+                <div class="price">$7.99</div>
+                <button>Add to Order</button>
+            </div>
+    
+            <!-- Drinks -->
+            <div class="menu-item">
+                <h3>Nebula Cola 🌌</h3>
+                <p>Signature cosmic-crafted cola</p>
+                <div class="dietary-labels">
+                    <span class="dietary-label vegan">Vegan</span>
+                </div>
+                <div class="price">$3.99</div>
+                <button>Add to Order</button>
+            </div>
+    
+            <div class="menu-item">
+                <h3>Lunar Lemonade 🌕</h3>
+                <p>Fresh-squeezed with galaxy glitter</p>
+                <div class="price">$4.50</div>
+                <button>Add to Order</button>
+            </div>
+    
+            <!-- Desserts -->
+            <div class="menu-item">
+                <h3>Comet Chocolate Cake 🍰</h3>
+                <p>Triple-layer chocolate fudge explosion</p>
+                <div class="dietary-labels">
+                    <span class="dietary-label vegetarian">Vegetarian</span>
+                </div>
+                <div class="price">$8.99</div>
+                <button>Add to Order</button>
+            </div>
+    
+            <!-- More Items -->
+            <div class="menu-item">
+                <h3>Orion's Veggie Delight 🥦</h3>
+                <p>Grilled vegetables, vegan cheese, balsamic glaze</p>
+                <div class="dietary-labels">
+                    <span class="dietary-label vegan">Vegan</span>
+                </div>
+                <div class="price">$17.50</div>
+                <button>Add to Order</button>
+            </div>
+    
+            <div class="menu-item">
+                <h3>Celestial Cheese 🌠</h3>
+                <p>Four-cheese blend on gluten-free crust</p>
+                <div class="dietary-labels">
+                    <span class="dietary-label gluten-free">Gluten Free</span>
+                </div>
+                <div class="price">$15.99</div>
+                <button>Add to Order</button>
+            </div>
+    
+            <div class="menu-item">
+                <h3>Supernova Wings 🌶️</h3>
+                <p>Crispy chicken wings with cosmic hot sauce</p>
+                <div class="price">$9.99</div>
+                <button>Add to Order</button>
+            </div>
+    
+            <div class="menu-item">
+                <h3>Milky Way Shake 🌟</h3>
+                <p>Vegan chocolate malt shake</p>
+                <div class="dietary-labels">
+                    <span class="dietary-label vegan">Vegan</span>
+                </div>
+                <div class="price">$6.50</div>
+                <button>Add to Order</button>
+            </div>
+    
+            <div class="menu-item">
+                <h3>Asteroid Alfredo 🍝</h3>
+                <p>Creamy garlic parmesan pasta</p>
+                <div class="dietary-labels">
+                    <span class="dietary-label vegetarian">Vegetarian</span>
+                </div>
+                <div class="price">$12.99</div>
+                <button>Add to Order</button>
+            </div>
+    
+            <div class="menu-item">
+                <h3>Cosmic Salad Bowl 🥗</h3>
+                <p>Fresh greens, seasonal fruits, nuts</p>
+                <div class="dietary-labels">
+                    <span class="dietary-label vegan">Vegan</span>
+                    <span class="dietary-label gluten-free">Gluten Free</span>
+                </div>
+                <div class="price">$10.99</div>
+                <button>Add to Order</button>
+            </div>
+    
+            <div class="menu-item">
+                <h3>Black Hole Coffee ☕</h3>
+                <p>Dark roast with cosmic creamer</p>
+                <div class="dietary-labels">
+                    <span class="dietary-label vegan">Vegan</span>
+                </div>
+                <div class="price">$4.25</div>
+                <button>Add to Order</button>
+            </div>
+    
+            <!-- Toppings Card -->
+            <div class="menu-item toppings-card">
+                <h3>Orbital Toppings 🚀</h3>
+                <div class="toppings-grid">
+                    <div class="topping">
+                        <span>Cosmic Pepperoni</span>
+                        <span>+$1.50</span>
+                    </div>
+                    <div class="topping">
+                        <span>Stellar Sausage</span>
+                        <span>+$2.00</span>
+                    </div>
+                    <div class="topping">
+                        <span>Asteroid Bacon Bits</span>
+                        <span>+$1.75</span>
+                    </div>
+                    <div class="topping">
+                        <span>Galactic Mushrooms</span>
+                        <span>+$1.00</span>
+                    </div>
+                    <div class="topping">
+                        <span>Free: Extra Cheese</span>
+                    </div>
+                    <div class="topping">
+                        <span>Free: Garlic Dust</span>
+                    </div>
+                </div>
+                <button>Customize Pizza</button>
+            </div>
+        </div>
+    </main>
+
+
+    <footer role="contentinfo">
+        <address>
+            Contact us at: 
+            <a href="tel:+11111111111" style="color: var(--star-blue);">(111) 111-1111</a><br>
+            42 Cosmic Crust Avenue, Nebula City, PC 11111
+        </address>
+        <p style="color: var(--nebula-blue);">&copy; 2025 Cosmic Crust Pizzeria. All rights reserved.</p>
+        <ul style="list-style: none; padding: 0; margin: 1rem 0; display: flex; justify-content: center; gap: 1rem;">
+            <li><a href="#accessibility" aria-label="Accessibility statement" style="color: var(--star-blue);">Accessibility</a></li>
+            <li><a href="#privacy" aria-label="Privacy policy" style="color: var(--star-blue);">Privacy Policy</a></li>
+        </ul>
+    </footer>
+</body>
+</html>

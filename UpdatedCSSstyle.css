@@ -1,0 +1,141 @@
+/* Cosmic Blue Theme */
+:root {
+    --space-blue: #0a0a2a;
+    --deep-space: #1a1a2a;
+    --star-blue: #00BFFF;
+    --nebula-blue: #87CEEB;
+    --milky-white: #f8f9fa;
+    --card-bg: rgba(32, 32, 96, 0.9);
+}
+
+/* BASE STYLES */
+body {
+    background-color: var(--space-blue);
+    color: var(--milky-white);
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+/* Center content */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* HEADER & NAVIGATION */
+header {
+    background-color: var(--deep-space);
+    padding: 20px;
+    text-align: center;
+    border-bottom: 2px solid var(--star-blue);
+    box-shadow: 0 4px 15px rgba(0,191,255,0.1);
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+nav a {
+    color: var(--star-blue);
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+}
+
+nav a:hover {
+    color: var(--milky-white);
+    background: rgba(0,191,255,0.1);
+    text-shadow: 0 0 8px var(--star-blue);
+}
+
+/* MAIN CONTENT */
+main {
+    padding: 40px 0;
+}
+
+/* Home Section */
+#home h1 {
+    color: var(--star-blue);
+    text-align: center;
+    font-size: 2.5rem;
+    text-shadow: 0 0 10px var(--star-blue);
+    margin-bottom: 2rem;
+}
+
+/* Mission Statement */
+.mission-statement {
+    background-color: var(--card-bg);
+    padding: 20px;
+    margin: 30px 0;
+    border-radius: 10px;
+    border: 1px solid var(--star-blue);
+    box-shadow: 0 4px 15px rgba(0,191,255,0.1);
+}
+
+.mission-statement h2 {
+    color: var(--nebula-blue);
+    margin-top: 0;
+}
+
+/* Menu Section */
+#menu {
+    background-color: var(--card-bg);
+    padding: 20px;
+    border-radius: 10px;
+    margin: 30px 0;
+    border: 1px solid var(--star-blue);
+}
+
+#menu h2 {
+    color: var(--star-blue);
+    text-shadow: 0 0 8px var(--star-blue);
+}
+
+#menu ul {
+    list-style: none;
+    padding: 0;
+}
+
+#menu li {
+    color: var(--nebula-blue);
+    margin: 10px 0;
+    padding: 1rem;
+    background: rgba(0,191,255,0.1);
+    border-radius: 5px;
+}
+
+/* FOOTER */
+footer {
+    background-color: var(--deep-space);
+    text-align: center;
+    padding: 20px;
+    border-top: 2px solid var(--star-blue);
+    margin-top: 3rem;
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    #home h1 {
+        font-size: 2rem;
+    }
+
+    .mission-statement,
+    #menu {
+        margin: 20px 0;
+        padding: 15px;
+    }
+}
