@@ -1,0 +1,228 @@
+<!-- OrderTracking.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Tracking - Cosmic Crust Pizzeria</title>
+    <link rel="stylesheet" href="UpdatedCSSstyle.css">
+    <style>
+        /* Order Tracking Specific Styles */
+        .tracking-container {
+            display: grid;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .order-status-card {
+            background: var(--card-bg);
+            border: 1px solid var(--star-blue);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0,191,255,0.1);
+        }
+
+        .status-timeline {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin: 2rem 0;
+        }
+
+        .status-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 1;
+        }
+
+        .status-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--deep-space);
+            border: 2px solid var(--star-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .status-icon.active {
+            background: var(--star-blue);
+            box-shadow: 0 0 15px var(--star-blue);
+        }
+
+        .status-name {
+            color: var(--nebula-blue);
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .tracking-map {
+            height: 300px;
+            background: var(--deep-space);
+            border: 2px solid var(--star-blue);
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tracking-map::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, 
+                transparent 48%, 
+                rgba(0,191,255,0.1) 50%, 
+                transparent 52%);
+            animation: radar-scan 4s linear infinite;
+        }
+
+        @keyframes radar-scan {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .order-details {
+            display: grid;
+            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+
+        .detail-card {
+            background: rgba(0,191,255,0.05);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--star-blue);
+        }
+
+        .tracking-form {
+            max-width: 500px;
+            margin: 2rem auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--nebula-blue);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(0,191,255,0.1);
+            border: 1px solid var(--star-blue);
+            border-radius: 5px;
+            color: var(--milky-white);
+        }
+
+        @media (max-width: 768px) {
+            .status-timeline {
+                flex-wrap: wrap;
+                gap: 2rem;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Skip Navigation Link -->
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <header role="banner">
+        <h1>Cosmic Crust Pizzeria</h1>
+        <nav aria-label="Main navigation" role="navigation">
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#order">Place Order</a></li>
+                <li><a href="#account">Create/Login Account</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main-content" role="main" class="container">
+        <section class="order-status-card">
+            <h2 style="color: var(--star-blue); text-shadow: 0 0 8px var(--star-blue);">
+                🚀 Order Tracking
+            </h2>
+            
+            <div class="tracking-form">
+                <form id="trackingForm">
+                    <div class="form-group">
+                        <label for="orderId">Order ID:</label>
+                        <input type="text" id="orderId" required 
+                            placeholder="Enter your cosmic order ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" required 
+                            placeholder="your.email@galaxy.com">
+                    </div>
+                    <button type="submit" style="width: 100%; margin-top: 1rem;">
+                        Track Order
+                    </button>
+                </form>
+            </div>
+
+            <div class="status-timeline">
+                <div class="status-step">
+                    <div class="status-icon active">✅</div>
+                    <span class="status-name">Order Received</span>
+                </div>
+                <div class="status-step">
+                    <div class="status-icon active">👩🍳</div>
+                    <span class="status-name">Preparing</span>
+                </div>
+                <div class="status-step">
+                    <div class="status-icon">🔥</div>
+                    <span class="status-name">Baking</span>
+                </div>
+                <div class="status-step">
+                    <div class="status-icon">🔍</div>
+                    <span class="status-name">Quality Check</span>
+                </div>
+                <div class="status-step">
+                    <div class="status-icon">🛸</div>
+                    <span class="status-name">On Route</span>
+                </div>
+            </div>
+
+
+            <div class="order-details">
+                <div class="detail-card">
+                    <h3 style="color: var(--nebula-blue);">Order Summary</h3>
+                    <p>Galactic Vegan Pizza</p>
+                    <p>Stellar Garlic Breadsticks</p>
+                    <p>Nebula Cola x2</p>
+                    <p style="color: var(--star-blue); font-weight: bold; margin-top: 1rem;">
+                        Total: $34.97
+                    </p>
+                </div>
+                
+            </div>
+        </section>
+    </main>
+
+    <footer role="contentinfo">
+        <address>
+            Contact us at: 
+            <a href="tel:+11111111111" style="color: var(--star-blue);">(111) 111-1111</a><br>
+            42 Cosmic Crust Avenue, Nebula City, PC 11111
+        </address>
+        <p style="color: var(--nebula-blue);">&copy; 2025 Cosmic Crust Pizzeria. All rights reserved.</p>
+        <ul style="list-style: none; padding: 0; display: flex; justify-content: center; gap: 1.5rem; margin: 1rem 0;">
+            <li><a href="#accessibility" aria-label="Accessibility statement" style="color: var(--star-blue);">Accessibility</a></li>
+            <li><a href="#privacy" aria-label="Privacy policy" style="color: var(--star-blue);">Privacy Policy</a></li>
+        </ul>
+    </footer>
+</body>
+</html>
