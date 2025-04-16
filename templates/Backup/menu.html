@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/static/style.css">
+        <title>Cosmic Crust Pizzeria - Menu</title>
+    </head>
+    <body>
+        <div class='menupage'>
+
+            <div class="jumbotron">
+                <div class='title'>
+                    <div class='row'>
+                        <div class='col'>
+                            <h1 class='ccp-title'>Cosmic Crust Pizzeria</h1>
+                        </div>
+                    </div>
+                </div>
+
+                <nav id="main-nav">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/menu">Menu</a></li>
+                        <li><a href="/order">Place Order</a></li>
+                        <li><a href="/account">Create/Login Account</a></li>
+                        <li><a href="/contact">Contact Us</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="main-content">
+                <div class="row main-pies">
+                    <div class="col-xl">
+                        <h3>Traditional Pies</h3>
+                        {% for pizza in pizzas %}
+                        <div class="row pizza-container">
+                            <div class="col">
+                                {% if pizza.to_dict().image_url %}
+                                    <img src="{{ pizza.to_dict().image_url }}" class="img-thumbnail" alt="{{ pizza.to_dict().name }}"/>
+                                {% else %}
+                                    <img src="#" class="img-thumbnail" alt="{{ pizza.to_dict().name }}"/>
+                                {% endif %}
+                            </div>
+                            <div  class="col" id="pizza{{ loop.index }}">
+                                🍕{{ pizza.to_dict().name }}: "{{ pizza.to_dict().description }}"
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-success add-to-cart-button" data-pizza-id="{{ pizza.id }}" onclick="addToCart(event)">Add to cart</button>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="sub-items">
+                    <div class="row">
+                        <div class="col-xl">
+                            <h3>Drinks</h3>
+                            <div class="row-drinks">
+                                <input type="checkbox" id="drink1" name="drink1" value="Pepsi">
+                                <label for="drink1">&nbsp Pepsi &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
+                                <input type="checkbox" id="drink2" name="drink2" value="Mountain Dew">
+                                <label for="drink2">&nbsp Mountain Dew</label>
+                            </div>
+                            <div class="row-drinks">
+                                <div class="col">
+                                    <button type="button" class="btn btn-success add-to-cart-button">Add to cart</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl">
+                            <h3>Menu Items</h3>
+                            <div class="row menu-container">
+                                <div class="col"> <img src="/static/images/chicken.png" class="img-thumbnail" alt="chicken_pic_art"/></div>
+                                <div  class="col" id="chicken">
+                                    🐔BBQ CHIPOTLE: “Tangy bbq sauce, mild heat with a citrus flavor”
+                                </div>
+                                <div class="col">
+                                    <button type="button" class="btn btn-success add-to-cart-button">Add to cart</button>
+                                </div>
+                            </div>
+                            </div>
+
+                        <div class="col-xl">
+                            <h3>Sauces</h3>
+                            <div class="row-sauces">
+                                <input type="checkbox" id="sauce1" name="sauce1" value="Ranch">
+                                <label for="sauce1">&nbsp Ranch &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
+                                <input type="checkbox" id="sauce2" name="sauce2" value="Marinara">
+                                <label for="sauce2">&nbsp Marinara</label>
+                            </div>
+                            <div class="row-sauces">
+                                <div class="col">
+                                    <button type="button" class="btn btn-success add-to-cart-button">Add to cart</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" id="sticky-section" class="btn btn-primary btn-block">Review your cart.</button>
+            </div>
+
+            <footer class="site-footer">
+                <p>&copy; 2025 Cosmic Crust Pizzeria. All rights reserved.</p>
+                <div class="social-media">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+                <p><a href="disclaimer">Disclaimer</a> | <a href="privacy">Privacy Policy</a></p>
+            </footer>
+
+            <script>
+                function addToCart(event) {
+                    event.preventDefault();
+                    const pizzaId = event.target.dataset.pizzaId;
+                    console.log("Add to cart:", pizzaId);
+                    // Implement AJAX call to Flask's /add_to_cart route here
+                }
+            </script>
+        </div>
+    </body>
+    </html>

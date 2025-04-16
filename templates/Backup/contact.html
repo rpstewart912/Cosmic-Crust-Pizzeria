@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Cosmic Crust Pizzeria - Intergalactic Pizza Experience">
+        <title>Contact Us - Cosmic Crust Pizzeria</title>
+        <link rel="stylesheet" href="/static/style.css">
+    </head>
+    <body>
+        <header role="banner">
+            <h1>Cosmic Crust Pizzeria</h1>
+            <nav aria-label="Main navigation" role="navigation">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/menu">Menu</a></li>
+                    <li><a href="/order">Place Order</a></li>
+                    <li><a href="/account">Create/Login Account</a></li>
+                    <li><a href="/contact">Contact Us</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main id="main-content" role="main">
+            <section aria-labelledby="contact-heading">
+                <h2 id="contact-heading" style="text-align: center;">Contact Cosmic Crust</h2>
+
+                <div class="contact-container">
+                    <div class="contact-info" role="region" aria-labelledby="info-heading" style="text-align: center;">
+                        <h3 id="info-heading">Reach Out to Us</h3>
+                        <p>
+                            For questions, feedback, or to place an order, feel free to contact us using the information below:
+                        </p>
+                        <address>
+                            Contact us at:
+                            <a href="tel:+11111111111">(111) 111-1111</a><br>
+                            42 Cosmic Crust Avenue, Nebula City, PC 11111
+                        </address>
+                    </div>
+
+                    <form action="/contact" method="post" class="contact-form" aria-label="Contact form" style="margin: 0 auto; max-width: 320px;">
+                        <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input type="text" id="name" name="name" required placeholder="Enter your name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" name="email" required placeholder="Enter your email">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message:</label>
+                            <textarea id="message" name="message" rows="5" required placeholder="Your message..."></textarea>
+                        </div>
+                        <div class="security-features">
+                            <div class="h-captcha" data-sitekey="YOUR_SITE_KEY" aria-label="Security verification"></div>
+
+                            <div class="form-group">
+                                <input type="checkbox" id="privacy-consent" name="privacy_consent" required>
+                                <label for="privacy-consent">
+                                    I agree to the <a href="privacy.html" target="_blank">Privacy Policy</a>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-controls">
+                            <button type="submit">Send Message</button>
+                            <button type="reset">Clear Form</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </main>
+
+        <footer role="contentinfo" style="text-align: center;">
+            <address>
+                Contact us at:
+                <a href="tel:+11111111111">(111) 111-1111</a><br>
+                42 Cosmic Crust Avenue, Nebula City, PC 11111
+            </address>
+            <p>&copy; 2025 Cosmic Crust Pizzeria. All rights reserved.</p>
+            <a href="disclaimer" aria-label="Disclaimer statement">Disclaimer</a> | <a href="privacy" aria-label="Privacy policy">Privacy Policy</a>
+        </footer>
+    </body>
+    </html>

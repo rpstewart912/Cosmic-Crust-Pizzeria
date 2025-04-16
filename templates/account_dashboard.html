@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmic Crust Pizzeria - Account Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header role="banner">
+        <h1>Cosmic Crust Pizzeria</h1>
+        <nav aria-label="Main navigation" role="navigation">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/menu">Menu</a></li>
+                <li><a href="/order">Start Order</a></li>
+                <li><a href="/account">Login/Register</a></li>
+                <li><a href="/contact" aria-current="page">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Welcome to Your Account Dashboard!</h2>
+
+        {% if user %}
+            <p>Welcome, {{ user.first_name }} {{ user.last_name }}!</p>
+
+            <h3>Account Details</h3>
+            <p>Username: {{ user.username }}</p>
+            <p>Email: {{ user.email }}</p>
+            <p>Address: {{ user.address }}</p>
+            <p>Phone Number: {{ user.phone_number }}</p>
+
+            <h3>Actions</h3>
+            <a href="/edit_profile">Edit Profile</a> | <a href="/change_password">Change Password</a>
+        {% else %}
+            <p>You are not logged in.</p>
+            <a href="/account">Login</a>
+        {% endif %}
+    </main>
+
+    <footer role="contentinfo">
+        <address>
+            Contact us at: 
+            <a href="tel:+11111111111" style="color: var(--star-blue);">(111) 111-1111</a><br>
+            42 Cosmic Crust Avenue, Nebula City, PC 11111
+        </address>
+        <p style="color: var(--nebula-blue);">&copy; 2025 Cosmic Crust Pizzeria. All rights reserved.</p>
+        <ul style="list-style: none; padding: 0; margin: 1rem 0; display: flex; justify-content: center; gap: 1rem;">
+            <li><a href="/disclaimer" aria-label="Disclaimer" style="color: var(--star-blue);">Disclaimer</a></li>
+            <li><a href="/privacy" aria-label="Privacy policy" style="color: var(--star-blue);">Privacy Policy</a></li>
+        </ul>
+    </footer>
+</body>
+</html>

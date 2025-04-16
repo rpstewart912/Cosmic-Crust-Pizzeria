@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cosmic Crust Pizzeria - Intergalactic Pizza Experience">
+    <title>Contact Us - Cosmic Crust Pizzeria</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <!-- Skip Navigation Link -->
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <header role="banner">
+        <h1>Cosmic Crust Pizzeria</h1>
+        <nav aria-label="Main navigation" role="navigation">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/menu">Menu</a></li>
+                <li><a href="/order">Start Order</a></li>
+                <li><a href="/account">Login/Register</a></li>
+                <li><a href="/contact" aria-current="page">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main-content" role="main">
+        <section aria-labelledby="contact-heading" class="container">
+            <h2 id="contact-heading">Contact Cosmic Crust</h2>
+            
+            <div class="contact-container mission-statement">
+                <!-- Cosmic-Themed Contact Information -->
+                <div class="contact-info" role="region" aria-labelledby="info-heading">
+                    <h3 id="info-heading" style="color: var(--nebula-blue);">Our Cosmic Headquarters</h3>
+                    <address>
+                        <p>
+                            42 Cosmic Crust Avenue<br>
+                            Nebula City, PC 11111<br>
+                            (Pizza Cosmos)
+                        </p>
+                        <p>
+                            Phone: <a href="tel:+11111111111" aria-label="Phone number" style="color: var(--star-blue);">(111) 111-1111</a>
+                        </p>
+                        <p>
+                            Email: <a href="mailto:contact@cosmiccrust.pizza" aria-label="Email address" style="color: var(--star-blue);">contact@cosmiccrust.pizza</a>
+                        </p>
+                    </address>
+                </div>
+
+                <!-- Contact Form -->
+                <form id="contact-form" method="POST" action="https://secure.cosmiccrust.pizza/contact" aria-label="Contact form" style="margin-top: 2rem;">
+                    <div class="form-group">
+                        <label for="name" style="color: var(--nebula-blue);">Full Name:</label>
+                        <input type="text" id="name" name="name" required
+                            aria-required="true"
+                            minlength="2"
+                            maxlength="50"
+                            pattern="[A-Za-z -]+"
+                            title="Please enter your full name"
+                            style="background: rgba(0,191,255,0.1); border: 1px solid var(--star-blue); color: var(--milky-white); padding: 0.5rem;">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" style="color: var(--nebula-blue);">Email Address:</label>
+                        <input type="email" id="email" name="email" required
+                            aria-required="true"
+                            autocomplete="email"
+                            style="background: rgba(0,191,255,0.1); border: 1px solid var(--star-blue); color: var(--milky-white); padding: 0.5rem;">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject" style="color: var(--nebula-blue);">Subject:</label>
+                        <select id="subject" name="subject" required aria-required="true"
+                            style="background: rgba(0,191,255,0.1); border: 1px solid var(--star-blue); color: var(--milky-white); padding: 0.5rem; width: 100%;">
+                            <option value="">Select a subject</option>
+                            <option value="order">Order Inquiry</option>
+                            <option value="feedback">Feedback</option>
+                            <option value="allergy">Allergy Information</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message" style="color: var(--nebula-blue);">Message:</label>
+                        <textarea id="message" name="message" rows="5" required
+                            aria-required="true"
+                            minlength="10"
+                            maxlength="500"
+                            style="background: rgba(0,191,255,0.1); border: 1px solid var(--star-blue); color: var(--milky-white); padding: 0.5rem; width: 100%;"></textarea>
+                    </div>
+
+                    <!-- Security Features -->
+                    <div class="security-features" style="margin: 1.5rem 0;">
+                        <div class="h-captcha" data-sitekey="YOUR_SITE_KEY" aria-label="Security verification"></div>
+                        
+                        <div class="form-group" style="margin-top: 1rem;">
+                            <input type="checkbox" id="privacy-consent" name="privacy_consent" required
+                                   style="accent-color: var(--star-blue);">
+                            <label for="privacy-consent" style="color: var(--nebula-blue);">
+                                I agree to the <a href="/privacy" target="_blank" style="color: var(--star-blue);">Privacy Policy</a>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-controls" style="display: flex; gap: 1rem;">
+                        <button type="submit" style="background: var(--star-blue); color: var(--space-blue); border: none; padding: 0.75rem 1.5rem; border-radius: 5px; cursor: pointer; transition: all 0.3s ease;">Send Message</button>
+                        <button type="reset" style="background: transparent; color: var(--star-blue); border: 1px solid var(--star-blue); padding: 0.75rem 1.5rem; border-radius: 5px; cursor: pointer; transition: all 0.3s ease;">Clear Form</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer role="contentinfo">
+        <address>
+            Contact us at: 
+            <a href="tel:+11111111111" style="color: var(--star-blue);">(111) 111-1111</a><br>
+            42 Cosmic Crust Avenue, Nebula City, PC 11111
+        </address>
+        <p style="color: var(--nebula-blue);">&copy; 2025 Cosmic Crust Pizzeria. All rights reserved.</p>
+        <ul style="list-style: none; padding: 0; margin: 1rem 0; display: flex; justify-content: center; gap: 1rem;">
+            <li><a href="/disclaimer" aria-label="Disclaimer" style="color: var(--star-blue);">Disclaimer</a></li>
+            <li><a href="/privacy" aria-label="Privacy policy" style="color: var(--star-blue);">Privacy Policy</a></li>
+        </ul>
+    </footer>
+</body>
+</html>
