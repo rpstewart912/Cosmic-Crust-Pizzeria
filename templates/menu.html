@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Cosmic Crust Pizzeria - Intergalactic Pizza Experience">
     <title>Cosmic Crust Pizzeria - Menu</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/style.css">
     <style>
         /* Additional menu-specific styles */
@@ -89,6 +90,17 @@
                 gap: 1rem;
             }
         }
+
+        .filter-btn {
+            border:none;
+            cursor:pointer;
+            justify-self: center;
+        }
+        
+        .filter-btn.active {
+            background:#444;
+            color:#fff;
+        }
     </style>
 </head>
 <body>
@@ -109,6 +121,26 @@
     </header>
 
     <main id="main-content" role="main" class="container">
+        <div class="menu-container">
+            <!-- Filter controls -->
+            <div class="filter-controls row" style="text-align:center; display: flex; justify-content: space-around;">
+                <div class="filter-col col-md-2">
+                    <button class="filter-btn" data-filter="all">All</button>
+                </div>
+                <div class="filter-col col-md-2">
+                    <button class="filter-btn" data-filter="vegan">Vegan</button>
+                </div>
+                <div class="filter-col col-md-2">
+                    <button class="filter-btn" data-filter="nut-free">Nut-Free</button>
+                </div>
+                <div class="filter-col col-md-2">
+                    <button class="filter-btn" data-filter="vegetarian">Vegetarian</button>
+                </div>
+                <div class="filter-col col-md-2">
+                    <button class="filter-btn" data-filter="gluten-free">Gluten-Free</button>
+                </div>
+            </div>
+        </div>
         <div class="menu-container">
             <!-- Pizzas -->
             <div class="menu-item">
@@ -300,5 +332,29 @@
             <li><a href="/privacy" aria-label="Privacy policy" style="color: var(--star-blue);">Privacy Policy</a></li>
         </ul>
     </footer>
+
+    <script>
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+            const filter = btn.dataset.filter; // e.g. "nut-free"
+
+            document.querySelectorAll('.menu-item').forEach(item => {
+                // check if this item has a <span class="dietary-label {filter}">
+                if (item.classList.contains('toppings-card')) {
+                    item.style.display = '';
+                    return;
+                }
+                
+                const matches = filter === 'all' 
+                || item.querySelector(`span.dietary-label.${filter}`);
+                item.style.display = matches ? '' : 'none';
+            });
+
+            // highlight active button
+            document.querySelectorAll('.filter-btn')
+                .forEach(b => b.classList.toggle('active', b === btn));
+            });
+        });
+    </script>
 </body>
 </html>
