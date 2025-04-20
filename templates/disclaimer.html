@@ -19,19 +19,21 @@
    <body>
        <header>
            <h1>Cosmic Crust Pizzeria</h1>
-           <nav>
-               <ul>
-                   <li><a href="/">Home</a></li>
-                   <li><a href="/menu">Menu</a></li>
-                   <li><a href="/order">Start Order</a></li>
-                   <li><a href="/account">Login/Register</a></li>
-                   <li><a href="/contact">Contact Us</a></li>
-               </ul>
-           </nav>
+           <nav aria-label="Main navigation" role="navigation">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/menu" aria-current="page">Menu</a></li>
+                <li><a href="/order">Start Order/Cart<span id="cart-count">0</span></a></li>
+                <li><a href="/account">Login/Register</a></li>
+                <li><a href="/contact">Contact Us</a></li>
+            </ul>
+        </nav>
        </header>
        <div class="container">
            <main>
                <section>
+                <br>
+                <br>
                    <h2>Disclaimer</h2>
                    <p>
                        This website is operated by Cosmic Crust Pizzeria.
@@ -76,5 +78,7 @@
             </ul>
         </footer>
        </div>
+
+       <script src="/static/cart.js"></script>
    </body>
    </html>

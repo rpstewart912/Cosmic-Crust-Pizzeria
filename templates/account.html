@@ -9,11 +9,11 @@
     <body>
         <header>
             <h1>Cosmic Crust Pizzeria</h1>
-            <nav id="main-nav">
+            <nav aria-label="Main navigation" role="navigation">
                 <ul>
                     <li><a href="/">Home</a></li>
-                    <li><a href="/menu">Menu</a></li>
-                    <li><a href="/order">Start Order</a></li>
+                    <li><a href="/menu" aria-current="page">Menu</a></li>
+                    <li><a href="/order">Start Order/Cart<span id="cart-count">0</span></a></li>
                     <li><a href="/account">Login/Register</a></li>
                     <li><a href="/contact">Contact Us</a></li>
                 </ul>
@@ -22,7 +22,10 @@
 
         <main>
             <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
-
+                <br>
+                <br>
+                <br>
+                <br>
                 <form id="login-form" action="/account" method="POST">
                     <h2>Login to Cosmic Crust</h2>
                     <div class="form-group">
@@ -103,5 +106,7 @@
                 document.getElementById('login-form').style.display = 'block';
             }
         </script>
+
+        <script src="/static/cart.js"></script>
     </body>
     </html>

@@ -15,6 +15,16 @@
             padding: 2rem 0;
         }
 
+        /* Style for category headings */
+        .menu-container h2 {
+            grid-column: 1 / -1; /* Make the heading span across all columns */
+            color: var(--nebula-blue); /* Use a color from your theme */
+            text-align: center;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 10px rgba(0,191,255,0.3); /* Add a subtle glow */
+        }
+
         .menu-item {
             background: var(--card-bg);
             border-radius: 10px;
@@ -22,12 +32,20 @@
             border: 1px solid var(--star-blue);
             box-shadow: 0 4px 15px rgba(0,191,255,0.1);
             color: var(--milky-white);
+            display: flex; /* Use flexbox for layout within item */
+            flex-direction: column; /* Stack content vertically */
+            justify-content: space-between; /* Push button to bottom */
         }
 
         .menu-item h3 {
             color: var(--star-blue);
             margin-top: 0;
             text-shadow: 0 0 8px var(--star-blue);
+        }
+
+        .menu-item p {
+            flex-grow: 1; /* Allow description to take up space */
+            margin-bottom: 0.5rem; /* Add space before size selection */
         }
 
         .price {
@@ -41,6 +59,7 @@
             margin: 0.5rem 0;
             display: flex;
             gap: 0.5rem;
+            flex-wrap: wrap; /* Allow labels to wrap on smaller screens */
         }
 
         .dietary-label {
@@ -50,6 +69,34 @@
             background: rgba(0,191,255,0.1);
             border: 1px solid var(--star-blue);
             color: var(--nebula-blue);
+            white-space: nowrap; /* Prevent text inside label from wrapping */
+        }
+
+        /* Style for size selection */
+        .size-selection {
+            margin-bottom: 1rem;
+            color: var(--milky-white);
+            font-size: 1rem;
+        }
+
+        .size-selection label {
+            margin-right: 0.5rem;
+            font-weight: bold;
+        }
+
+        .size-selection select {
+            padding: 0.4rem;
+            border-radius: 5px;
+            border: 1px solid var(--star-blue);
+            background-color: var(--space-blue);
+            color: var(--milky-white);
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .size-selection select option {
+            background-color: var(--space-blue); /* Ensure options have dark background */
+            color: var(--milky-white); /* Ensure option text is light */
         }
 
         button {
@@ -62,6 +109,7 @@
             transition: all 0.3s ease;
             font-weight: bold;
             width: 100%;
+            margin-top: auto; /* Push button to the bottom */
         }
 
         button:hover {
@@ -69,19 +117,11 @@
             box-shadow: 0 0 10px var(--star-blue);
         }
 
-        .toppings-grid {
-            display: grid;
-            gap: 0.8rem;
-            margin: 1rem 0;
+        .toppings-card button {
+            margin-top: 1.5rem; /* Add space above customize button */
         }
 
-        .topping {
-            display: flex;
-            justify-content: space-between;
-            padding: 0.5rem;
-            background: rgba(0,191,255,0.05);
-            border-radius: 5px;
-        }
+        /* Note: toppings-grid and topping styles from previous version are kept but not used in this new structure */
 
         @media (max-width: 768px) {
             .menu-container {
@@ -89,10 +129,21 @@
                 gap: 1rem;
             }
         }
+
+        /* Style for the cart count span */
+        #cart-count {
+            margin-left: 5px; /* Space from the text link */
+            background-color: var(--nebula-blue); /* Highlight color */
+            color: var(--space-blue); /* Text color */
+            padding: 2px 6px;
+            border-radius: 10px; /* Pill shape */
+            font-size: 0.8em; /* Smaller text */
+            font-weight: bold;
+            vertical-align: super; /* Position slightly higher */
+        }
     </style>
 </head>
 <body>
-    <!-- Skip Navigation Link -->
     <a class="skip-link" href="#main-content">Skip to main content</a>
 
     <header role="banner">
@@ -101,7 +152,7 @@
             <ul>
                 <li><a href="/">Home</a></li>
                 <li><a href="/menu" aria-current="page">Menu</a></li>
-                <li><a href="/order">Start Order</a></li>
+                <li><a href="/order">Start Order/Cart<span id="cart-count">0</span></a></li>
                 <li><a href="/account">Login/Register</a></li>
                 <li><a href="/contact">Contact Us</a></li>
             </ul>
@@ -110,187 +161,113 @@
 
     <main id="main-content" role="main" class="container">
         <div class="menu-container">
-            <!-- Pizzas -->
-            <div class="menu-item">
-                <h3>Solar Flare Supreme 🌞</h3>
-                <p>Tomato sauce, mozzarella, pepperoni, mushrooms, cosmic peppers</p>
-                <div class="dietary-labels">
-                    <span class="dietary-label vegetarian">Vegetarian</span>
-                </div>
-                <div class="price">$16.99</div>
-                <button>Add to Order</button>
-            </div>
+            <br>
+            <br>
+            {# Define a mapping from display header name to actual data category name #}
+            {# **IMPORTANT:** Update the values ('dessert', 'drink', 'pizza', 'side') below #}
+            {# to match the exact category string values used in your menu_items data from the backend. #}
+            {% set category_map = {
+                'Desserts': 'dessert',
+                'Drinks': 'drink',
+                'Pizzas': 'pizza',
+                'Sides': 'side'
+            } %}
+            {# Define the desired order of display headers #}
+            {% set header_order = ['Desserts', 'Drinks', 'Pizzas', 'Sides'] %}
 
-            <div class="menu-item">
-                <h3>Galactic Garden Vegan 🌱</h3>
-                <p>Vegan cheese, roasted veggies, pesto, stardust seasoning</p>
-                <div class="dietary-labels">
-                    <span class="dietary-label vegan">Vegan</span>
-                    <span class="dietary-label gluten-free">Gluten Free</span>
-                </div>
-                <div class="price">$18.99</div>
-                <button>Add to Order</button>
-            </div>
-    
-            <div class="menu-item">
-                <h3>Black Hole Hot & Spicy 🌶️</h3>
-                <p>Spicy marinara, ghost peppers, chorizo, jalapeños</p>
-                <div class="price">$17.99</div>
-                <button>Add to Order</button>
-            </div>
-    
-            <!-- Sides -->
-            <div class="menu-item">
-                <h3>Stellar Garlic Breadsticks 🥖</h3>
-                <p>Fresh-baked with garlic butter and parmesan</p>
-                <div class="dietary-labels">
-                    <span class="dietary-label vegetarian">Vegetarian</span>
-                </div>
-                <div class="price">$6.99</div>
-                <button>Add to Order</button>
-            </div>
-    
-            <div class="menu-item">
-                <h3>Meteor Mozzarella Sticks 🧀</h3>
-                <p>Crispy breaded mozzarella with marinara</p>
-                <div class="price">$7.99</div>
-                <button>Add to Order</button>
-            </div>
-    
-            <!-- Drinks -->
-            <div class="menu-item">
-                <h3>Nebula Cola 🌌</h3>
-                <p>Signature cosmic-crafted cola</p>
-                <div class="dietary-labels">
-                    <span class="dietary-label vegan">Vegan</span>
-                </div>
-                <div class="price">$3.99</div>
-                <button>Add to Order</button>
-            </div>
-    
-            <div class="menu-item">
-                <h3>Lunar Lemonade 🌕</h3>
-                <p>Fresh-squeezed with galaxy glitter</p>
-                <div class="price">$4.50</div>
-                <button>Add to Order</button>
-            </div>
-    
-            <!-- Desserts -->
-            <div class="menu-item">
-                <h3>Comet Chocolate Cake 🍰</h3>
-                <p>Triple-layer chocolate fudge explosion</p>
-                <div class="dietary-labels">
-                    <span class="dietary-label vegetarian">Vegetarian</span>
-                </div>
-                <div class="price">$8.99</div>
-                <button>Add to Order</button>
-            </div>
-    
-            <!-- More Items -->
-            <div class="menu-item">
-                <h3>Orion's Veggie Delight 🥦</h3>
-                <p>Grilled vegetables, vegan cheese, balsamic glaze</p>
-                <div class="dietary-labels">
-                    <span class="dietary-label vegan">Vegan</span>
-                </div>
-                <div class="price">$17.50</div>
-                <button>Add to Order</button>
-            </div>
-    
-            <div class="menu-item">
-                <h3>Celestial Cheese 🌠</h3>
-                <p>Four-cheese blend on gluten-free crust</p>
-                <div class="dietary-labels">
-                    <span class="dietary-label gluten-free">Gluten Free</span>
-                </div>
-                <div class="price">$15.99</div>
-                <button>Add to Order</button>
-            </div>
-    
-            <div class="menu-item">
-                <h3>Supernova Wings 🌶️</h3>
-                <p>Crispy chicken wings with cosmic hot sauce</p>
-                <div class="price">$9.99</div>
-                <button>Add to Order</button>
-            </div>
-    
-            <div class="menu-item">
-                <h3>Milky Way Shake 🌟</h3>
-                <p>Vegan chocolate malt shake</p>
-                <div class="dietary-labels">
-                    <span class="dietary-label vegan">Vegan</span>
-                </div>
-                <div class="price">$6.50</div>
-                <button>Add to Order</button>
-            </div>
-    
-            <div class="menu-item">
-                <h3>Asteroid Alfredo 🍝</h3>
-                <p>Creamy garlic parmesan pasta</p>
-                <div class="dietary-labels">
-                    <span class="dietary-label vegetarian">Vegetarian</span>
-                </div>
-                <div class="price">$12.99</div>
-                <button>Add to Order</button>
-            </div>
-    
-            <div class="menu-item">
-                <h3>Cosmic Salad Bowl 🥗</h3>
-                <p>Fresh greens, seasonal fruits, nuts</p>
-                <div class="dietary-labels">
-                    <span class="dietary-label vegan">Vegan</span>
-                    <span class="dietary-label gluten-free">Gluten Free</span>
-                </div>
-                <div class="price">$10.99</div>
-                <button>Add to Order</button>
-            </div>
-    
-            <div class="menu-item">
-                <h3>Black Hole Coffee ☕</h3>
-                <p>Dark roast with cosmic creamer</p>
-                <div class="dietary-labels">
-                    <span class="dietary-label vegan">Vegan</span>
-                </div>
-                <div class="price">$4.25</div>
-                <button>Add to Order</button>
-            </div>
-    
-            <!-- Toppings Card -->
-            <div class="menu-item toppings-card">
-                <h3>Orbital Toppings 🚀</h3>
-                <div class="toppings-grid">
-                    <div class="topping">
-                        <span>Cosmic Pepperoni</span>
-                        <span>+$1.50</span>
+            {# Loop through the desired header order #}
+            {% for header_name in header_order %}
+                {# Get the actual data category name using the map #}
+                {% set data_category_name = category_map[header_name] %}
+
+                {# Filter the original list for items matching the actual data category name #}
+                {# Use a default empty list if menu_items is None or not iterable #}
+                {% set items_in_category = (menu_items | default([]) if menu_items is not none else []) | selectattr('category', 'equalto', data_category_name) | list %}
+
+                {# If items exist for this category, display the header and items #}
+                {% if items_in_category %}
+                    <h2>{{ header_name }}</h2>
+
+                    {# Loop through items within this category #}
+                    {% for item in items_in_category %}
+                         {# Check if the item is NOT a placeholder for the Custom Pizza card if you have one in menu_items #}
+                         {# Adjust 'custom_pizza_placeholder_id' if your data uses a different ID for this #}
+                        {% if item.id != 'custom_pizza_placeholder_id' %}
+                        <div class="menu-item">
+                            <h3>{{ item.name }} {{ item.emoji | default('') }}</h3>
+                            <p>{{ item.description }}</p>
+
+                            {# Add size selection ONLY for items with the actual data category 'pizza' that are NOT the custom pizza #}
+                            {% if item.category == 'pizza' and item.sizes is defined and item.sizes %}
+                                <div class="size-selection">
+                                    <label for="size-{{ item.id }}">Size:</label>
+                                    <select id="size-{{ item.id }}" class="pizza-size-select" data-item-id="{{ item.id }}">
+                                        {# Loop through sizes and prices #}
+                                        {% for size, price in item.sizes.items() %}
+                                            <option value="{{ size }}" data-price="{{ price }}">{{ size }} - ${{ "%.2f" | format(price) }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            {% endif %}
+
+                            {# Display dietary labels if they exist #}
+                            {% if item.dietary %}
+                                <div class="dietary-labels">
+                                    {% if item.dietary is string %}
+                                        <span class="dietary-label {{ item.dietary | lower }}">{{ item.dietary }}</span>
+                                    {% elif item.dietary is iterable %}
+                                        {% for label in item.dietary %}
+                                            {% if label is string %}
+                                                <span class="dietary-label {{ label | lower }}">{{ label }}</span>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+
+                            {# Display price #}
+                            {# For pizzas with sizes, the JS will update the price display #}
+                             <div class="price {% if item.category == 'pizza' and item.sizes is defined and item.sizes %}selected-pizza-price{% endif %}" data-item-id="{{ item.id }}">
+                                {% if item.category != 'pizza' or item.sizes is not defined or not item.sizes %}
+                                    ${{ "%.2f" | format(item.price) }}
+                                {% endif %}
+                             </div>
+
+
+                            <button class="add-to-order-btn"
+                                    data-id="{{ item.id }}" {# Use Firestore document ID as item ID #}
+                                    data-name="{{ item.name }}"
+                                    data-description="{{ item.description }}"
+                                    {# data-price will be updated by JS for pizzas #}
+                                    data-price="{{ item.price | default(0) }}" {# Use default 0 if price is missing (e.g., for pizzas with sizes) #}
+                                    data-category="{{ item.category }}" {# Keep actual data category here #}
+                                    {# Pass dietary labels as a comma-separated string #}
+                                    data-dietary="{{ item.dietary | join(',') if item.dietary is iterable else item.dietary if item.dietary is string else '' }}"
+                                    data-customizable="{{ item.customizable }}">Add to Order</button>
+                        </div>
+                         {% endif %}
+                    {% endfor %}
+
+                    {# Place the hardcoded Custom Pizza card specifically within the Pizzas category header #}
+                    {# Check against the display header name, not the data category name here #}
+                    {% if header_name == 'Pizzas' %}
+                    <div class="menu-item toppings-card">
+                        <h3>Custom Pizza 🚀</h3>
+                        <p>Embark on a culinary adventure! Build your own interstellar masterpiece with a universe of fresh toppings.</p>
+                        {# REMOVED size selection from Custom Pizza card #}
+                        <button class="customize-pizza-btn" data-pizza-id="custom_pizza">Customize Pizza</button>
                     </div>
-                    <div class="topping">
-                        <span>Stellar Sausage</span>
-                        <span>+$2.00</span>
-                    </div>
-                    <div class="topping">
-                        <span>Asteroid Bacon Bits</span>
-                        <span>+$1.75</span>
-                    </div>
-                    <div class="topping">
-                        <span>Galactic Mushrooms</span>
-                        <span>+$1.00</span>
-                    </div>
-                    <div class="topping">
-                        <span>Free: Extra Cheese</span>
-                    </div>
-                    <div class="topping">
-                        <span>Free: Garlic Dust</span>
-                    </div>
-                </div>
-                <button>Customize Pizza</button>
-            </div>
+                    {% endif %}
+
+                {% endif %} {# End if items exist for this category #}
+            {% endfor %} {# End loop through header order #}
+
         </div>
     </main>
 
-
     <footer role="contentinfo">
         <address>
-            Contact us at: 
+            Contact us at:
             <a href="tel:+11111111111" style="color: var(--star-blue);">(111) 111-1111</a><br>
             42 Cosmic Crust Avenue, Nebula City, PC 11111
         </address>
@@ -300,5 +277,160 @@
             <li><a href="/privacy" aria-label="Privacy policy" style="color: var(--star-blue);">Privacy Policy</a></li>
         </ul>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+             // Function to update the displayed price for a pizza based on selected size
+            const updatePizzaPriceDisplay = (itemId) => {
+                // Find the size select element specifically related to this item ID
+                const selectElement = document.querySelector(`.pizza-size-select[data-item-id="${itemId}"]`);
+                // Find the price display element specifically related to this item ID
+                const priceDisplayElement = document.querySelector(`.price.selected-pizza-price[data-item-id="${itemId}"]`);
+
+                if (selectElement && priceDisplayElement) {
+                    const selectedOption = selectElement.options[selectElement.selectedIndex];
+                    const selectedPrice = selectedOption.dataset.price;
+                    priceDisplayElement.textContent = `$${parseFloat(selectedPrice).toFixed(2)}`;
+                }
+            };
+
+            // Function to calculate total quantity in the cart
+            function calculateCartTotalQuantity() {
+                const currentOrder = JSON.parse(localStorage.getItem('cosmicOrder')) || [];
+                // Sum the quantity of each item in the order
+                const totalQuantity = currentOrder.reduce((sum, item) => sum + (item.quantity || 0), 0);
+                return totalQuantity;
+            }
+
+            // Function to update the cart count display in the header
+            function updateCartCountDisplay() {
+                const cartCountSpan = document.getElementById('cart-count');
+                if (cartCountSpan) {
+                    const totalQuantity = calculateCartTotalQuantity();
+                    cartCountSpan.textContent = totalQuantity.toString();
+                }
+            }
+
+            // Update price display on page load for all pizza items with size selects (excluding custom)
+            document.querySelectorAll('.pizza-size-select').forEach(select => {
+                // Only update if it's not the custom pizza select
+                if (select.dataset.itemId !== 'custom_pizza') {
+                    updatePizzaPriceDisplay(select.dataset.itemId);
+                }
+            });
+
+            // Add event listeners to update price display when size selection changes
+            document.querySelectorAll('.pizza-size-select').forEach(selectElement => {
+                // Only add listener if it's not the custom pizza select
+                if (selectElement.dataset.itemId !== 'custom_pizza') {
+                    selectElement.addEventListener('change', (event) => {
+                        const itemId = event.target.dataset.itemId;
+                        updatePizzaPriceDisplay(itemId);
+                    });
+                }
+            });
+
+            // Get all buttons with the class 'add-to-order-btn'
+            const addToOrderButtons = document.querySelectorAll('.add-to-order-btn');
+
+            // Add a click event listener to each button
+            addToOrderButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Extract item data from data attributes
+                    const itemId = button.dataset.id; // Use the Firestore document ID
+                    const itemName = button.dataset.name;
+                    const itemDescription = button.dataset.description;
+                    // Get the actual data category from the data attribute
+                    const itemCategory = button.dataset.category;
+                    const itemDietary = button.dataset.dietary ? button.dataset.dietary.split(',') : [];
+                    const itemCustomizable = button.dataset.customizable === 'true';
+
+                    let itemPrice;
+                    let selectedSize = null;
+
+                    // Check if the item's data category is 'pizza' to get the selected size and price
+                    // **IMPORTANT:** Ensure 'pizza' matches the actual category value in your data
+                    if (itemCategory === 'pizza') {
+                         // Find the size select for THIS specific item card that is a pizza size select
+                         // This will find selects ONLY on non-custom pizza items now
+                        const sizeSelect = button.closest('.menu-item').querySelector('.pizza-size-select');
+
+                        if (sizeSelect) {
+                            const selectedOption = sizeSelect.options[sizeSelect.selectedIndex];
+                            selectedSize = selectedOption.value;
+                            itemPrice = parseFloat(selectedOption.dataset.price);
+                        } else {
+                             // This else block should ideally not be hit for standard pizzas with sizes
+                             // unless there's an issue with the template rendering the select.
+                             // For the custom pizza, it will be hit, but the category check prevents entering here.
+                             console.warn(`Size selection expected but not found for pizza item: ${itemName} (ID: ${itemId}). Using base price.`);
+                             itemPrice = parseFloat(button.dataset.price) || 0; // Fallback to base price or 0
+                        }
+                    } else {
+                        // For non-pizza items, use the price from the data attribute
+                        itemPrice = parseFloat(button.dataset.price);
+                    }
+
+                    // Create an item object for the cart
+                    const itemToAdd = {
+                        id: itemId, // Original item ID
+                        cartId: `${itemId}-${Date.now()}-${selectedSize || 'nosize'}`, // Unique ID for this cart item instance, include size if present
+                        name: itemName,
+                        description: itemDescription,
+                        price: itemPrice,
+                        category: itemCategory, // Store the actual data category
+                        dietary: itemDietary,
+                        customizable: itemCustomizable,
+                        quantity: 1, // Start with a quantity of 1
+                        customizations: {}, // Placeholder for toppings/customizations
+                    };
+
+                    // Add selected size property ONLY if a size was selected (i.e., for standard pizzas)
+                    if (selectedSize) {
+                        itemToAdd.selectedSize = selectedSize;
+                    }
+
+                    // Get the current order from local storage
+                    const currentOrder = JSON.parse(localStorage.getItem('cosmicOrder')) || [];
+
+                    // Check if the item is already in the order (based on original item ID, selected size, and customizations)
+                    // Note: For non-pizza items, selectedSize will be null, correctly matching other instances of the same item
+                    const existingItemIndex = currentOrder.findIndex(item =>
+                        item.id === itemToAdd.id &&
+                        item.selectedSize === itemToAdd.selectedSize && // Compare sizes (null for non-pizzas)
+                        JSON.stringify(item.customizations) === JSON.stringify(itemToAdd.customizations)
+                    );
+
+                    if (existingItemIndex > -1) {
+                        // Item with same ID, size, and customizations already exists, increment quantity
+                        currentOrder[existingItemIndex].quantity += 1;
+                    } else {
+                        // Item does not exist or has different size/customizations, add it as a new item instance
+                        currentOrder.push(itemToAdd);
+                    }
+
+                    // Save the updated order back to local storage
+                    localStorage.setItem('cosmicOrder', JSON.stringify(currentOrder));
+
+                    // Update the cart count display in the header
+                    updateCartCountDisplay();
+                });
+            });
+
+            // --- Updated Customize Pizza button functionality ---
+            // This button now just redirects to the customize page without a size parameter
+            const customizePizzaButton = document.querySelector('.customize-pizza-btn');
+            if (customizePizzaButton) {
+                customizePizzaButton.addEventListener('click', () => {
+                    const customizeUrl = `/custom_pizza`; // No size parameter here
+                    window.location.href = customizeUrl;
+                });
+            }
+
+            // --- Initial call to display cart count on page load ---
+            updateCartCountDisplay();
+        });
+    </script>
 </body>
 </html>

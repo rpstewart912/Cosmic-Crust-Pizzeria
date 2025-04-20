@@ -8,42 +8,38 @@
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <!-- Skip Navigation Link -->
     <a class="skip-link" href="#main-content">Skip to main content</a>
 
-    <!-- Header -->
     <header role="banner">
-        <h1>Cosmic Crust Pizzeria</h1>
-        <nav aria-label="Main navigation" role="navigation">
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/menu">Menu</a></li>
-                <li><a href="/order">Start Order</a></li>
-                <li><a href="/account">Login/Register</a></li>
-                <li><a href="/contact">Contact Us</a></li>
-            </ul>
-        </nav>
+        <div class="header-container">
+            <div id="account-actions"></div>  <h1 id="header-title">Cosmic Crust Pizzeria</h1>
+            <nav aria-label="Main navigation" role="navigation">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/menu" aria-current="page">Menu</a></li>
+                    <li><a href="/order">Start Order/Cart<span id="cart-count">0</span></a></li>
+                    <li><a href="/account">Login/Register</a></li>
+                    <li><a href="/contact">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
-    <!-- Main Content -->
     <main id="main-content" role="main" class="container">
-        <!-- Home Section -->
         <section id="home">
             <h1 style="color: var(--star-blue); text-shadow: 0 0 10px var(--star-blue);">
                 Welcome to Cosmic Crust Pizzeria
             </h1>
             <p style="font-size: 1.2rem; color: var(--nebula-blue);">
-                The online ordering system for our intergalactic pizza restaurant!
+                <br> The online ordering system for our intergalactic pizza restaurant!
             </p>
         </section>
 
-        <!-- Mission Statement -->
         <section aria-labelledby="mission-heading" class="mission-statement">
             <h2 id="mission-heading">Our Cosmic Mission</h2>
             <p>To deliver delicious, out-of-this-world pizza experiences to celestial beings across the galaxy.</p>
         </section>
 
-        <!-- Menu Preview -->
         <section id="menu" style="margin-top: 2rem;">
             <h2 style="color: var(--star-blue); text-shadow: 0 0 8px var(--star-blue);">
                 Stellar Specialties
@@ -63,7 +59,6 @@
         </section>
     </main>
 
-    <!-- Footer -->
     <footer role="contentinfo">
         <address>
             Contact us at: 
@@ -76,5 +71,28 @@
             <li><a href="/privacy" aria-label="Privacy policy" style="color: var(--star-blue);">Privacy Policy</a></li>
         </ul>
     </footer>
+
+    <script>
+        function updateAccountActions() {
+            const accountActions = document.getElementById('account-actions');
+            // ***IMPORTANT:*** Replace this with your actual login status check!
+            const isLoggedIn = false;
+    
+            let links = [];
+    
+            if (isLoggedIn) {
+                links.push('<a href="/profile">View Profile</a>');
+            } else {
+                links.push('<a href="/account">Login/Register</a>');
+            }
+            links.push(<a href="/order">View Order</a>);
+    
+            accountActions.innerHTML = links.join(' | ');
+        }
+    
+        window.onload = updateAccountActions;
+    </script>
+
+    <script src="/static/cart.js"></script>
 </body>
 </html>
