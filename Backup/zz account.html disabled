@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Test</title>
+</head>
+<body>
+  <button id="myButton">Click Me</button>
+  <script>
+    document.getElementById("myButton").addEventListener("click", async () => {
+      const response = await fetch('/test');
+      const data = await response.text(); //changed from json() to text()
+      console.log(data);
+      alert(data);
+    });
+  </script>
+</body>
+</html>

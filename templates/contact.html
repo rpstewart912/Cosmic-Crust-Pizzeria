@@ -16,10 +16,10 @@
         <nav aria-label="Main navigation" role="navigation">
             <ul>
                 <li><a href="/">Home</a></li>
-                <li><a href="/menu">Menu</a></li>
-                <li><a href="/order">Start Order</a></li>
+                <li><a href="/menu" aria-current="page">Menu</a></li>
+                <li><a href="/order">Start Order/Cart<span id="cart-count">0</span></a></li>
                 <li><a href="/account">Login/Register</a></li>
-                <li><a href="/contact" aria-current="page">Contact Us</a></li>
+                <li><a href="/contact">Contact Us</a></li>
             </ul>
         </nav>
     </header>
@@ -123,5 +123,7 @@
             <li><a href="/privacy" aria-label="Privacy policy" style="color: var(--star-blue);">Privacy Policy</a></li>
         </ul>
     </footer>
+
+    <script src="/static/cart.js"></script>
 </body>
 </html>
