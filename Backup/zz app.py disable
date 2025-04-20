@@ -1,0 +1,13 @@
+from flask import Flask, jsonify
+import logging
+app = Flask(__name__)
+
+logging.basicConfig(level=logging.DEBUG,
+                    format='%(asctime)s - %(levelname)s - %(message)s')
+@app.route('/test', methods=['GET'])
+def test_route():
+    logging.info("hitting the test route")
+    return jsonify({'message': 'Test successful'}), 200
+
+if __name__ == '__main__':
+    app.run(debug=True)

@@ -1,0 +1,44 @@
+runtime: python39
+entrypoint: gunicorn -b :$PORT app:app
+
+# [START cloudsql_settings]
+beta_settings:
+  CloudSQLInstances: cosmic-crust-pizzeria:us-central1:cosmicpizzasql-1
+# [END cloudsql_settings]
+
+handlers:
+- url: /(.*\.css)
+  static_files: style.css
+  upload: style.css
+- url: /mpstyles.css
+  static_files: mpstyles.css
+  upload: mpstyles.css
+- url: /account.html
+  static_files: account.html
+  upload: account.html
+- url: /contact.html
+  static_files: contact.html
+  upload: contact.html
+- url: /disclaimer.html
+  static_files: disclaimer.html
+  upload: disclaimer.html
+- url: /menu.html  # Keep this handler in app.yaml
+  static_files: menu.html
+  upload: menu.html
+- url: /order.html
+  static_files: order.html
+  upload: order.html
+- url: /privacy.html
+  static_files: privacy.html
+  upload: privacy.html  
+- url: /images
+  static_dir: images
+- url: /.*
+  static_files: index.html
+  upload: index.html
+
+# [START env_variables]
+env_variables:
+  CLOUD_SQL_DATABASE_NAME: cosmic_crust_db
+  CLOUD_SQL_INSTANCE_CONNECTION_NAME: cosmic-crust-pizzeria:us-central1:cosmicpizzasql-1  # Add this!
+# [END env_variables]
