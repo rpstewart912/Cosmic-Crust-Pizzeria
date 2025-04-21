@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmic Crust Pizzeria - Your Order</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        /* Additional styles for the order page */
+        .order-summary-container {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 10px;
+            margin: 30px auto; /* Center the container */
+            max-width: 800px; /* Limit width for readability */
+            border: 1px solid var(--star-blue);
+            box-shadow: 0 4px 15px rgba(0,191,255,0.1);
+        }
+
+        .order-item {
+            border-bottom: 1px dashed var(--nebula-blue);
+            padding: 15px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+        }
+
+        .item-details {
+            flex-grow: 1; /* Allow details to take up space */
+            margin-right: 20px; /* Space between details and quantity */
+        }
+
+        .item-details h4 {
+            margin: 0 0 5px 0;
+            color: var(--star-blue);
+        }
+
+        .item-details p {
+            margin: 0;
+            color: var(--milky-white);
+            font-size: 0.9rem;
+        }
+
+        /* Added styling for displaying selected size and customizations */
+        .item-size,
+        .customizations-display {
+            font-size: 0.8rem;
+            color: var(--nebula-blue);
+            margin-top: 5px; /* Space above size/customization details */
+        }
+
+        .item-size strong,
+        .customizations-display strong {
+            color: var(--star-blue);
+        }
+
+        .item-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px; /* Space between quantity and price/remove */
+        }
+
+        .item-quantity {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quantity-control button {
+            background-color: var(--deep-space);
+            color: var(--nebula-blue);
+            border: 1px solid var(--nebula-blue);
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-weight: bold;
+        }
+
+        .quantity-control button:hover {
+            background-color: var(--nebula-blue);
+            color: var(--deep-space);
+        }
+
+        .remove-item-btn {
+            background-color: transparent;
+            color: #ff4d4d; /* Red color for remove */
+            border: none;
+            padding: 5px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+
+        .remove-item-btn:hover {
+            color: #ff1a1a;
+        }
+
+        .item-price {
+            color: var(--star-blue);
+            font-weight: bold;
+            margin-left: 20px; /* Space out price */
+            min-width: 60px; /* Ensure price column has minimum width */
+            text-align: right;
+        }
+
+        .order-total {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid var(--star-blue);
+            text-align: right;
+            font-size: 1.5rem;
+            color: var(--nebula-blue);
+        }
+
+        .order-total span {
+            color: var(--star-blue);
+            font-weight: bold;
+        }
+
+        .checkout-button {
+            display: block; /* Make button full width */
+            width: 100%;
+            padding: 15px;
+            margin-top: 30px;
+            background-color: var(--star-blue);
+            color: var(--space-blue);
+            border: none;
+            border-radius: 5px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Added style for Clear Cart button */
+        .clear-cart-button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin-top: 15px; /* Space between checkout and clear */
+            background-color: #ff4d4d; /* Red color */
+            color: var(--space-blue);
+            border: none;
+            border-radius: 5px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .checkout-button:hover {
+            background-color: var(--nebula-blue);
+            box-shadow: 0 0 10px var(--star-blue);
+        }
+
+        .clear-cart-button:hover {
+            background-color: #ff1a1a; /* Darker red on hover */
+        }
+
+        @media (max-width: 600px) {
+            .order-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .item-details {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+            .item-controls {
+                width: 100%;
+                justify-content: space-between;
+                gap: 10px;
+            }
+            .item-quantity {
+                flex-grow: 1;
+                justify-content: flex-start;
+            }
+            .item-price {
+                margin-left: 0;
+                text-align: left;
+                min-width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <header>
+        <div class="container">
+            <h1 id="home" style="text-align: center;">Cosmic Crust Pizzeria</h1>
+            <nav aria-label="Main navigation" role="navigation">
+              <ul>
+                  <li><a href="/">Home</a></li>
+                  <li><a href="/menu" aria-current="page">Menu</a></li>
+                  <li><a href="/order">Start Order/Cart<span id="cart-count">0</span></a></li>
+                  <li><a href="/account">Login/Register</a></li>
+                  <li><a href="/contact">Contact Us</a></li>
+              </ul>
+          </nav>
+        </div>
+    </header>
+
+    <main id="main-content">
+      <br>
+      <br>
+        <div class="container">
+            <div class="order-summary-container">
+                <h2 style="color: var(--star-blue); text-align: center; margin-bottom: 20px;">Your Cosmic Order</h2>
+
+                <div id="order-summary">
+                    </div>
+
+                <div class="order-total">
+                    Total: <span id="total-price">$0.00</span>
+                </div>
+
+                <button class="checkout-button">Proceed to Checkout</button>
+                {# Added Clear Cart button #}
+                <button class="clear-cart-button">CLEAR CART</button>
+
+            </div>
+        </div>
+    </main>
+
+    <footer role="contentinfo">
+        <address>
+            Contact us at:
+            <a href="tel:+11111111111" style="color: var(--star-blue);">(111) 111-1111</a><br>
+            42 Cosmic Crust Avenue, Nebula City, PC 11111
+        </address>
+        <p style="color: var(--nebula-blue);">&copy; 2025 Cosmic Crust Pizzeria. All rights reserved.</p>
+        <ul style="list-style: none; padding: 0; margin: 1rem 0; display: flex; justify-content: center; gap: 1rem;">
+            <li><a href="/disclaimer" aria-label="Disclaimer" style="color: var(--star-blue);">Disclaimer</a></li>
+            <li><a href="/privacy" aria-label="Privacy policy" style="color: var(--star-blue);">Privacy Policy</a></li>
+        </ul>
+         {# This Font Awesome script tag seems incomplete or a placeholder. Ensure it's correct or remove if not used. #}
+        {# <script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script> #}
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const orderSummaryDiv = document.getElementById('order-summary');
+            const totalSpan = document.getElementById('total-price');
+            const checkoutButton = document.querySelector('.checkout-button');
+            const clearCartButton = document.querySelector('.clear-cart-button'); // Get the clear cart button
+
+            // Function to load order from local storage
+            function loadOrder() {
+                const currentOrder = JSON.parse(localStorage.getItem('cosmicOrder')) || [];
+                return currentOrder;
+            }
+
+            // Function to save order to local storage
+            function saveOrder(orderItems) {
+                localStorage.setItem('cosmicOrder', JSON.stringify(orderItems));
+            }
+
+            // Function to display order items
+            function displayOrder(orderItems) {
+                orderSummaryDiv.innerHTML = ''; // Clear current content
+
+                if (orderItems.length === 0) {
+                    orderSummaryDiv.innerHTML = '<p style="text-align: center; color: var(--nebula-blue);">Your order is empty. Add items from the <a href="/menu" style="color: var(--star-blue);">Menu</a>!</p>';
+                    checkoutButton.disabled = true; // Disable checkout if order is empty
+                    checkoutButton.style.opacity = 0.5; // Visually indicate disabled state
+                    checkoutButton.style.cursor = 'not-allowed';
+                    clearCartButton.style.display = 'none'; // Hide clear cart button when empty
+                    return;
+                }
+
+                checkoutButton.disabled = false; // Enable checkout if order has items
+                checkoutButton.style.opacity = 1;
+                checkoutButton.style.cursor = 'pointer';
+                clearCartButton.style.display = 'block'; // Show clear cart button when items exist
+
+
+                orderItems.forEach(item => {
+                    const itemElement = document.createElement('div');
+                    itemElement.classList.add('order-item');
+
+                    // Build the content for the .item-details div
+                    // Use item.name, defaulting to 'Unnamed Item' if it's missing
+                    let itemDetailsContent = `<h4>${item.name || 'Unnamed Item'}</h4>`;
+
+                    // Add size display if the item has a selected size
+                    if (item.selectedSize) {
+                        itemDetailsContent += `<p class="item-size">Size: ${item.selectedSize}</p>`;
+                    }
+
+                    // Check if the item has customizations
+                    const hasCustomizations = item.customizations && typeof item.customizations === 'object' && Object.keys(item.customizations).length > 0;
+
+                    // Add customizations or description
+                    if (hasCustomizations) {
+                        itemDetailsContent += '<div class="customizations-display">';
+                        for (const category in item.customizations) {
+                            // Only process own properties that are arrays and not empty
+                            if (item.customizations.hasOwnProperty(category) && Array.isArray(item.customizations[category]) && item.customizations[category].length > 0) {
+                                const options = item.customizations[category];
+                                // Capitalize category name
+                                itemDetailsContent += `<p><strong>${category.charAt(0).toUpperCase() + category.slice(1)}:</strong> `;
+
+                                const optionNames = options.map(option => {
+                                    // Display option name and quantity if quantity is present and > 1
+                                    // Ensure option and option.name exist
+                                    if (option && option.name) {
+                                        if (option.quantity && option.quantity > 1) {
+                                            return `${option.name} (x${option.quantity})`;
+                                        }
+                                        return option.name;
+                                    }
+                                    return 'Unknown Option'; // Handle case where option or name is missing
+                                });
+                                itemDetailsContent += optionNames.join(', ');
+                                itemDetailsContent += '</p>';
+                            }
+                        }
+                        itemDetailsContent += '</div>'; // Close customizations-display
+                    } else {
+                        // Display standard item description if no customizations
+                         // Use empty string if item.description is missing
+                        itemDetailsContent += `<p>${item.description || ''}</p>`;
+                    }
+
+                    // Assemble the full itemDetailsHtml
+                    let itemDetailsHtml = `
+                        <div class="item-details">
+                            ${itemDetailsContent}
+                        </div>
+                    `;
+
+                    // Assemble the final itemElement HTML
+                    itemElement.innerHTML = `
+                        ${itemDetailsHtml}
+                        <div class="item-controls">
+                            <div class="item-quantity quantity-control">
+                                <button class="quantity-btn" data-item-cart-id="${item.cartId}" data-action="decrease">-</button>
+                                <span>${item.quantity || 0}</span> {# Use default 0 if quantity missing #}
+                                <button class="quantity-btn" data-item-cart-id="${item.cartId}" data-action="increase">+</button>
+                            </div>
+                            <div class="item-price">$${((item.price || 0) * (item.quantity || 0)).toFixed(2)}</div> {# Use default 0 if price/quantity missing #}
+                            <button class="remove-item-btn" data-item-cart-id="${item.cartId}">X</button>
+                        </div>
+                    `;
+
+                    orderSummaryDiv.appendChild(itemElement);
+                });
+                // Add event listeners after items are displayed
+                addQuantityButtonListeners();
+                addRemoveButtonListeners();
+            }
+
+            // Function to update the total price display
+            function updateOrderTotal(orderItems) {
+                const total = orderItems.reduce((sum, item) => sum + ((item.price || 0) * (item.quantity || 0)), 0); // Use default 0 for price/quantity
+                totalSpan.textContent = `$${total.toFixed(2)}`;
+            }
+
+            // Function to add event listeners to quantity buttons
+            function addQuantityButtonListeners() {
+                document.querySelectorAll('.quantity-btn').forEach(button => {
+                    button.addEventListener('click', (event) => {
+                        // Use data-item-cart-id to find the specific item instance in the cart
+                        const itemCartId = event.target.dataset.itemCartId;
+                        const action = event.target.dataset.action;
+                        let currentOrder = loadOrder();
+
+                        // Find the item in the order by its unique cartId
+                        const itemIndex = currentOrder.findIndex(item => item.cartId === itemCartId);
+
+                        if (itemIndex > -1) {
+                            if (action === 'increase') {
+                                currentOrder[itemIndex].quantity = (currentOrder[itemIndex].quantity || 0) + 1; // Use default 0
+                            } else if (action === 'decrease') {
+                                currentOrder[itemIndex].quantity = (currentOrder[itemIndex].quantity || 0) - 1; // Use default 0
+                                // Remove item if quantity drops to 0 or less
+                                if (currentOrder[itemIndex].quantity <= 0) {
+                                    currentOrder.splice(itemIndex, 1);
+                                }
+                            }
+
+                            saveOrder(currentOrder);
+                            displayOrder(currentOrder); // Re-render the order list
+                            updateOrderTotal(currentOrder); // Update the total
+                        }
+                    });
+                });
+            }
+
+            // Function to add event listeners to remove buttons
+            function addRemoveButtonListeners() {
+                document.querySelectorAll('.remove-item-btn').forEach(button => {
+                    button.addEventListener('click', (event) => {
+                        // Use data-item-cart-id to find the specific item instance in the cart
+                        const itemCartId = event.target.dataset.itemCartId;
+                        let currentOrder = loadOrder();
+
+                        // Find the item in the order by its unique cartId
+                        const itemIndex = currentOrder.findIndex(item => item.cartId === itemCartId);
+
+                        if (itemIndex > -1) {
+                            // Remove the item from the array
+                            currentOrder.splice(itemIndex, 1);
+
+                            saveOrder(currentOrder);
+                            displayOrder(currentOrder); // Re-render the order list
+                            updateOrderTotal(currentOrder); // Update the total
+                        }
+                    });
+                });
+            }
+
+            // Event listener for the Clear Cart button
+            clearCartButton.addEventListener('click', () => {
+                // Clear the order from local storage
+                localStorage.removeItem('cosmicOrder');
+                // Re-display the order (will show empty cart message)
+                displayOrder([]);
+                updateOrderTotal([]);
+                updateCartCountDisplay(); // Update cart count display
+            });
+
+            // ——— Event listener for the CHECKOUT button ———
+            checkoutButton.addEventListener('click', () => {
+                const currentOrder = loadOrder();
+
+                // stop users with an empty cart
+                if (currentOrder.length === 0) {
+                    alert('Your order is empty!');
+                    return;
+                }
+
+                // go straight to the checkout page
+                window.location.href = '/checkout';
+            });
+
+
+
+            // --- Initial load and display of the order when the page loads ---
+            const initialOrder = loadOrder();
+            displayOrder(initialOrder);
+            updateOrderTotal(initialOrder);
+        });
+    </script>
+
+    <script src="/static/cart.js"></script>
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout – Cosmic Crust Pizzeria</title>
+    <link rel="stylesheet" href="/static/style.css">
+
+    <!-- checkout‑specific styling -->
+    <style>
+        /* wrapper box */
+        .checkout-box{
+            background:var(--card-bg);
+            padding:32px 40px 40px;
+            border-radius:10px;
+            margin:50px auto;
+            max-width:640px;
+            border:1px solid var(--star-blue);
+            box-shadow:0 4px 15px rgba(0,191,255,.1);
+        }
+        .checkout-box h2{
+            color:var(--star-blue);
+            text-align:center;
+            margin:0 0 2rem;
+            font-weight:700;
+        }
+
+        /* single column rows */
+        .form-row{
+            display:flex;
+            flex-direction:column;
+            margin-bottom:1.25rem;
+        }
+        .form-row label{
+            color:var(--nebula-blue);
+            font-weight:600;
+            margin-bottom:.35rem;
+        }
+        .form-row input,
+        .form-row select{
+            width:100%;
+            padding:11px 14px;
+            border-radius:6px;
+            border:1px solid var(--star-blue);
+            background:var(--deep-space);
+            color:var(--milky-white);
+            font-size:1rem;
+        }
+
+        /* submit */
+        .place-btn{
+            display:block;
+            width:100%;
+            padding:14px;
+            margin-top:.5rem;
+            background:var(--star-blue);
+            color:var(--space-blue);
+            border:none;
+            border-radius:6px;
+            font-size:1.2rem;
+            font-weight:700;
+            cursor:pointer;
+            transition:background .25s, box-shadow .25s;
+        }
+        .place-btn:hover{
+            background:var(--nebula-blue);
+            box-shadow:0 0 10px var(--star-blue);
+        }
+    </style>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
+<header>
+    <h1>Cosmic Crust Pizzeria</h1>
+    <nav aria-label="Main navigation">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/menu">Menu</a></li>
+            <li><a href="/order">Start Order / Cart<span id="cart-count">0</span></a></li>
+            <li><a href="/account">Login / Register</a></li>
+            <li><a href="/contact">Contact Us</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main id="main-content">
+    <section class="checkout-box">
+        <h2>Secure Checkout</h2>
+
+        <form method="POST" action="/checkout">
+            <!-- cardholder name -->
+            <div class="form-row">
+                <label for="name_on_card">Name on Card</label>
+                <input type="text" id="name_on_card" name="name_on_card" autocomplete="cc-name" required>
+            </div>
+
+            <!-- card number -->
+            <div class="form-row">
+                <label for="card_number">Card Number</label>
+                <input type="text" id="card_number" name="card_number"
+                       maxlength="19" inputmode="numeric"
+                       autocomplete="cc-number" required>
+            </div>
+
+            <!-- expiry -->
+            <div class="form-row">
+                <label for="exp_date">Expiry (MM/YY)</label>
+                <input type="text" id="exp_date" name="exp_date"
+                       maxlength="5" inputmode="numeric"
+                       autocomplete="cc-exp" required>
+            </div>
+
+            <!-- cvv -->
+            <div class="form-row">
+                <label for="cvv">CVV</label>
+                <input type="text" id="cvv" name="cvv"
+                       maxlength="4" inputmode="numeric"
+                       autocomplete="cc-csc" required>
+            </div>
+
+            <hr style="border:none; border-top:1px dashed var(--star-blue); margin:2rem 0;">
+
+            <!-- billing address -->
+            <div class="form-row">
+                <label for="addr1">Billing Address Line 1</label>
+                <input type="text" id="addr1" name="addr1" autocomplete="address-line1" required>
+            </div>
+
+            <div class="form-row">
+                <label for="addr2">Address Line 2 (optional)</label>
+                <input type="text" id="addr2" name="addr2" autocomplete="address-line2">
+            </div>
+
+            <div class="form-row">
+                <label for="city">City</label>
+                <input type="text" id="city" name="city" autocomplete="address-level2" required>
+            </div>
+
+            <div class="form-row">
+                <label for="state">State / Province</label>
+                <input type="text" id="state" name="state" autocomplete="address-level1" required>
+            </div>
+
+            <div class="form-row">
+                <label for="zip">ZIP / Postal Code</label>
+                <input type="text" id="zip" name="zip" autocomplete="postal-code" required>
+            </div>
+
+            <div class="form-row">
+                <label for="country">Country</label>
+                <select id="country" name="country" autocomplete="country" required>
+                    <option value="">Select country…</option>
+                    <option value="US">United States</option>
+                    <option value="CA">Canada</option>
+                    <!-- add others as needed -->
+                </select>
+            </div>
+
+            <button type="submit" class="place-btn">Place Order</button>
+        </form>
+    </section>
+</main>
+
+<footer role="contentinfo">
+    <address>
+        Contact us at:
+        <a href="tel:+11111111111" style="color:var(--star-blue)">111-111-1111</a><br>
+        42 Cosmic Crust Avenue, Nebula City, PC 11111
+    </address>
+    <p style="color:var(--nebula-blue)">&copy; 2025 Cosmic Crust Pizzeria. All rights reserved.</p>
+    <ul style="list-style:none; padding:0; margin:1rem 0; display:flex; gap:1rem; justify-content:center">
+        <li><a href="/disclaimer" style="color:var(--star-blue)">Disclaimer</a></li>
+        <li><a href="/privacy"    style="color:var(--star-blue)">Privacy Policy</a></li>
+    </ul>
+</footer>
+
+<script src="/static/cart.js"></script>
+</body>
+</html>
