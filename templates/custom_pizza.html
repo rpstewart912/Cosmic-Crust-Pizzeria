@@ -7,57 +7,81 @@
     <title>Cosmic Crust Pizzeria - Customize Pizza</title>
     <link rel="stylesheet" href="/static/style.css">
     <style>
-        /* Styles from previous customize_pizza.html versions for structure and theme */
+        /* Refined Custom Pizza Page Styles */
         .customize-container {
             background-color: var(--card-bg);
-            padding: 30px;
-            border-radius: 10px;
-            margin: 30px auto;
-            max-width: 800px;
+            padding: 2.5rem;
+            border-radius: 12px;
+            margin: 3rem auto;
+            max-width: 1000px;
             border: 1px solid var(--star-blue);
-            box-shadow: 0 4px 15px rgba(0,191,255,0.1);
+            box-shadow: 0 6px 20px rgba(0, 191, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 2.5rem;
         }
 
         .pizza-details {
             text-align: center;
-            margin-bottom: 20px;
-            padding-bottom: 20px;
+            margin-bottom: 0;
+            padding-bottom: 2rem;
             border-bottom: 1px dashed var(--nebula-blue);
         }
 
         .pizza-details h2 {
             color: var(--star-blue);
-            text-shadow: 0 0 8px var(--star-blue);
-            margin-bottom: 10px;
+            text-shadow: 0 0 10px var(--star-blue);
+            margin-bottom: 0.75rem;
+            font-size: 3rem;
+            letter-spacing: -0.02em;
+        }
+
+        .pizza-details p {
+            font-size: 1.15rem;
+            color: var(--milky-white);
+            line-height: 1.7;
         }
 
         .customization-options {
-            margin-top: 20px;
+            margin-top: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 2rem;
         }
 
         .customization-category {
-            margin-bottom: 25px;
-            padding: 15px;
-            background: rgba(0,191,255,0.05);
-            border-radius: 8px;
-            border: 1px solid rgba(0,191,255,0.1);
+            margin-bottom: 0;
+            padding: 2rem;
+            background: rgba(0, 191, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(0, 191, 255, 0.1);
+            flex: 1 1 300px;
+            min-width: 280px;
         }
 
         .customization-category h3 {
             color: var(--nebula-blue);
             margin-top: 0;
-            margin-bottom: 15px;
-            border-bottom: 1px solid rgba(0,191,255,0.2);
-            padding-bottom: 5px;
+            margin-bottom: 1.25rem;
+            border-bottom: 1px solid rgba(0, 191, 255, 0.2);
+            padding-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            letter-spacing: -0.02em;
         }
 
         .option-group {
-            margin-bottom: 10px;
+            margin-bottom: 1rem;
         }
 
         .option-group label {
             color: var(--milky-white);
-            margin-left: 5px;
+            margin-left: 0.75rem;
+            font-size: 1.1rem;
+            display: inline-block;
+            vertical-align: middle;
         }
 
         .option-group input[type="checkbox"],
@@ -65,41 +89,81 @@
             accent-color: var(--star-blue);
             display: inline-block;
             vertical-align: middle;
-            margin-right: 5px;
+            margin-right: 0.75rem;
+            cursor: pointer;
         }
 
-        .option-group label {
+        .option-group > div {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-direction: row;
+            gap: 1.25rem;
+            width: fit-content;
+        }
+
+        .option-group > div > label {
+            margin-left: 0;
+            margin-right: 0;
+            font-size: 1.1rem;
+            color: var(--milky-white);
+        }
+
+        .option-group > div > input[type="radio"] {
+            margin-right: 0.75rem;
+            margin-left: 0;
+        }
+
+        .size-selector {
+            margin-bottom: 0;
+            display: flex; /* Use Flexbox to align label and select */
+            flex-direction: column;
+            align-items: flex-start; /* Align items to the start (top) */
+        }
+
+        .size-selector label {
+            color: var(--nebula-blue);
+            margin-right: 1.25rem;
+            margin-bottom: 0.5rem; /* Add space between label and select */
+            font-size: 1.1rem;
+            font-weight: bold;
             display: inline-block;
             vertical-align: middle;
         }
 
-        /* Added style for size dropdown */
-        .size-selector label {
-            color: var(--nebula-blue);
-            margin-right: 10px;
-        }
-
         .size-selector select {
-            background: rgba(0,191,255,0.1);
-            border: 1px solid var(--star-blue);
+            background: rgba(0, 191, 255, 0.1);
+            border: 2px solid var(--star-blue);
             color: var(--milky-white);
-            padding: 0.5rem;
-            border-radius: 5px;
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            width: 100%;
+            max-width: 250px;
+            transition: all 0.2s ease;
         }
 
-        /* Added style for options within the size dropdown */
+        .size-selector select:focus {
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 191, 255, 0.3);
+            border-color: var(--nebula-blue);
+        }
+
         .size-selector select option {
             background-color: var(--space-blue);
             color: var(--milky-white);
+            font-size: 1.1rem;
+            padding: 0.5rem;
         }
 
         .price-total {
-            margin-top: 30px;
-            padding-top: 20px;
+            margin-top: 3rem;
+            padding-top: 2rem;
             border-top: 2px solid var(--star-blue);
             text-align: right;
-            font-size: 1.5rem;
+            font-size: 2.5rem;
             color: var(--nebula-blue);
+            font-weight: bold;
         }
 
         .price-total span {
@@ -110,119 +174,116 @@
         .add-to-order-button {
             display: block;
             width: 100%;
-            padding: 15px;
-            margin-top: 30px;
+            padding: 1rem;
+            margin-top: 2.5rem;
             background-color: var(--star-blue);
             color: var(--space-blue);
             border: none;
-            border-radius: 5px;
-            font-size: 1.3rem;
+            border-radius: 8px;
+            font-size: 1.5rem;
             font-weight: bold;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 191, 255, 0.2);
         }
 
         .add-to-order-button:hover {
             background-color: var(--nebula-blue);
-            box-shadow: 0 0 10px var(--star-blue);
+            box-shadow: 0 5px 15px rgba(0, 191, 255, 0.3);
         }
 
-        /* Added styles for optional topping quantity (basic example) */
+        .add-to-order-button:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 5px rgba(0, 191, 255, 0.2);
+        }
+
         .topping-option {
             display: flex;
             align-items: center;
-            margin-bottom: 8px;
+            margin-bottom: 1rem;
+            justify-content: space-between;
         }
 
         .topping-option input[type="checkbox"] {
-            margin-right: 10px;
+            margin-right: 1rem;
+            cursor: pointer;
         }
 
         .topping-quantity {
-            display: none; /* Hidden by default */
-            margin-left: 20px;
+            display: none;
+            margin-left: auto;
+            align-items: center;
+            gap: 0.75rem;
         }
 
         .topping-quantity label {
-            margin-right: 5px;
-        }
-        /* Fix radio button spacing */
-        .option-group > div {
-            display: flex; /* Use flexbox for alignment */
-            align-items: center; /* Vertically center items */
-            margin-bottom: 5px; /* Add spacing between radio button groups */
+            margin: 0;
+            font-size: 1.1rem;
+            color: var(--milky-white);
         }
 
-        .option-group > div > input[type="radio"] {
-            margin-right: 5px; /* Space between radio and label */
+        .topping-quantity select {
+            background: rgba(0, 191, 255, 0.1);
+            border: 2px solid var(--star-blue);
+            color: var(--milky-white);
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            width: 80px;
+            transition: all 0.2s ease;
         }
 
-        .option-group > div > label {
-             margin-right: 10px;
+        .topping-quantity select:focus{
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 191, 255, 0.3);
+            border-color: var(--nebula-blue);
         }
-
     </style>
 </head>
 <body>
     <a class="skip-link" href="#main-content">Skip to main content</a>
-
     <header role="banner">
         <div class="header-container">
             <div id="account-actions"></div>
-            </div>
-            <img class="logo" src="https://cosmic-crust-pizzeria.uc.r.appspot.com/static/images/ccpLogo.png" alt="Cosmic Crust Pizzeria Logo">
-            <nav aria-label="Main navigation" role="navigation">
-                <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/menu" aria-current="page">Menu</a></li>
-                    <li><a href="/order">Start Order/Cart<span id="cart-count">0</span></a></li>
-                    {# --- Start Conditional Account Link --- #}
-                    {% if logged_in %}
-                        {# If logged in, show "View Account" and link to dashboard #}
-                        <li><a href="{{ url_for('account_dashboard') }}">View Account/Logout</a></li>
-                    {% else %}
-                        {# If not logged in, show "Login/Register" and link to account page #}
-                        <li><a href="{{ url_for('account') }}">Login/Register</a></li>
-                    {% endif %}
-                    {# --- End Conditional Account Link --- #}
-                    <li><a href="/contact">Contact Us</a></li>
-                </ul>
-            </nav>
         </div>
+        <img class="logo" src="https://cosmic-crust-pizzeria.uc.r.appspot.com/static/images/ccpLogo.png" alt="Cosmic Crust Pizzeria Logo">
+        <nav aria-label="Main navigation" role="navigation">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/menu" aria-current="page">Menu</a></li>
+                <li><a href="/order">Start Order/Cart<span id="cart-count">0</span></a></li>
+                {% if logged_in %}
+                    <li><a href="{{ url_for('account_dashboard') }}">View Account/Logout</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('account') }}">Login/Register</a></li>
+                {% endif %}
+                <li><a href="/contact">Contact Us</a></li>
+            </ul>
+        </nav>
     </header>
 
     <main id="main-content" role="main" class="container">
-
         <div class="customize-container">
             <div class="pizza-details">
-                    {# The item_id is passed from main.py, though not used for fetching in simple route #}
                 <h2 id="custom-pizza-name">Customize Your Pizza</h2>
                 <p>Start building your perfect cosmic creation from scratch!</p>
-                {# Base price for a custom pizza #}
                 <p>Base Price: <span id="base-price-display">$10.00</span></p>
-                {# Store base price in a data attribute for JavaScript #}
                 <div id="base-price" data-base-price="10.00"></div>
-                    {# Store a base item ID for the custom pizza #}
-                    <div id="base-item-id" data-id="custom_pizza_base"></div>
-
+                <div id="base-item-id" data-id="custom_pizza_base"></div>
             </div>
 
-                {# Added Size Selection #}
             <div class="customization-category size-selector">
-                    <h3>Size</h3>
-                    <label for="pizza-size">Select Size:</label>
-                    <select id="pizza-size">
-                        <option value="small" data-multiplier="1.00">Small</option>
-                        <option value="medium" data-multiplier="1.25" selected>Medium</option> {# Medium selected by default #}
-                        <option value="large" data-multiplier="1.50">Large</option>
-                        <option value="extra_large" data-multiplier="1.75">Extra Large</option>
-                    </select>
-                </div>
-
+                <h3>Size</h3>
+                <label for="pizza-size">Select Size:</label>
+                <select id="pizza-size">
+                    <option value="small" data-multiplier="1.00">Small</option>
+                    <option value="medium" data-multiplier="1.25" selected>Medium</option>
+                    <option value="large" data-multiplier="1.50">Large</option>
+                    <option value="extra_large" data-multiplier="1.75">Extra Large</option>
+                </select>
+            </div>
 
             <div class="customization-options">
-
-                {# Basic Crust Selection (Radio Buttons for single choice) #}
                 <div class="customization-category">
                     <h3>Crust</h3>
                     <div class="option-group">
@@ -237,7 +298,6 @@
                     </div>
                 </div>
 
-                {# Basic Sauce Selection (Radio Buttons for single choice) #}
                 <div class="customization-category">
                     <h3>Sauce</h3>
                     <div class="option-group">
@@ -252,14 +312,13 @@
                     </div>
                 </div>
 
-                {# Basic Cheese Selection (Checkboxes for multiple choice) #}
                 <div class="customization-category">
                     <h3>Cheese</h3>
                     <div class="option-group">
                         <div>
                             <input type="checkbox" id="cheese-mozzarella" name="cheese" value="mozzarella" data-price="0.00" checked>
                             <label for="cheese-mozzarella">Mozzarella ($0.00)</label>
-                         </div>
+                        </div>
                         <div>
                             <input type="checkbox" id="cheese-cheddar" name="cheese" value="cheddar" data-price="1.00">
                             <label for="cheese-cheddar">Cheddar ($1.00)</label>
@@ -267,66 +326,53 @@
                     </div>
                 </div>
 
-                {# Basic Toppings Selection (Checkboxes) #}
                 <div class="customization-category">
                     <h3>Toppings</h3>
                     <div class="option-group">
-                            {# Example topping options #}
                         <div class="topping-option">
                             <input type="checkbox" id="topping-pepperoni" name="topping" value="pepperoni" data-price="1.50">
                             <label for="topping-pepperoni">Pepperoni ($1.50)</label>
-                                {# Basic quantity selector example - initially hidden #}
-                                <span class="topping-quantity" id="qty-pepperoni">
-                                    <label for="qty-pepperoni-select">Qty:</label>
-                                    <select id="qty-pepperoni-select" data-topping-id="pepperoni">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                    </select>
-                                </span>
+                            <span class="topping-quantity" id="qty-pepperoni">
+                                <label for="qty-pepperoni-select">Qty:</label>
+                                <select id="qty-pepperoni-select" data-topping-id="pepperoni">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                </select>
+                            </span>
                         </div>
 
                         <div class="topping-option">
                             <input type="checkbox" id="topping-mushrooms" name="topping" value="mushrooms" data-price="1.00">
                             <label for="topping-mushrooms">Mushrooms ($1.00)</label>
-                                {# Basic quantity selector example - initially hidden #}
-                                <span class="topping-quantity" id="qty-mushrooms">
-                                    <label for="qty-mushrooms-select">Qty:</label>
-                                    <select id="qty-mushrooms-select" data-topping-id="mushrooms">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                    </select>
-                                </span>
+                            <span class="topping-quantity" id="qty-mushrooms">
+                                <label for="qty-mushrooms-select">Qty:</label>
+                                <select id="qty-mushrooms-select" data-topping-id="mushrooms">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                </select>
+                            </span>
                         </div>
 
                         <div class="topping-option">
                             <input type="checkbox" id="topping-onions" name="topping" value="onions" data-price="0.75">
                             <label for="topping-onions">Onions ($0.75)</label>
-                                {# Basic quantity selector example - initially hidden #}
-                                <span class="topping-quantity" id="qty-onions">
-                                    <label for="qty-onions-select">Qty:</label>
-                                    <select id="qty-onions-select" data-topping-id="onions">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                    </select>
-                                </span>
+                            <span class="topping-quantity" id="qty-onions">
+                                <label for="qty-onions-select">Qty:</label>
+                                <select id="qty-onions-select" data-topping-id="onions">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                </select>
+                            </span>
                         </div>
-
-                            {# Add more basic topping options here #}
-
                     </div>
                 </div>
-
-                {# Add more basic customization categories as needed #}
-
             </div>
 
             <div class="price-total">
                 Estimated Total: <span id="estimated-total">$10.00</span>
             </div>
 
-                {# Added data-item-name for the base pizza name #}
             <button class="add-to-order-button" data-item-name="Custom Pizza">Add to Order</button>
-
         </div>
     </main>
 
@@ -349,126 +395,100 @@
             const estimatedTotalSpan = document.getElementById('estimated-total');
             const customizationOptionsDiv = document.querySelector('.customization-options');
             const addToOrderButton = document.querySelector('.add-to-order-button');
-            const baseItemIdElement = document.getElementById('base-item-id'); // Get the base item ID element
-            const pizzaSizeSelect = document.getElementById('pizza-size'); // Get the size select element
-
+            const baseItemIdElement = document.getElementById('base-item-id');
+            const pizzaSizeSelect = document.getElementById('pizza-size');
 
             let basePrice = parseFloat(basePriceElement.dataset.basePrice);
             let currentTotal = basePrice;
 
-            // Function to update the estimated total price display
             function updateEstimatedTotal() {
                 estimatedTotalSpan.textContent = `$${currentTotal.toFixed(2)}`;
             }
 
-            // Function to calculate the total price based on selections
             function calculateTotal() {
                 currentTotal = basePrice;
 
-                // Get the selected size multiplier and apply it to the base price
                 const selectedSizeOption = pizzaSizeSelect.options[pizzaSizeSelect.selectedIndex];
                 const sizeMultiplier = parseFloat(selectedSizeOption.dataset.multiplier);
-                // For a simple approach, let's just add the multiplier directly to the base price for now
-                // A more robust approach would be to have base prices per size
-                let sizePrice = basePrice * (sizeMultiplier - 1); // Calculate additional cost based on multiplier
+                let sizePrice = basePrice * (sizeMultiplier - 1);
 
-                // Ensure minimum price is the base price even if multiplier is 1
                 currentTotal = basePrice + sizePrice;
 
-
-                // Get all selected radio buttons (for single choice categories like crust, sauce)
                 customizationOptionsDiv.querySelectorAll('input[type="radio"]:checked').forEach(radio => {
                     currentTotal += parseFloat(radio.dataset.price);
                 });
 
-                // Get all selected checkboxes (for multiple choice categories like cheese, toppings)
                 customizationOptionsDiv.querySelectorAll('input[type="checkbox"]:checked').forEach(checkbox => {
                     const price = parseFloat(checkbox.dataset.price);
-                    // Basic handling for topping quantity if checked
                     const toppingId = checkbox.value;
                     const quantitySelect = document.querySelector(`#qty-${toppingId}-select`);
-                    const quantity = quantitySelect ? parseInt(quantitySelect.value) : 1; // Default to 1 if no quantity select
+                    const quantity = quantitySelect ? parseInt(quantitySelect.value) : 1;
 
-                    currentTotal += price * quantity; // Add price multiplied by quantity
+                    currentTotal += price * quantity;
                 });
 
                 updateEstimatedTotal();
             }
 
-            // Add event listeners to input elements to trigger total calculation
             customizationOptionsDiv.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(input => {
                 input.addEventListener('change', calculateTotal);
             });
 
-            // Add event listener to the size select dropdown
             pizzaSizeSelect.addEventListener('change', calculateTotal);
 
-
-            // Add event listeners to topping quantity selectors if they exist
             customizationOptionsDiv.querySelectorAll('.topping-quantity select').forEach(select => {
                 select.addEventListener('change', calculateTotal);
             });
 
-
-            // Show/hide topping quantity selector when checkbox is checked/unchecked
             customizationOptionsDiv.querySelectorAll('.topping-option input[type="checkbox"]').forEach(checkbox => {
                 checkbox.addEventListener('change', (event) => {
                     const toppingId = event.target.value;
                     const quantitySpan = document.getElementById(`qty-${toppingId}`);
                     if (event.target.checked) {
-                        quantitySpan.style.display = 'inline-block'; // Show quantity
-                        // Ensure quantity is at least 1 when checked
+                        quantitySpan.style.display = 'inline-block';
                         const quantitySelect = quantitySpan.querySelector('select');
                         if (quantitySelect && parseInt(quantitySelect.value) < 1) {
                             quantitySelect.value = '1';
                         }
                     } else {
-                        quantitySpan.style.display = 'none'; // Hide quantity
-                        // Reset quantity to 0 or 1 when unchecked if needed, or let calculateTotal handle it
+                        quantitySpan.style.display = 'none';
                     }
-                    calculateTotal(); // Recalculate total when checkbox changes
+                    calculateTotal();
                 });
             });
 
-
-            // Initial calculation when the page loads
             calculateTotal();
 
-            // Event listener for the Add to Order button
             addToOrderButton.addEventListener('click', () => {
-                const baseItemId = baseItemIdElement.dataset.id; // Get the base item ID (e.g., 'custom_pizza_base')
-                const pizzaName = document.getElementById('custom-pizza-name').textContent; // Get the base pizza name
+                const baseItemId = baseItemIdElement.dataset.id;
+                const pizzaName = document.getElementById('custom-pizza-name').textContent;
                 const basePrice = parseFloat(document.getElementById('base-price').dataset.basePrice);
 
-                // Get the selected size details
                 const selectedSizeElement = document.getElementById('pizza-size');
                 const selectedSizeOption = selectedSizeElement.options[selectedSizeElement.selectedIndex];
                 const selectedSize = {
                     id: selectedSizeElement.value,
-                    name: selectedSizeOption.text.split(' ($')[0], // Get size name (e.g., "Medium")
+                    name: selectedSizeOption.text.split(' ($')[0],
                     multiplier: parseFloat(selectedSizeOption.dataset.multiplier)
                 };
 
                 const selectedCustomizations = {
-                    size: [selectedSize] // Store size as a customization
+                    size: [selectedSize]
                 };
 
-                // Collect selected options for other categories (Crust, Sauce, Cheese, Toppings)
                 customizationOptionsDiv.querySelectorAll('.customization-category').forEach(categoryDiv => {
                     const categoryName = categoryDiv.querySelector('h3').textContent.toLowerCase();
 
-                    // Skip size category as it's handled separately
                     if (categoryName === 'size') return;
 
                     const selectedOptions = [];
 
                     categoryDiv.querySelectorAll('input[type="radio"]:checked, input[type="checkbox"]:checked').forEach(input => {
                         const optionId = input.value;
-                        const optionName = input.labels[0].textContent.split(' ($')[0].trim(); // Extract name
+                        const optionName = input.labels[0].textContent.split(' ($')[0].trim();
                         const optionPrice = parseFloat(input.dataset.price);
-                        let quantity = 1; // Default quantity is 1
+                        let quantity = 1;
 
-                        // If it's a checked topping checkbox, check for selected quantity
                         if (input.type === 'checkbox' && categoryName === 'toppings' && input.checked) {
                             const quantitySelect = document.querySelector(`#qty-${optionId}-select`);
                             if (quantitySelect) {
@@ -480,7 +500,7 @@
                             id: optionId,
                             name: optionName,
                             price: optionPrice,
-                            quantity: quantity // Include quantity for toppings
+                            quantity: quantity
                         });
                     });
                     if (selectedOptions.length > 0) {
@@ -488,45 +508,32 @@
                     }
                 });
 
-                // Include the base price as part of the item's total price calculation
-                const customizedItemPrice = currentTotal; // The total is already calculated
+                const customizedItemPrice = currentTotal;
 
-                // Generate a unique cart ID for this specific customized item instance
-                // Use the base ID and a timestamp to ensure uniqueness
                 const uniqueCartId = `${baseItemId}-${Date.now()}`;
 
                 const customizedItem = {
-                    // Use the unique ID for this specific customized instance in the cart
-                    id: uniqueCartId, // This can also be the unique instance ID
-                    cartId: uniqueCartId, // Add the cartId property using the unique ID
-                    baseId: baseItemId, // Store the ID of the base item ('custom_pizza_base')
-                    name: pizzaName, // Name from the page title/header
-                    basePrice: basePrice, // Store the base price
-                    customizations: selectedCustomizations, // Details of selected options including size
-                    price: customizedItemPrice, // Final calculated price
-                    quantity: 1 // For a single customized pizza item
+                    id: uniqueCartId,
+                    cartId: uniqueCartId,
+                    baseId: baseItemId,
+                    name: pizzaName,
+                    basePrice: basePrice,
+                    customizations: selectedCustomizations,
+                    price: customizedItemPrice,
+                    quantity: 1
                 };
 
-                // Get current order from local storage
                 const currentOrder = JSON.parse(localStorage.getItem('cosmicOrder')) || [];
 
-                // Add the customized item to the order
                 currentOrder.push(customizedItem);
 
-                // Save the updated order back to local storage
                 localStorage.setItem('cosmicOrder', JSON.stringify(currentOrder));
 
-                // Redirect the user to the order page
                 window.location.href = '/order';
             });
 
-            // TODO: Implement updateAccountActions if needed on this page
-            // function updateAccountActions() { ... }
-            // updateAccountActions();
+            updateAccountActions();
         });
-
-        // Call the function to update the account actions when the page loads
-        updateAccountActions();
     </script>
 
     <script src="/static/cart.js"></script>

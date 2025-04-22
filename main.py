@@ -281,7 +281,7 @@ def change_password():
 @app.route("/logout")
 def logout():
     session.pop("user_id", None)
-    return redirect(url_for("index"), logged_in=is_logged_in())
+    return redirect(url_for("index"))
 
 
 @app.route("/contact")
