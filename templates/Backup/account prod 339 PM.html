@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Cosmic Crust Pizzeria - Login/Create Account</title>
+        <link rel="stylesheet" href="/static/style.css">
+    </head>
+    <body>
+        <header>
+            <h1>Cosmic Crust Pizzeria</h1>
+            <nav aria-label="Main navigation" role="navigation">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/menu" aria-current="page">Menu</a></li>
+                    <li><a href="/order">Start Order/Cart<span id="cart-count">0</span></a></li>
+                    {# --- Start Conditional Account Link --- #}
+                    {% if logged_in %}
+                        {# If logged in, show "View Account" and link to dashboard #}
+                        <li><a href="{{ url_for('account_dashboard') }}">View Account/Logout</a></li>
+                    {% else %}
+                        {# If not logged in, show "Login/Register" and link to account page #}
+                        <li><a href="{{ url_for('account') }}">Login/Register</a></li>
+                    {% endif %}
+                    {# --- End Conditional Account Link --- #}
+                    <li><a href="/contact">Contact Us</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+                <form id="login-form" action="/account" method="POST">
+                    <h2>Login to Cosmic Crust</h2>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <input type="hidden" name="action" value="login">
+                    <button type="submit">Login</button>
+                    <div class="form-switch">
+                        Don't have an account? <a href="#" onclick="showCreateAccount()">Register</a>
+                    </div>
+                </form>
+
+                <form id="create-account-form" action="/account" method="POST" style="display: none;">
+                    <h2>Create Your Cosmic Crust Account</h2>
+                    <div class="form-group">
+                        <label for="first_name">First Name:</label>
+                        <input type="text" id="first_name" name="first_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="last_name">Last Name:</label>
+                        <input type="text" id="last_name" name="last_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Address:</label>
+                        <input type="text" id="address" name="address" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone_number">Phone Number:</label>
+                        <input type="text" id="phone_number" name="phone_number" required>
+                    </div>
+                    <input type="hidden" name="action" value="register">
+                    <button type="submit">Create Account</button>
+                    <div class="form-switch">
+                        Already have an account? <a href="#" onclick="showLogin()">Login</a>
+                    </div>
+                </form>
+            </div>
+        </main>
+
+        <footer role="contentinfo">
+            <address>
+                Contact us at: 
+                <a href="tel:+11111111111" style="color: var(--star-blue);">(111) 111-1111</a><br>
+                42 Cosmic Crust Avenue, Nebula City, PC 11111
+            </address>
+            <p style="color: var(--nebula-blue);">&copy; 2025 Cosmic Crust Pizzeria. All rights reserved.</p>
+            <ul style="list-style: none; padding: 0; margin: 1rem 0; display: flex; justify-content: center; gap: 1rem;">
+                <li><a href="/disclaimer" aria-label="Disclaimer" style="color: var(--star-blue);">Disclaimer</a></li>
+                <li><a href="/privacy" aria-label="Privacy policy" style="color: var(--star-blue);">Privacy Policy</a></li>
+            </ul>
+        </footer>
+
+        <script>
+            function showCreateAccount() {
+                document.getElementById('login-form').style.display = 'none';
+                document.getElementById('create-account-form').style.display = 'block';
+            }
+
+            function showLogin() {
+                document.getElementById('create-account-form').style.display = 'none';
+                document.getElementById('login-form').style.display = 'block';
+            }
+        </script>
+
+        <script src="/static/cart.js"></script>
+    </body>
+    </html>

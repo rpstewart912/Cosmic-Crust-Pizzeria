@@ -5,19 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cosmic Crust Pizzeria - Account Dashboard</title>
     <link rel="stylesheet" href="/static/style.css">
+    <style>
+        /* Add any additional styling for the order history section here */
+        .order-history-section {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            border: 1px solid var(--star-blue);
+            box-shadow: 0 4px 15px rgba(0, 191, 255, 0.1);
+        }
+
+        .order-history-item {
+            border-bottom: 1px dashed var(--nebula-blue);
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .order-details {
+            flex-grow: 1;
+        }
+
+        .order-total {
+            font-weight: bold;
+            color: var(--star-blue);
+        }
+    </style>
 </head>
 <body>
     <a class="skip-link" href="#main-content">Skip to main content</a>
 
     <header role="banner">
-        <h1>Cosmic Crust Pizzeria</h1>
+        <div class="header-container">
+            <div id="account-actions"></div>
+        </div>
+        <img class="logo" src="https://cosmic-crust-pizzeria.uc.r.appspot.com/static/images/ccpLogo.png"
+            alt="Cosmic Crust Pizzeria Logo">
         <nav aria-label="Main navigation" role="navigation">
             <ul>
                 <li><a href="/">Home</a></li>
-                <li><a href="/menu">Menu</a></li>
+                <li><a href="/menu" aria-current="page">Menu</a></li>
                 <li><a href="/order">Start Order/Cart<span id="cart-count">0</span></a></li>
-                <li><a href="/account">Login/Register</a></li>
-                <li><a href="/contact">Contact Us</a></li> {# Removed aria-current="page" as this is the dashboard page #}
+                {# --- Start Conditional Account Link --- #}
+                {% if logged_in %}
+                {# If logged in, show "View Account" and link to dashboard #}
+                <li><a href="{{ url_for('account_dashboard') }}">View Account/Logout</a></li>
+                {% else %}
+                {# If not logged in, show "Login/Register" and link to account page #}
+                <li><a href="{{ url_for('account') }}">Login/Register</a></li>
+                {% endif %}
+                {# --- End Conditional Account Link --- #}
+                <li><a href="/contact">Contact Us</a></li>
             </ul>
         </nav>
     </header>
@@ -25,8 +65,6 @@
     <main id="main-content" role="main">
         {# Added a container div for centering and styling the main dashboard block #}
         <div class="dashboard-container">
-            <br>
-            <br>
             <h2>Welcome to Your Account Dashboard!</h2>
 
             {% if user %}
@@ -38,7 +76,7 @@
                     <h3>Account Details</h3>
                     {# Grid container for the detail rows #}
                     <div class="details-grid">
-                        {# Restructured each detail into a row with label and value divs #}
+                        {# Each detail is structured into a row with label and value divs #}
                         <div class="detail-row">
                             <div class="detail-label">Username:</div>
                             <div class="detail-value">{{ user.username }}</div>
@@ -55,8 +93,29 @@
                             <div class="detail-label">Phone Number:</div>
                             <div class="detail-value">{{ user.phone_number }}</div>
                         </div>
+                        {# Add other account details here following the same detail-row structure #}
                     </div> {# End details-grid #}
                 </div> {# End account-details-section #}
+
+                {# Order History Section - NEW #}
+                <div class="order-history-section">
+                    <h3>Order History</h3>
+                    {% if orders %}
+                        {% for order in orders %}
+                            <div class="order-history-item">
+                                <div class="order-details">
+                                    <h4>Order #{{ loop.index }}</h4>  {# Simple order number #}
+                                    <p>Date: {{ order.order_date }}</p>
+                                    <p>Status: {{ order.order_status }}</p>
+                                    {# Add more details if needed, e.g., order.items #}
+                                </div>
+                                <div class="order-total">Total: ${{ order.order_total }}</div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>You have no order history yet.</p>
+                    {% endif %}
+                </div> {# End order-history-section #}
 
                 {# Container for the Actions section #}
                 <div class="actions-section">

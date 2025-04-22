@@ -214,8 +214,6 @@
     </header>
 
     <main id="main-content">
-      <br>
-      <br>
         <div class="container">
             <div class="order-summary-container">
                 <h2 style="color: var(--star-blue); text-align: center; margin-bottom: 20px;">Your Cosmic Order</h2>
@@ -247,7 +245,7 @@
             <li><a href="/privacy" aria-label="Privacy policy" style="color: var(--star-blue);">Privacy Policy</a></li>
         </ul>
          {# This Font Awesome script tag seems incomplete or a placeholder. Ensure it's correct or remove if not used. #}
-         {# <script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script> #}
+        {# <script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script> #}
     </footer>
 
     <script>
@@ -433,20 +431,20 @@
                 updateCartCountDisplay(); // Update cart count display
             });
 
-            // ——— Event listener for the CHECKOUT button ———
+
+            // Event listener for checkout button (placeholder)
             checkoutButton.addEventListener('click', () => {
                 const currentOrder = loadOrder();
-
-                // stop users with an empty cart
-                if (currentOrder.length === 0) {
+                if (currentOrder.length > 0) {
+                    alert('Proceeding to Checkout! (Payment functionality not yet implemented)');
+                    // TODO: Implement actual checkout/payment logic here
+                    // This would involve sending the order data to your Flask backend
+                    // for processing and creating a document in the 'orders' collection.
+                    console.log('Order to send:', currentOrder);
+                } else {
                     alert('Your order is empty!');
-                    return;
                 }
-
-                // go straight to the checkout page
-                window.location.href = '/checkout';
             });
-
 
 
             // --- Initial load and display of the order when the page loads ---

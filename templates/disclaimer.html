@@ -17,23 +17,33 @@
        </style>
    </head>
    <body>
-       <header>
-           <h1>Cosmic Crust Pizzeria</h1>
-           <nav aria-label="Main navigation" role="navigation">
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/menu" aria-current="page">Menu</a></li>
-                <li><a href="/order">Start Order/Cart<span id="cart-count">0</span></a></li>
-                <li><a href="/account">Login/Register</a></li>
-                <li><a href="/contact">Contact Us</a></li>
-            </ul>
-        </nav>
-       </header>
+    <header role="banner">
+        <div class="header-container">
+            <div id="account-actions"></div>          
+            </div>
+            <img class="logo" src="https://cosmic-crust-pizzeria.uc.r.appspot.com/static/images/ccpLogo.png" alt="Cosmic Crust Pizzeria Logo">
+            <nav aria-label="Main navigation" role="navigation">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/menu" aria-current="page">Menu</a></li>
+                    <li><a href="/order">Start Order/Cart<span id="cart-count">0</span></a></li>
+                    {# --- Start Conditional Account Link --- #}
+                    {% if logged_in %}
+                        {# If logged in, show "View Account" and link to dashboard #}
+                        <li><a href="{{ url_for('account_dashboard') }}">View Account/Logout</a></li>
+                    {% else %}
+                        {# If not logged in, show "Login/Register" and link to account page #}
+                        <li><a href="{{ url_for('account') }}">Login/Register</a></li>
+                    {% endif %}
+                    {# --- End Conditional Account Link --- #}
+                    <li><a href="/contact">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
        <div class="container">
            <main>
                <section>
-                <br>
-                <br>
                    <h2>Disclaimer</h2>
                    <p>
                        This website is operated by Cosmic Crust Pizzeria.

@@ -86,30 +86,13 @@ def order():
 
 
 # ────────────────────────────────────────────────────────────
-# NEW: Checkout
-# ────────────────────────────────────────────────────────────
-@app.route("/checkout", methods=["GET", "POST"])
-def checkout():
-    """
-    GET -> show card‑details form
-    POST -> (stub) pretend to process payment, clear cart, thank user
-    """
-    if request.method == "POST":
-        # Integrate Stripe, Square, etc. here in production.
-        flash("Payment successful! Thanks for your order.", "success")
-        return redirect(url_for("index"))
-
-    return render_template("checkout.html", logged_in=is_logged_in())
-
-
-# ────────────────────────────────────────────────────────────
 # Account / Auth
 # ────────────────────────────────────────────────────────────
 @app.route("/account", methods=["GET", "POST"])
 def account():
     """
-    GET  -> show login form by default (or register form via ?form=register)
-    POST -> login / register handlers.
+    GET  → show login form by default (or register form via ?form=register)
+    POST → login  / register handlers.
     """
     form_type = request.args.get("form", "")
     if request.method == "POST":
@@ -166,15 +149,21 @@ def register_user():
     # Basic required field check
     if not all([username, email, password, confirm]):
         flash("Missing required fields", "error")
-        return render_template("account.html", form_type="register", form_data=_sanitised_form_data(req), logged_in=is_logged_in())
+        return render_template(
+            "account.html", form_type="register", form_data=_sanitised_form_data(req), logged_in=is_logged_in()
+        )
 
     if password != confirm:
         flash("Passwords do not match", "error")
-        return render_template("account.html", form_type="register", form_data=_sanitised_form_data(req), logged_in=is_logged_in())
+        return render_template(
+            "account.html", form_type="register", form_data=_sanitised_form_data(req), logged_in=is_logged_in()
+        )
 
     if user_exists(username, email):
         flash("Username or email already exists", "error")
-        return render_template("account.html", form_type="register", form_data=_sanitised_form_data(req), logged_in=is_logged_in())
+        return render_template(
+            "account.html", form_type="register", form_data=_sanitised_form_data(req), logged_in=is_logged_in()
+        )
 
     # create user
     user_doc = {
@@ -193,7 +182,9 @@ def register_user():
     except Exception as exc:
         logging.error("Registration error: %s", exc)
         flash(f"Registration failed: {exc}", "error")
-        return render_template("account.html", form_type="register", form_data=_sanitised_form_data(req), logged_in=is_logged_in())
+        return render_template(
+            "account.html", form_type="register", form_data=_sanitised_form_data(req), logged_in=is_logged_in()
+        )
 
 
 @app.route("/account_dashboard")

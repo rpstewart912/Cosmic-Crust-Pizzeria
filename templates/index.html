@@ -9,16 +9,28 @@
 </head>
 <body>
     <a class="skip-link" href="#main-content">Skip to main content</a>
-
+    <div class="logo-container">
+    </div>
+    
     <header role="banner">
         <div class="header-container">
-            <div id="account-actions"></div>  <h1 id="header-title">Cosmic Crust Pizzeria</h1>
+            <div id="account-actions"></div>          
+            </div>
+            <img class="logo" src="https://cosmic-crust-pizzeria.uc.r.appspot.com/static/images/ccpLogo.png" alt="Cosmic Crust Pizzeria Logo">
             <nav aria-label="Main navigation" role="navigation">
                 <ul>
                     <li><a href="/">Home</a></li>
                     <li><a href="/menu" aria-current="page">Menu</a></li>
                     <li><a href="/order">Start Order/Cart<span id="cart-count">0</span></a></li>
-                    <li><a href="/account">Login/Register</a></li>
+                    {# --- Start Conditional Account Link --- #}
+                    {% if logged_in %}
+                        {# If logged in, show "View Account" and link to dashboard #}
+                        <li><a href="{{ url_for('account_dashboard') }}">View Account/Logout</a></li>
+                    {% else %}
+                        {# If not logged in, show "Login/Register" and link to account page #}
+                        <li><a href="{{ url_for('account') }}">Login/Register</a></li>
+                    {% endif %}
+                    {# --- End Conditional Account Link --- #}
                     <li><a href="/contact">Contact Us</a></li>
                 </ul>
             </nav>
@@ -40,28 +52,66 @@
             <p>To deliver delicious, out-of-this-world pizza experiences to celestial beings across the galaxy.</p>
         </section>
 
-        <section id="menu" style="margin-top: 2rem;">
+        {# Start Stellar Specialties Section (Mirrored from Menu structure for cart functionality) #}
+        <section id="specials" style="margin-top: 2rem;">
             <h2 style="color: var(--star-blue); text-shadow: 0 0 8px var(--star-blue);">
                 Stellar Specialties
             </h2>
             <div class="menu-container" style="display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
-                <div class="menu-item" style="background: var(--card-bg); padding: 1rem; border-radius: 10px;">
+        
+                <div class="menu-item" style="background: var(--card-bg); padding: 1rem; border-radius: 10px; display: flex; flex-direction: column; justify-content: space-between;">
                     <h3 style="color: var(--nebula-blue);">Solar Flare Special</h3>
-                    <p style="color: var(--milky-white);">Pepperoni, cosmic peppers, stardust cheese</p>
-                    <div style="color: var(--star-blue); font-weight: bold;">$17.99</div>
+        
+                    {# Display image if imageLink exists #}
+                    <div class="item-image-container">
+                        <img src="https://cosmic-crust-pizzeria.uc.r.appspot.com/static/images/menuItems/Solar_Flare_Special.jpg" alt="Solar Flare Special" class="item-image">
+                    </div>
+        
+                    <p style="color: var(--milky-white); flex-grow: 1; margin-bottom: 1rem;">Large Pepperoni, cosmic peppers, stardust cheese pizza</p>
+                    <div class="price" style="color: var(--star-blue); font-weight: bold; margin-bottom: 1rem;">$17.99</div>
+        
+                    <button class="add-to-order-btn"
+                            data-id="solar-flare-special"
+                            data-name="Solar Flare Special"
+                            data-description="Large pepperoni, cosmic peppers, stardust cheese pizza"
+                            data-price="8.99"
+                            data-category="special"
+                            data-dietary=""
+                            data-customizable="false"
+                            style="width: 100%;"
+                            >Add to Order</button>
                 </div>
-                <div class="menu-item" style="background: var(--card-bg); padding: 1rem; border-radius: 10px;">
+        
+                <div class="menu-item" style="background: var(--card-bg); padding: 1rem; border-radius: 10px; display: flex; flex-direction: column; justify-content: space-between;">
                     <h3 style="color: var(--nebula-blue);">Galactic Vegan</h3>
-                    <p style="color: var(--milky-white);">Plant-based cheese, asteroid veggies</p>
-                    <div style="color: var(--star-blue); font-weight: bold;">$19.99</div>
+        
+                    {# Display image if imageLink exists #}
+                    <div class="item-image-container">
+                        <img src="https://cosmic-crust-pizzeria.uc.r.appspot.com/static/images/menuItems/Galactic_Vegan.jpg" alt="Galactic Vegan" class="item-image">
+                    </div>
+        
+                    <p style="color: var(--milky-white); flex-grow: 1; margin-bottom: 1rem;">Large Plant-based cheese, asteroid veggies pizza</p>
+                    <div class="price" style="color: var(--star-blue); font-weight: bold; margin-bottom: 1rem;">$19.99</div>
+        
+                    <button class="add-to-order-btn"
+                            data-id="galactic-vegan"
+                            data-name="Galactic Vegan"
+                            data-description="Large plant-based cheese, asteroid veggies pizza"
+                            data-price="8.99"
+                            data-category="special"
+                            data-dietary=""
+                            data-customizable="false"
+                            style="width: 100%;"
+                            >Add to Order</button>
                 </div>
             </div>
         </section>
+        {# End Stellar Specialties Section #}
     </main>
 
     <footer role="contentinfo">
         <address>
-            Contact us at: 
+            Contact us at:
             <a href="tel:+11111111111" style="color: var(--star-blue);">(111) 111-1111</a><br>
             42 Cosmic Crust Avenue, Nebula City, PC 11111
         </address>
@@ -72,27 +122,7 @@
         </ul>
     </footer>
 
-    <script>
-        function updateAccountActions() {
-            const accountActions = document.getElementById('account-actions');
-            // ***IMPORTANT:*** Replace this with your actual login status check!
-            const isLoggedIn = false;
-    
-            let links = [];
-    
-            if (isLoggedIn) {
-                links.push('<a href="/profile">View Profile</a>');
-            } else {
-                links.push('<a href="/account">Login/Register</a>');
-            }
-            links.push(<a href="/order">View Order</a>);
-    
-            accountActions.innerHTML = links.join(' | ');
-        }
-    
-        window.onload = updateAccountActions;
-    </script>
-
+    {# Link to the shared cart functionality script #}
     <script src="/static/cart.js"></script>
 </body>
 </html>

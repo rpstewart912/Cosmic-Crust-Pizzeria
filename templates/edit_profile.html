@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile - Cosmic Crust Pizzeria</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header role="banner">
+        <div class="header-container">
+            <div id="account-actions"></div>          
+            </div>
+            <img class="logo" src="https://cosmic-crust-pizzeria.uc.r.appspot.com/static/images/ccpLogo.png" alt="Cosmic Crust Pizzeria Logo">
+            <nav aria-label="Main navigation" role="navigation">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/menu" aria-current="page">Menu</a></li>
+                    <li><a href="/order">Start Order/Cart<span id="cart-count">0</span></a></li>
+                    {# --- Start Conditional Account Link --- #}
+                    {% if logged_in %}
+                        {# If logged in, show "View Account" and link to dashboard #}
+                        <li><a href="{{ url_for('account_dashboard') }}">View Account/Logout</a></li>
+                    {% else %}
+                        {# If not logged in, show "Login/Register" and link to account page #}
+                        <li><a href="{{ url_for('account') }}">Login/Register</a></li>
+                    {% endif %}
+                    {# --- End Conditional Account Link --- #}
+                    <li><a href="/contact">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+            <h2>Edit Your Profile</h2>
+            <form id="edit-profile-form" method="POST" action="/edit_profile">
+                <div class="form-group">
+                    <label for="first_name">First Name:</label>
+                    <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="last_name">Last Name:</label>
+                    <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email (cannot change):</label>
+                    <input type="email" id="email" name="email" value="{{ user.email }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" value="{{ user.username }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="address">Address:</label>
+                    <input type="text" id="address" name="address" value="{{ user.address }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone_number">Phone Number:</label>
+                    <input type="text" id="phone_number" name="phone_number" value="{{ user.phone_number }}" required>
+                </div>
+                <button type="submit">Update Profile</button>
+            </form>
+
+            <br>
+            <a href="{{ url_for('account_dashboard') }}" id="back-to-dashboard">Back to Dashboard</a>
+        </div>
+    </main>
+
+    <footer role="contentinfo">
+        <address>
+            Contact us at:
+            <a href="tel:+11111111111" style="color: var(--star-blue);">(111) 111-1111</a><br>
+            42 Cosmic Crust Avenue, Nebula City, PC 11111
+        </address>
+        <p style="color: var(--nebula-blue);">&copy; 2025 Cosmic Crust Pizzeria. All rights reserved.</p>
+        <ul style="list-style: none; padding: 0; margin: 1rem 0; display: flex; justify-content: center; gap: 1rem;">
+            <li><a href="/disclaimer" aria-label="Disclaimer" style="color: var(--star-blue);">Disclaimer</a></li>
+            <li><a href="/privacy" aria-label="Privacy policy" style="color: var(--star-blue);">Privacy Policy</a></li>
+        </ul>
+    </footer>
+
+    <script>
+        let formChanged = false;
+        const form = document.getElementById('edit-profile-form');
+
+        form.addEventListener('input', () => {
+            formChanged = true;
+        });
+
+        document.getElementById('back-to-dashboard').addEventListener('click', function (e) {
+            if (formChanged) {
+                e.preventDefault();
+
+                const modal = document.createElement('div');
+                modal.innerHTML = `
+                    <div style="
+                        position: fixed;
+                        top: 0; left: 0;
+                        width: 100vw;
+                        height: 100vh;
+                        background: rgba(0,0,0,0.75);
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        z-index: 9999;">
+                        <div style="
+                            background: #1b1b1b;
+                            padding: 2rem;
+                            color: white;
+                            max-width: 400px;
+                            text-align: center;
+                            border-radius: 10px;
+                            box-shadow: 0 0 10px rgba(255,255,255,0.2);">
+                            <p>You have made changes that have not been updated. Any changes will be lost if you leave this page. Are you sure you want to leave?</p>
+                            <button id="leave-btn" style="margin: 1rem; padding: 0.5rem 1rem; background: #00d4ff; border: none; color: black; border-radius: 5px;">Leave Page</button>
+                            <button id="stay-btn" style="margin: 1rem; padding: 0.5rem 1rem; background: #444; border: none; color: white; border-radius: 5px;">Stay on Page</button>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+
+                modal.querySelector('#leave-btn').addEventListener('click', () => {
+                    window.location.href = e.target.href;
+                });
+
+                modal.querySelector('#stay-btn').addEventListener('click', () => {
+                    modal.remove();
+                });
+            }
+        });
+
+        window.onbeforeunload = null; // disable default browser prompt
+    </script>
+
+    <script src="/static/cart.js"></script>
+</body>
+</html>

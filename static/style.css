@@ -1,274 +1,238 @@
-/* Cosmic Blue Theme */
-:root {
+/* ==========================================================================
+   1.  RESET & BASE STYLES
+      -   (You can add Normalize.css here if you're using it)
+      -   Basic element styling (body, html, etc.)
+      -   Typography (font families, headings)
+      -   Global classes (e.g., .container)
+   ========================================================================== */
+
+   .logo {
+    width: 200px;
+    height: 200px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .menu-item .item-image-container {
+    width: 100%;
+    height: auto;
+    max-height: 200px; /* Adjust as needed */
+    overflow: hidden;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .menu-item .item-image {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* Or 'cover' if you want to crop */
+  }
+  
+  /* Cosmic Blue Theme */
+  :root {
     --space-blue: #0a0a2a;
     --deep-space: #1a1a2a;
     --star-blue: #00BFFF;
     --nebula-blue: #87CEEB;
     --milky-white: #f8f9fa;
     --card-bg: rgba(32, 32, 96, 0.9);
-}
-
-/* BASE STYLES */
-body {
+  }
+  
+  body {
     background-color: var(--space-blue);
     color: var(--milky-white);
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     line-height: 1.6;
-}
-
-/* Center content */
-.container {
+  }
+  
+  .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-}
-
-/* HEADER & NAVIGATION */
-header {
+  }
+  
+  /* ==========================================================================
+     2.  LAYOUT
+        -   Header, Navigation
+        -   Main content sections
+        -   Footer
+     ========================================================================== */
+  
+  header {
     background-color: var(--deep-space);
     padding: 20px;
     text-align: center;
     border-bottom: 2px solid var(--star-blue);
-    box-shadow: 0 4px 15px rgba(0,191,255,0.1);
-
-    /* Make the header fixed */
-    position: fixed; /* Fix the position relative to the viewport */
-    top: 0; /* Align to the top edge */
-    left: 0; /* Align to the left edge */
-    right: 0; /* Align to the right edge */
-    z-index: 100; /* Ensure it stays above other content */
-}
-
-nav ul {
+    box-shadow: 0 4px 15px rgba(0, 191, 255, 0.1);
+  }
+  
+  nav ul {
     list-style: none;
     padding: 0;
     display: flex;
     justify-content: center;
     gap: 20px;
-}
-
-nav a {
+  }
+  
+  nav a {
     color: var(--star-blue);
     text-decoration: none;
     font-size: 1.2rem;
     transition: all 0.3s ease;
     padding: 0.5rem 1rem;
     border-radius: 5px;
-}
-
-nav a:hover {
+  }
+  
+  nav a:hover {
     color: var(--milky-white);
-    background: rgba(0,191,255,0.1);
+    background: rgba(0, 191, 255, 0.1);
     text-shadow: 0 0 8px var(--star-blue);
-}
-
-/* New CSS for Header Layout (if used) */
-.header-container {
+  }
+  
+  /* Header Layout (if used, e.g., for aligning elements within header) */
+  .header-container {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
-    grid-template-rows: auto auto; /* Two rows */
+    grid-template-rows: auto auto;
     align-items: center;
     padding: 1rem;
-}
-
-#account-actions {
+  }
+  
+  #account-actions {
     grid-column: 3;
     grid-row: 1;
     justify-self: end;
-    white-space: nowrap; /* Prevent wrapping */
-}
-
-#header-title {
-    grid-column: 1 / 4; /* Span all columns */
+    white-space: nowrap;
+  }
+  
+  #header-title {
+    grid-column: 1 / 4;
     grid-row: 1;
     margin: 0;
     text-align: center;
-}
-
-.header-container nav {
-    grid-column: 1 / 4; /* Span all columns */
+  }
+  
+  .header-container nav {
+    grid-column: 1 / 4;
     grid-row: 2;
     justify-self: center;
-}
-
-/* Style the links if needed */
-#account-actions a {
+  }
+  
+  /* Style the links if needed */
+  #account-actions a {
     margin-left: 1rem;
     color: var(--star-blue);
     text-decoration: none;
-}
-
-#account-actions a:hover {
+  }
+  
+  #account-actions a:hover {
     text-decoration: underline;
-}
-
-/* MAIN CONTENT */
-main {
-    /* Adjust padding value based on the height of your fixed header */
-    padding-top: 120px; /* Example padding, you will likely need to adjust this */
-}
-
-/* Home Section */
-#home h1 {
-    color: var(--star-blue);
-    text-align: center;
-    font-size: 2.5rem;
-    text-shadow: 0 0 10px var(--star-blue);
-    margin-bottom: 2rem;
-}
-
-/* Mission Statement */
-.mission-statement {
-    background-color: var(--card-bg);
-    padding: 20px;
-    margin: 30px 0;
-    border-radius: 10px;
-    border: 1px solid var(--star-blue);
-    box-shadow: 0 4px 15px rgba(0,191,255,0.1);
-}
-
-.mission-statement h2 {
-    color: var(--nebula-blue);
-    margin-top: 0;
-}
-
-/* Menu Section */
-#menu {
-    background-color: var(--card-bg);
-    padding: 20px;
-    border-radius: 10px;
-    margin: 30px 0;
-    border: 1px solid var(--star-blue);
-}
-
-#menu h2 {
-    color: var(--star-blue);
-    text-shadow: 0 0 8px var(--star-blue);
-}
-
-#menu ul {
-    list-style: none;
-    padding: 0;
-}
-
-#menu li {
-    color: var(--nebula-blue);
-    margin: 10px 0;
-    padding: 1rem;
-    background: rgba(0,191,255,0.1);
-    border-radius: 5px;
-}
-
-/* FOOTER */
-footer {
+  }
+  
+  main {
+    /* Remove or significantly reduce this padding */
+    padding-top: 0;
+    padding-bottom: 3rem;
+  }
+  
+  footer {
     background-color: var(--deep-space);
     text-align: center;
     padding: 20px;
     border-top: 2px solid var(--star-blue);
     margin-top: 3rem;
-}
-
-/* RESPONSIVE DESIGN */
-@media (max-width: 768px) {
-    nav ul {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    #home h1 {
-        font-size: 2rem;
-    }
-
-    .mission-statement,
-    #menu {
-        margin: 20px 0;
-        padding: 15px;
-    }
-}
-
-/* Style for the cart count span */
-#cart-count {
-    margin-left: 5px; /* Space from the text link */
-    background-color: var(--nebula-blue); /* Highlight color */
-    color: var(--space-blue); /* Text color */
+  }
+  
+  /* ==========================================================================
+     3.  MODULES/COMPONENTS
+        -   Specific reusable UI elements
+        -   Buttons
+        -   Cards (if you have them)
+        -   Menu (if you have specific menu component styles)
+        -   Account forms
+     ========================================================================== */
+  
+  /* Style for the cart count span */
+  #cart-count {
+    margin-left: 5px;
+    background-color: var(--nebula-blue);
+    color: var(--space-blue);
     padding: 2px 6px;
-    border-radius: 10px; /* Pill shape */
-    font-size: 0.8em; /* Smaller text */
+    border-radius: 10px;
+    font-size: 0.8em;
     font-weight: bold;
-    vertical-align: super; /* Position slightly higher */
-}
-
-/* --- ACCOUNT PAGE FORM STYLES --- */
-
-/* Styles for the form containers (Login and Create Account) */
-#login-form,
-#create-account-form {
-    /* The parent div with display: flex will center the form block */
-    width: 100%; /* Take full width of the parent flex item */
-    max-width: 500px; /* Limit the maximum width of the forms */
-    margin-bottom: 30px; /* Space between the forms and content below */
-
-    background-color: var(--card-bg); /* Apply background, padding, border, etc. */
+    vertical-align: super;
+  }
+  
+  /* --- ACCOUNT PAGE FORM STYLES --- */
+  
+  /* Styles for the form containers (Login and Create Account) */
+  #login-form,
+  #create-account-form {
+    width: 100%;
+    max-width: 500px;
+    margin-bottom: 30px;
+    background-color: var(--card-bg);
     padding: 30px;
     border-radius: 10px;
     border: 1px solid var(--star-blue);
-    box-shadow: 0 4px 15px rgba(0,191,255,0.1);
-}
-
-/* Style the form titles */
-#login-form h2,
-#create-account-form h2 {
+    box-shadow: 0 4px 15px rgba(0, 191, 255, 0.1);
+  }
+  
+  /* Style the form titles */
+  #login-form h2,
+  #create-account-form h2 {
     text-align: center;
     color: var(--star-blue);
-    margin-top: 0; /* Remove default h2 top margin */
-    margin-bottom: 20px; /* Space below the title */
-}
-
-/* Style the container for each label/input pair */
-.form-group {
-    display: flex; /* Use Flexbox to lay out children (label and input) horizontally */
-    align-items: center; /* Vertically align label and input in the center */
-    margin-bottom: 15px; /* Add space between each form row */
-    /* flex-wrap: wrap; /* Optional: if you want label/input to wrap on very small screens */
-}
-
-/* Style the labels within the form-group */
-.form-group label {
-    /* Set a fixed width for the label column */
-    flex-basis: 120px; /* Example width, adjust as needed to fit your longest label */
-    min-width: 120px; /* Ensure the label column doesn't shrink */
-    text-align: right; /* Right-align the text of the labels */
-    margin-right: 15px; /* Add space between the label text and the input field */
-    /* Inherit color/font from body or other styles */
-    color: var(--nebula-blue); /* Use a color from your theme */
+    margin-top: 0;
+    margin-bottom: 20px;
+  }
+  
+  /* Style the container for each label/input pair */
+  .form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  /* Style the labels within the form-group */
+  .form-group label {
+    flex-basis: 120px;
+    min-width: 120px;
+    text-align: right;
+    margin-right: 15px;
+    color: var(--nebula-blue);
     font-weight: bold;
-}
-
-/* Style the input fields within the form-group */
-.form-group input[type="text"],
-.form-group input[type="email"],
-.form-group input[type="password"],
-.form-group input[type="tel"] { /* Add other input types like 'number' if needed */
-    flex-grow: 1; /* Allow the input to take up the remaining space in the row */
-    /* width: auto; /* Override potential 100% width from other styles if needed */
-    padding: 10px; /* Add padding inside the input field */
+  }
+  
+  /* Style the input fields within the form-group */
+  .form-group input[type="text"],
+  .form-group input[type="email"],
+  .form-group input[type="password"],
+  .form-group input[type="tel"],
+  .form-group select {
+    flex-grow: 1;
+    padding: 10px;
     border-radius: 5px;
     border: 1px solid var(--star-blue);
-    background-color: var(--deep-space); /* Use a dark background for inputs */
-    color: var(--milky-white); /* Use light text color for input text */
+    background-color: var(--deep-space);
+    color: var(--milky-white);
     font-size: 1rem;
-}
-
-/* Style the submit buttons within the forms */
-#login-form button[type="submit"],
-#create-account-form button[type="submit"] {
-    display: block; /* Make button a block element */
-    width: 100%; /* Make the button take the full width of the form */
-    padding: 12px; /* Adjust padding */
-    margin-top: 20px; /* Space above the button */
-    /* Add your existing button styles or adjust them */
+  }
+  
+  /* Style the submit buttons within the forms */
+  #login-form button[type="submit"],
+  #create-account-form button[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
     background-color: var(--star-blue);
     color: var(--space-blue);
     border: none;
@@ -277,48 +241,342 @@ footer {
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-#login-form button[type="submit"]:hover,
-#create-account-form button[type="submit"]:hover {
+  }
+  
+  #login-form button[type="submit"]:hover,
+  #create-account-form button[type="submit"]:hover {
     background-color: var(--nebula-blue);
     box-shadow: 0 0 10px var(--star-blue);
-}
-
-/* Style for the form switch div (e.g., "Don't have an account? Register") */
-.form-switch {
+  }
+  
+  /* Style for the form switch div (e.g., "Don't have an account? Register") */
+  .form-switch {
     text-align: center;
-    margin-top: 15px; /* Space above the switch text */
+    margin-top: 15px;
     font-size: 0.9rem;
-    color: var(--milky-white); /* Text color for the surrounding text */
-}
-
-.form-switch a {
-    color: var(--star-blue); /* Style the link (e.g., "Register", "Login") */
+    color: var(--milky-white);
+  }
+  
+  .form-switch a {
+    color: var(--star-blue);
     text-decoration: none;
-    font-weight: bold; /* Make the link stand out */
-}
-
-.form-switch a:hover {
+    font-weight: bold;
+  }
+  
+  .form-switch a:hover {
     text-decoration: underline;
-}
-
-/* Optional: Adjustments for smaller screens if using flex-wrap on form-group */
-/*
-@media (max-width: 600px) {
-    .form-group {
-        flex-direction: column; // Stack label and input vertically
-        align-items: flex-start; // Align stacked items to the left
-    }
-    .form-group label {
-        flex-basis: auto; // Remove fixed width when stacked
-        min-width: auto;
-        text-align: left; // Left-align label text when stacked
-        margin-right: 0; // Remove right margin
-        margin-bottom: 5px; // Add space below label when stacked
-    }
-     .form-group input {
-        width: 100%; // Make input full width when stacked
-     }
-}
-*/
+  }
+  
+  /* ==========================================================================
+     4.  PAGES
+        -   Styles specific to individual pages
+        -   home.html
+        -   menu.html
+        -   account.html (if you have any account page specific styles not already covered)
+        -   contact.html
+        -   account_dashboard.html
+        -   edit_profile.html
+        -   change_password.html
+     ========================================================================== */
+  
+  /* Home Section */
+  #home h1 {
+    color: var(--star-blue);
+    text-align: center;
+    font-size: 2.5rem;
+    text-shadow: 0 0 10px var(--star-blue);
+    margin-bottom: 2rem;
+  }
+  
+  /* Mission Statement */
+  .mission-statement {
+    background-color: var(--card-bg);
+    padding: 20px;
+    margin: 30px 0;
+    border-radius: 10px;
+    border: 1px solid var(--star-blue);
+    box-shadow: 0 4px 15px rgba(0, 191, 255, 0.1);
+  }
+  
+  .mission-statement h2 {
+    color: var(--nebula-blue);
+    margin-top: 0;
+  }
+  
+  /* Menu Section (Basic) */
+  #menu {
+    /* This is basic styling, the grid layout for menu items is in the menu.html <style> block */
+    background-color: var(--card-bg);
+    padding: 20px;
+    border-radius: 10px;
+    margin: 30px 0;
+    border: 1px solid var(--star-blue);
+  }
+  
+  #menu h2 {
+    color: var(--star-blue);
+    text-shadow: 0 0 8px var(--star-blue);
+  }
+  
+  /* --- CONTACT PAGE STYLES --- */
+  
+  .contact-container {
+    padding: 2rem;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  .contact-info {
+    margin-bottom: 2rem;
+  }
+  
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--nebula-blue);
+    font-weight: bold;
+  }
+  
+  input,
+  textarea,
+  select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--star-blue);
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--milky-white);
+    font-size: 1rem;
+  }
+  
+  input:focus,
+  textarea:focus,
+  select:focus {
+    outline: none;
+    border-color: var(--nebula-blue);
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 5px rgba(0, 191, 255, 0.2);
+  }
+  
+  select option {
+    background-color: var(--space-blue);
+    color: var(--milky-white);
+  }
+  
+  button {
+    padding: 0.75rem 1.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+  }
+  
+  button[type="submit"] {
+    background: var(--star-blue);
+    color: var(--space-blue);
+    border: none;
+  }
+  
+  button[type="reset"] {
+    background: transparent;
+    color: var(--star-blue);
+    border: 1px solid var(--star-blue);
+  }
+  
+  button:hover {
+    background: var(--nebula-blue);
+    box-shadow: 0 0 10px var(--star-blue);
+  }
+  
+  input[type="checkbox"] {
+    display: inline-block;
+    width: auto;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+  }
+  
+  label[for="privacy-consent"] {
+    display: inline-block;
+    vertical-align: middle;
+    font-weight: normal;
+  }
+  
+  .security-features {
+    margin-top: 1rem;
+  }
+  
+  /* custom_pizza.html styles */
+  .customize-container {
+    background-color: var(--card-bg);
+    padding: 30px;
+    border-radius: 10px;
+    margin: 30px auto;
+    max-width: 800px;
+    border: 1px solid var(--star-blue);
+    box-shadow: 0 4px 15px rgba(0,191,255,0.1);
+  }
+  
+  .pizza-details {
+    text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px dashed var(--nebula-blue);
+  }
+  
+  .pizza-details h2 {
+    color: var(--star-blue);
+    text-shadow: 0 0 8px var(--star-blue);
+    margin-bottom: 10px;
+  }
+  
+  .customization-options {
+    margin-top: 20px;
+  }
+  
+  .customization-category {
+    margin-bottom: 25px;
+    padding: 15px;
+    background: rgba(0,191,255,0.05);
+    border-radius: 8px;
+    border: 1px solid rgba(0,191,255,0.1);
+  }
+  
+  .customization-category h3 {
+    color: var(--nebula-blue);
+    margin-top: 0;
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgba(0,191,255,0.2);
+    padding-bottom: 5px;
+  }
+  
+  .option-group {
+    margin-bottom: 10px;
+  }
+  
+  .option-group label {
+    color: var(--milky-white);
+    margin-left: 5px;
+  }
+  
+  .option-group input[type="checkbox"],
+  .option-group input[type="radio"] {
+    accent-color: var(--star-blue);
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px;
+  }
+  
+  .option-group label {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  
+  /* Added style for size dropdown */
+  .size-selector label {
+    color: var(--nebula-blue);
+    margin-right: 10px;
+  }
+  
+  .size-selector select {
+    background: rgba(0,191,255,0.1);
+    border: 1px solid var(--star-blue);
+    color: var(--milky-white);
+    padding: 0.5rem;
+    border-radius: 5px;
+  }
+  
+  /* Added style for options within the size dropdown */
+  .size-selector select option {
+    background-color: var(--space-blue);
+    color: var(--milky-white);
+  }
+  
+  .price-total {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 2px solid var(--star-blue);
+    text-align: right;
+    font-size: 1.5rem;
+    color: var(--nebula-blue);
+  }
+  
+  .price-total span {
+    color: var(--star-blue);
+    font-weight: bold;
+  }
+  
+  .add-to-order-button {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    margin-top: 30px;
+    background-color: var(--star-blue);
+    color: var(--space-blue);
+    border: none;
+    border-radius: 5px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .add-to-order-button:hover {
+    background-color: var(--nebula-blue);
+    box-shadow: 0 0 10px var(--star-blue);
+  }
+  
+  /* Added styles for optional topping quantity (basic example) */
+  .topping-option {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  
+  .topping-option input[type="checkbox"] {
+    margin-right: 10px;
+  }
+  
+  .topping-quantity {
+    display: none; /* Hidden by default */
+    margin-left: 20px;
+  }
+  
+  .topping-quantity label {
+    margin-right: 5px;
+  }
+  /* Fix radio button spacing */
+  .option-group > div {
+    display: flex; /* Use flexbox for alignment */
+    align-items: center; /* Vertically center items */
+    margin-bottom: 5px; /* Add spacing between radio button groups */
+  }
+  
+  .option-group > div > input[type="radio"] {
+    margin-right: 5px; /* Space between radio and label */
+  }
+  
+  .option-group > div > label {
+     margin-right: 10px;
+  }
+  
+  /* Ensure the label and radio button are treated as a unit */
+  .option-group > div {
+      display: flex;
+      align-items: center;
+      margin-bottom: 5px;
+  }
+  
+  .option-group > div > input[type="radio"] {
+      margin-right: 5px; /* Add space between the radio button and label */
+      flex-direction: row-reverse; /* THIS IS THE IMPORTANT CHANGE */
+  }
+  
+  .option-group > div > label {
+      margin-left: 10px; /* Add space to the label,  */
+      margin-right: 0;
+  }
+  
