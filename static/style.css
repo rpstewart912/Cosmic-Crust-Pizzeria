@@ -579,4 +579,23 @@
       margin-left: 10px; /* Add space to the label,  */
       margin-right: 0;
   }
-  
+
+  /* Add to /static/style.css */
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  position: relative; /* Important for positioning context */
+}
+
+/* Responsive adjustments might be needed for smaller screens */
+@media (max-width: 768px) {
+  nav ul {
+      flex-direction: column; /* Stack links vertically */
+      align-items: center; /* Center items when stacked */
+  }
+  /* No specific admin link style needed here anymore */
+}

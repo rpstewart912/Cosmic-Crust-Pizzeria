@@ -195,19 +195,29 @@
             <img class="logo" src="https://cosmic-crust-pizzeria.uc.r.appspot.com/static/images/ccpLogo.png" alt="Cosmic Crust Pizzeria Logo">
             <nav aria-label="Main navigation" role="navigation">
                 <ul>
+                    {# Standard Links #}
                     <li><a href="/">Home</a></li>
-                    <li><a href="/menu" aria-current="page">Menu</a></li>
+                    <li><a href="/menu">Menu</a></li>
                     <li><a href="/order">Start Order/Cart<span id="cart-count">0</span></a></li>
-                    {# --- Start Conditional Account Link --- #}
+            
+                    {# --- Conditional Account Link --- #}
                     {% if logged_in %}
-                        {# If logged in, show "View Account" and link to dashboard #}
                         <li><a href="{{ url_for('account_dashboard') }}">View Account/Logout</a></li>
                     {% else %}
-                        {# If not logged in, show "Login/Register" and link to account page #}
                         <li><a href="{{ url_for('account') }}">Login/Register</a></li>
                     {% endif %}
-                    {# --- End Conditional Account Link --- #}
+            
+                    {# Contact Us Link #}
                     <li><a href="/contact">Contact Us</a></li>
+            
+                    {# --- Conditional ADMIN Link (Moved After Contact Us) --- #}
+                    {% if is_staff %} {# Check the is_staff variable passed from Flask #}
+                    <li> {# Removed class="nav-admin-link" #}
+                        <a href="{{ url_for('admin_menu') }}" style="color: var(--nebula-blue); font-weight: bold;">ADMIN</a>
+                    </li>
+                    {% endif %}
+                    {# --- End Conditional ADMIN Link --- #}
+            
                 </ul>
             </nav>
         </div>

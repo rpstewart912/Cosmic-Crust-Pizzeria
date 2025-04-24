@@ -1,4 +1,3 @@
-<!-- OrderTracking.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,10 +7,16 @@
     <link rel="stylesheet" href="/static/style.css">
     <style>
         /* Order Tracking Specific Styles */
+        /* --- PASTE ALL YOUR ORIGINAL CSS RULES FOR THIS PAGE HERE --- */
+        /* Example rules (ensure you include everything from your file): */
         .tracking-container {
-            display: grid;
+            display: flex; /* Use flex for centering */
+            flex-direction: column;
+            align-items: center;
             gap: 2rem;
-            margin-top: 2rem;
+            margin: 2rem auto;
+            max-width: 900px;
+            padding: 0 1rem;
         }
 
         .order-status-card {
@@ -20,20 +25,71 @@
             border-radius: 10px;
             padding: 2rem;
             box-shadow: 0 4px 15px rgba(0,191,255,0.1);
+            width: 100%;
+            box-sizing: border-box;
         }
 
+        .order-status-card h2 {
+             color: var(--star-blue);
+             text-shadow: 0 0 8px var(--star-blue);
+             text-align: center;
+             margin-bottom: 1.5rem;
+        }
+         .order-status-card p {
+              color: var(--milky-white);
+              text-align: center;
+              margin-bottom: 1rem;
+              font-size: 1.1rem;
+         }
+         .order-status-card p strong {
+              color: var(--nebula-blue);
+         }
+
+        /* --- Status Timeline --- */
         .status-timeline {
             display: flex;
             justify-content: space-between;
+            align-items: flex-start;
             position: relative;
-            margin: 2rem 0;
+            margin: 2.5rem 0;
+            padding: 0 10px;
+            overflow-x: auto; /* Allow horizontal scroll on small screens */
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+        }
+        /* Progress Bar Line (Background) */
+        .status-timeline::before {
+             content: "";
+             position: absolute;
+             top: 20px; /* Position vertically centered with icons */
+             left: 5%; /* Start after first icon */
+             right: 5%; /* End before last icon */
+             height: 4px;
+             background-color: var(--deep-space); /* Background of the bar */
+             z-index: 0;
+        }
+         /* Active Progress Bar Line (Foreground) */
+        .status-timeline::after {
+             content: "";
+             position: absolute;
+             top: 20px;
+             left: 5%;
+             height: 4px;
+             background-color: var(--star-blue); /* Active color */
+             z-index: 1;
+             /* This width is controlled by the --timeline-progress-width CSS variable set in JS */
+             width: var(--timeline-progress-width, 0%);
+             transition: width 0.5s ease-in-out;
         }
 
         .status-step {
             display: flex;
             flex-direction: column;
             align-items: center;
-            z-index: 1;
+            text-align: center;
+            position: relative; /* Needed for z-index */
+            z-index: 2; /* Above the progress lines */
+            flex: 1; /* Distribute space evenly */
+            min-width: 80px; /* Minimum width for each step */
         }
 
         .status-icon {
@@ -41,201 +97,398 @@
             height: 40px;
             border-radius: 50%;
             background: var(--deep-space);
-            border: 2px solid var(--star-blue);
+            border: 3px solid var(--deep-space); /* Border matching background initially */
+            color: var(--nebula-blue); /* Icon color */
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 0.5rem;
             transition: all 0.3s ease;
+            font-size: 1.2rem; /* Adjust icon size if needed */
         }
 
-        .status-icon.active {
+        /* Styling for completed steps */
+        .status-step.completed .status-icon {
             background: var(--star-blue);
-            box-shadow: 0 0 15px var(--star-blue);
+            border-color: var(--star-blue);
+            color: var(--space-blue); /* Icon color on active */
+            box-shadow: 0 0 10px var(--star-blue);
+        }
+        /* Styling for the current step */
+        .status-step.current .status-icon {
+             background: var(--nebula-blue); /* Different color for current */
+             border-color: var(--nebula-blue);
+             color: var(--space-blue);
+             box-shadow: 0 0 12px var(--nebula-blue);
         }
 
         .status-name {
             color: var(--nebula-blue);
             font-size: 0.9rem;
-            text-align: center;
+            font-weight: bold;
+            margin-top: 0.25rem;
         }
+         .status-step.completed .status-name,
+         .status-step.current .status-name {
+              color: var(--milky-white); /* Highlight name for completed/current */
+         }
 
-        .tracking-map {
-            height: 300px;
-            background: var(--deep-space);
-            border: 2px solid var(--star-blue);
-            border-radius: 10px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .tracking-map::before {
-            content: "";
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, 
-                transparent 48%, 
-                rgba(0,191,255,0.1) 50%, 
-                transparent 52%);
-            animation: radar-scan 4s linear infinite;
-        }
-
-        @keyframes radar-scan {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .order-details {
+        /* --- Order Details Section --- */
+        .order-details-grid {
             display: grid;
-            gap: 1rem;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive columns */
+            margin-top: 2rem;
         }
 
         .detail-card {
             background: rgba(0,191,255,0.05);
             padding: 1.5rem;
             border-radius: 8px;
-            border: 1px solid var(--star-blue);
-        }
-
-        .tracking-form {
-            max-width: 500px;
-            margin: 2rem auto;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--nebula-blue);
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 0.8rem;
-            background: rgba(0,191,255,0.1);
-            border: 1px solid var(--star-blue);
-            border-radius: 5px;
+            border: 1px solid rgba(0, 191, 255, 0.1);
             color: var(--milky-white);
         }
+        .detail-card h3 {
+            color: var(--nebula-blue);
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            border-bottom: 1px solid rgba(0, 191, 255, 0.15);
+            padding-bottom: 0.5rem;
+        }
+        .detail-card p {
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+        }
+         .detail-card p strong {
+              color: var(--star-blue);
+              margin-right: 0.5em;
+         }
+         .detail-card ul {
+              list-style: none;
+              padding-left: 0;
+              margin-top: 0.5rem;
+         }
+         .detail-card li {
+              margin-bottom: 0.5rem;
+              font-size: 0.95rem;
+         }
+         .detail-card .item-size {
+              font-size: 0.85rem;
+              color: var(--nebula-blue);
+              margin-left: 1rem; /* Indent size */
+              margin-top: 0.2rem;
+         }
+         .detail-card .customization-details {
+              font-size: 0.85rem;
+              color: var(--nebula-blue);
+              margin-left: 1rem; /* Indent customizations */
+              margin-top: 0.2rem;
+         }
+         .detail-card .customization-details strong {
+              color: var(--star-blue);
+         }
 
+        /* --- Responsive adjustments --- */
         @media (max-width: 768px) {
             .status-timeline {
-                flex-wrap: wrap;
-                gap: 2rem;
-                justify-content: center;
+                 justify-content: flex-start; /* Align steps to start */
+                 padding: 0 5px; /* Reduce padding */
+            }
+             .status-timeline::before, .status-timeline::after {
+                 left: 25px; /* Adjust line start */
+                 right: 25px; /* Adjust line end */
+             }
+            .status-step {
+                 min-width: 70px; /* Slightly smaller min-width */
+            }
+            .status-name {
+                 font-size: 0.8rem; /* Smaller text */
+            }
+            .order-details-grid {
+                 grid-template-columns: 1fr; /* Stack detail cards */
             }
         }
+
+         @media (max-width: 480px) {
+             .status-icon {
+                  width: 35px;
+                  height: 35px;
+                  font-size: 1rem;
+             }
+              .status-timeline::before, .status-timeline::after {
+                  top: 17.5px; /* Adjust line position */
+              }
+         }
+        /* Style for flash messages */
+        .flash-message {
+            padding: 0.8rem;
+            border-radius: 5px;
+            text-align: center;
+            color: white;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+        .flash-message.success { background-color: #1f8b4c; }
+        .flash-message.error { background-color: #c0392b; }
+        .flash-message.info { background-color: #2980b9; }
+
     </style>
 </head>
 <body>
-    <!-- Skip Navigation Link -->
     <a class="skip-link" href="#main-content">Skip to main content</a>
 
+    {# --- Header (Included directly as requested) --- #}
     <header role="banner">
         <div class="header-container">
-            <div id="account-actions"></div>          
-            </div>
-            <img class="logo" src="https://cosmic-crust-pizzeria.uc.r.appspot.com/static/images/ccpLogo.png" alt="Cosmic Crust Pizzeria Logo">
-            <nav aria-label="Main navigation" role="navigation">
-                <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/menu" aria-current="page">Menu</a></li>
-                    <li><a href="/order">Start Order/Cart<span id="cart-count">0</span></a></li>
-                    {# --- Start Conditional Account Link --- #}
-                    {% if logged_in %}
-                        {# If logged in, show "View Account" and link to dashboard #}
-                        <li><a href="{{ url_for('account_dashboard') }}">View Account/Logout</a></li>
-                    {% else %}
-                        {# If not logged in, show "Login/Register" and link to account page #}
-                        <li><a href="{{ url_for('account') }}">Login/Register</a></li>
-                    {% endif %}
-                    {# --- End Conditional Account Link --- #}
-                    <li><a href="/contact">Contact Us</a></li>
-                </ul>
-            </nav>
+             <div id="account-actions">
+                 {# This uses the 'logged_in' variable passed from Flask #}
+                 {% if logged_in %}
+                     <a href="{{ url_for('account_dashboard') }}">View Account</a> | <a href="{{ url_for('logout') }}">Logout</a>
+                 {% else %}
+                     <a href="{{ url_for('account') }}">Login/Register</a>
+                 {% endif %}
+             </div>
         </div>
+        <img class="logo" src="https://cosmic-crust-pizzeria.uc.r.appspot.com/static/images/ccpLogo.png" alt="Cosmic Crust Pizzeria Logo">
+        <nav aria-label="Main navigation" role="navigation">
+            <ul>
+                {# Standard Links #}
+                <li><a href="/">Home</a></li>
+                <li><a href="/menu">Menu</a></li>
+                <li><a href="/order">Start Order/Cart<span id="cart-count">0</span></a></li>
+        
+                {# --- Conditional Account Link --- #}
+                {% if logged_in %}
+                    <li><a href="{{ url_for('account_dashboard') }}">View Account/Logout</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('account') }}">Login/Register</a></li>
+                {% endif %}
+        
+                {# Contact Us Link #}
+                <li><a href="/contact">Contact Us</a></li>
+        
+                {# --- Conditional ADMIN Link (Moved After Contact Us) --- #}
+                {% if is_staff %} {# Check the is_staff variable passed from Flask #}
+                <li> {# Removed class="nav-admin-link" #}
+                    <a href="{{ url_for('admin_menu') }}" style="color: var(--nebula-blue); font-weight: bold;">ADMIN</a>
+                </li>
+                {% endif %}
+                {# --- End Conditional ADMIN Link --- #}
+        
+            </ul>
+        </nav>
     </header>
+    {# --- End Header --- #}
 
-    <main id="main-content" role="main" class="container">
+<main id="main-content" role="main" class="container">
+    {# --- Flash Messages Display --- #}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div style="display: flex; justify-content: center; padding: 1rem;">
+          <div style="max-width: 900px; width: 100%;">
+            {% for category, message in messages %}
+              {# Uses the flash message styles defined above #}
+              <div class="flash-message {{ category }}">
+                {{ message }}
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+    {% endwith %}
+    {# --- End Flash Messages --- #}
+
+    <div class="tracking-container">
         <section class="order-status-card">
-            <h2 style="color: var(--star-blue); text-shadow: 0 0 8px var(--star-blue);">
-                🚀 Order Tracking
-            </h2>
-            
-            <div class="tracking-form">
-                <form id="trackingForm">
-                    <div class="form-group">
-                        <label for="orderId">Order ID:</label>
-                        <input type="text" id="orderId" required 
-                            placeholder="Enter your cosmic order ID">
+            <h2>🚀 Order Tracking</h2>
+
+            {# --- Display Basic Order Info --- #}
+            <p>
+                <strong>Order ID:</strong> {{ order_id or 'N/A' }} {# Displays the order_id variable from Flask #}
+            </p>
+            <p>
+                 <strong>Current Status:</strong> <span id="current-status-text">{{ status or 'Unknown' }}</span> {# Displays the status variable from Flask #}
+            </p>
+
+            {# --- Status Timeline --- #}
+            {# Uses the 'status_updates' list and 'current_stage' number from Flask #}
+            <div class="status-timeline" id="status-timeline-bar">
+                {% for loop_status in status_updates %} {# Loop through all possible statuses #}
+                    {% set loop_index = loop.index0 %} {# Get the index (0-based) #}
+                    {% set step_class = '' %} {# Initialize class string #}
+                    {# Add 'completed' class if this step's index is less than the current stage #}
+                    {% if loop_index < current_stage %}
+                        {% set step_class = 'completed' %}
+                    {# Add 'current' class if this step's index matches the current stage #}
+                    {% elif loop_index == current_stage %}
+                        {% set step_class = 'current' %}
+                    {% endif %}
+                    <div class="status-step {{ step_class }}"> {# Apply the calculated class #}
+                        <div class="status-icon">
+                             {# Display appropriate emoji based on the status text #}
+                             {% if loop_status == 'Order Received' %}📝{% elif loop_status == 'Preparing' %}👩‍🍳{% elif loop_status == 'Baking' %}🔥{% elif loop_status == 'Quality Check' %}🔍{% elif loop_status == 'On Route' %}🛸{% elif loop_status == 'Delivered' %}🏠{% else %}✔️{% endif %}
+                        </div>
+                        <span class="status-name">{{ loop_status }}</span> {# Display the status text #}
                     </div>
-                    <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" required 
-                            placeholder="your.email@galaxy.com">
-                    </div>
-                    <button type="submit" style="width: 100%; margin-top: 1rem;">
-                        Track Order
-                    </button>
-                </form>
+                {% endfor %}
             </div>
+            {# --- End Status Timeline --- #}
 
-            <div class="status-timeline">
-                <div class="status-step">
-                    <div class="status-icon active">✅</div>
-                    <span class="status-name">Order Received</span>
-                </div>
-                <div class="status-step">
-                    <div class="status-icon active">👩🍳</div>
-                    <span class="status-name">Preparing</span>
-                </div>
-                <div class="status-step">
-                    <div class="status-icon">🔥</div>
-                    <span class="status-name">Baking</span>
-                </div>
-                <div class="status-step">
-                    <div class="status-icon">🔍</div>
-                    <span class="status-name">Quality Check</span>
-                </div>
-                <div class="status-step">
-                    <div class="status-icon">🛸</div>
-                    <span class="status-name">On Route</span>
-                </div>
-            </div>
-
-
-            <div class="order-details">
+            {# --- Order Details Grid --- #}
+            <div class="order-details-grid">
                 <div class="detail-card">
-                    <h3 style="color: var(--nebula-blue);">Order Summary</h3>
-                    <p>Galactic Vegan Pizza</p>
-                    <p>Stellar Garlic Breadsticks</p>
-                    <p>Nebula Cola x2</p>
-                    <p style="color: var(--star-blue); font-weight: bold; margin-top: 1rem;">
-                        Total: $34.97
+                    <h3>Order Summary</h3>
+                     {# Check if the 'order_items' list (from Flask) exists and has items #}
+                     {% if order_items %}
+                         <ul>
+                         {# Loop through each 'item' dictionary in the 'order_items' list #}
+                         {% for item in order_items %}
+                             <li>
+                                 {# Display quantity and name, providing a fallback if name is missing #}
+                                 {{ item.quantity }}x {{ item.name or 'Unknown Item' }}
+                                 {# Display the selected size if it exists in the item data #}
+                                 {% if item.selectedSize %}
+                                     <div class="item-size">(Size: {{ item.selectedSize }})</div>
+                                 {% endif %}
+                                 {# Check if 'customizations' exists and is a dictionary (mapping) #}
+                                 {% if item.customizations and item.customizations is mapping %}
+                                     <div class="customization-details">
+                                         {# Loop through each category (key) and options (value) in customizations #}
+                                         {% for category, options in item.customizations.items() %}
+                                             {# Ensure 'options' is a list/iterable and not empty #}
+                                             {% if options is iterable and options is not string and options | length > 0 %}
+                                                 <strong>{{ category | capitalize }}:</strong> {# Display category name #}
+                                                  {# Check if the first option has a 'name' attribute (means list of dicts) #}
+                                                 {% if options[0].name is defined %}
+                                                      {# Map the 'name' attribute from each option dict and join with commas #}
+                                                      {{ options | map(attribute='name') | join(', ') }}
+                                                 {% else %}
+                                                      {# Fallback if options is just a list of strings #}
+                                                      {{ options | join(', ') }}
+                                                 {% endif %}
+                                             {% endif %}
+                                         {% endfor %}
+                                     </div>
+                                 {% endif %}
+                             </li>
+                         {% endfor %}
+                         </ul>
+                     {% else %}
+                         <p>No items found for this order.</p> {# Displayed if 'order_items' is empty or missing #}
+                     {% endif %}
+                     {# Display the total price, formatted to 2 decimal places #}
+                    <p style="color: var(--star-blue); font-weight: bold; margin-top: 1rem; border-top: 1px solid rgba(0, 191, 255, 0.15); padding-top: 1rem;">
+                        <strong>Total:</strong> ${{ "%.2f" | format(order_total | default(0)) }} {# Uses 'order_total' from Flask #}
                     </p>
                 </div>
-                
+                <div class="detail-card">
+                    <h3>Order Time</h3>
+                    <p>{{ order_time or 'N/A' }}</p> {# Displays 'order_time' string from Flask #}
+                </div>
+                <div class="detail-card">
+                    <h3>Estimated Ready By</h3>
+                    <p>{{ ready_by_time or 'Pending' }}</p> {# Displays 'ready_by_time' from Flask #}
+                </div>
             </div>
+             {# --- End Order Details Grid --- #}
         </section>
-    </main>
+    </div>
+</main>
 
+    {# --- Footer (Included directly as requested) --- #}
     <footer role="contentinfo">
         <address>
-            Contact us at: 
+            Contact us at:
             <a href="tel:+11111111111" style="color: var(--star-blue);">(111) 111-1111</a><br>
             42 Cosmic Crust Avenue, Nebula City, PC 11111
         </address>
         <p style="color: var(--nebula-blue);">&copy; 2025 Cosmic Crust Pizzeria. All rights reserved.</p>
-        <ul style="list-style: none; padding: 0; margin: 1rem 0; display: flex; justify-content: center; gap: 1rem;">
+        <ul style="list-style: none; padding: 0; display: flex; justify-content: center; gap: 1.5rem; margin: 1rem 0;">
             <li><a href="/disclaimer" aria-label="Disclaimer" style="color: var(--star-blue);">Disclaimer</a></li>
             <li><a href="/privacy" aria-label="Privacy policy" style="color: var(--star-blue);">Privacy Policy</a></li>
         </ul>
     </footer>
-    <script src="/static/cart.js"></script>
+    {# --- End Footer --- #}
+
+{# Include the shared cart JavaScript file for header count updates #}
+<script src="/static/cart.js"></script>
+
+{# Page-specific JavaScript #}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        /**
+         * Clears the 'cosmicOrder' from localStorage and updates the cart count display.
+         * This is called when the order tracking page loads, signifying order completion.
+         */
+        function clearCartAndRefreshCount() {
+            try {
+                localStorage.removeItem('cosmicOrder');
+                console.log('Cart cleared from localStorage on order tracking page.');
+
+                // Call the function from cart.js (if available) to update the header count
+                if (typeof updateCartCountDisplay === 'function') {
+                    updateCartCountDisplay(); // Should set the count to 0
+                } else {
+                    console.warn("updateCartCountDisplay function not found (expected in cart.js). Cart count in header might not be updated.");
+                }
+            } catch (e) {
+                console.error("Error clearing cart from localStorage or updating count:", e);
+            }
+        }
+
+        /**
+         * Animates the status timeline progress bar based on the current order stage.
+         */
+        function animateProgressBar() {
+            try {
+                const timelineBar = document.getElementById('status-timeline-bar');
+                if (!timelineBar) {
+                    console.warn("Timeline bar element ('status-timeline-bar') not found.");
+                    return;
+                }
+
+                // Get the current stage and total number of stages from Jinja variables (passed by Flask)
+                // Provide default values to prevent errors if variables are missing
+                const currentStageText = "{{ current_stage | default(0) }}";
+                const totalStagesText = "{{ status_updates | length | default(1) }}"; // Default length to 1 to avoid division by zero
+
+                // Parse the text values into integers
+                const currentStage = parseInt(currentStageText, 10);
+                const totalStages = parseInt(totalStagesText, 10);
+
+                // Validate that parsing was successful
+                if (isNaN(currentStage) || isNaN(totalStages)) {
+                    console.error("Could not parse currentStage or totalStages from template variables:", currentStageText, totalStagesText);
+                    return;
+                }
+
+                // Calculate progress only if there are multiple stages
+                if (totalStages > 1) {
+                    // Calculate the percentage width for the progress bar
+                    // The progress reaches 100% at the *last* stage (index totalStages - 1)
+                    const percentage = (currentStage / (totalStages - 1)) * 100;
+
+                    // Set the CSS custom property '--timeline-progress-width'
+                    // The ::after pseudo-element uses this variable for its width
+                    timelineBar.style.setProperty('--timeline-progress-width', percentage + '%');
+                    console.log(`Progress bar set to ${percentage.toFixed(1)}%`); // Debug log
+
+                } else {
+                     // Log if there's only one stage (no progress to show)
+                     console.log("Not enough stages (" + totalStages + ") for progress animation.");
+                }
+            } catch (e) {
+                // Log any errors during the animation setup
+                console.error("Error animating progress bar:", e);
+            }
+        }
+
+        // --- Run functions after the DOM is fully loaded ---
+        clearCartAndRefreshCount(); // Clear the user's cart
+        animateProgressBar(); // Animate the status timeline
+    });
+</script>
+
 </body>
 </html>

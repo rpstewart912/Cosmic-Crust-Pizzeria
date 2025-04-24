@@ -2,3 +2,4 @@ Flask
 google-cloud-firestore
 gunicorn
 werkzeug
+firebase-admin

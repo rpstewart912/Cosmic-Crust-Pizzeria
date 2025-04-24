@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin: Menu Management - Cosmic Crust Pizzeria</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        /* Basic Admin Menu Styles (Add more specific styles as needed) */
+        .admin-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 1.5rem;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            border: 1px solid var(--star-blue);
+            box-shadow: 0 4px 15px rgba(0, 191, 255, 0.1);
+        }
+
+        .admin-container h2, .admin-container h3 {
+            color: var(--star-blue);
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Flash messages styling */
+        .flash-message {
+            padding: 0.8rem;
+            border-radius: 5px;
+            text-align: center;
+            color: white;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+        .flash-message.success { background-color: #1f8b4c; }
+        .flash-message.error { background-color: #c0392b; }
+        .flash-message.info { background-color: #2980b9; }
+
+        /* Table Styles */
+        .menu-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2rem;
+            color: var(--milky-white);
+            font-size: 0.9rem;
+        }
+        .menu-table th, .menu-table td {
+            border: 1px solid var(--star-blue);
+            padding: 0.6rem;
+            text-align: left;
+            vertical-align: top; /* Align content to top */
+        }
+        .menu-table th {
+            background-color: rgba(0, 191, 255, 0.1);
+            color: var(--nebula-blue);
+            font-weight: bold;
+        }
+        .menu-table td ul {
+            margin: 0;
+            padding-left: 1.2rem; /* Indent lists slightly */
+        }
+        .menu-table img {
+            max-width: 80px;
+            height: auto;
+            display: block;
+            border-radius: 4px;
+        }
+        .menu-table .actions {
+            white-space: nowrap; /* Prevent buttons wrapping */
+            text-align: center;
+        }
+        .menu-table .actions button, .menu-table .actions .edit-btn {
+            padding: 0.3rem 0.6rem;
+            font-size: 0.8rem;
+            margin: 0.2rem;
+            cursor: pointer;
+            border-radius: 4px;
+            border: none;
+            font-weight: bold;
+        }
+        .edit-btn {
+            background-color: var(--nebula-blue);
+            color: var(--space-blue);
+        }
+        .delete-btn {
+            background-color: #c0392b; /* Red */
+            color: white;
+        }
+
+        /* Form Styles */
+        .admin-form {
+            background-color: rgba(0, 191, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 191, 255, 0.1);
+            margin-bottom: 2rem;
+        }
+        .admin-form h3 {
+            text-align: left;
+            margin-top: 0;
+            border-bottom: 1px solid rgba(0, 191, 255, 0.2);
+            padding-bottom: 0.5rem;
+        }
+
+        /* --- NEW/UPDATED Form Grid Styles --- */
+        .form-grid {
+            display: grid;
+            /* Create 2 equal columns */
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem 1.5rem; /* Row gap, Column gap */
+            align-items: start; /* Align items to the top of their grid cell */
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            /* Removed margin-bottom, rely on grid gap */
+        }
+        /* Make specific elements span both columns */
+        .form-group.full-width,
+        .sizes-section {
+            grid-column: 1 / -1; /* Span from first column line to last */
+        }
+        /* --- End NEW/UPDATED Form Grid Styles --- */
+
+        .form-group label {
+            color: var(--nebula-blue);
+            margin-bottom: 0.3rem;
+            font-weight: bold;
+            font-size: 0.9rem; /* Slightly smaller label */
+        }
+        .form-group input[type="text"],
+        .form-group input[type="number"],
+        .form-group input[type="url"],
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.7rem; /* Slightly more padding */
+            border-radius: 5px;
+            border: 1px solid var(--star-blue);
+            background-color: var(--deep-space);
+            color: var(--milky-white);
+            font-size: 1rem; /* Ensure consistent font size */
+            box-sizing: border-box;
+        }
+        .form-group textarea {
+            min-height: 80px; /* Slightly taller */
+            resize: vertical;
+        }
+        /* Align checkbox and its label */
+        .form-group.checkbox-group {
+             grid-column: 1 / -1; /* Span full width for alignment */
+             display: flex;
+             flex-direction: row;
+             align-items: center;
+             gap: 0.5rem;
+             margin-top: 0.5rem; /* Add some space above checkbox */
+        }
+        .form-group input[type="checkbox"] {
+            width: auto; /* Let checkbox size itself */
+            margin: 0; /* Remove default margin */
+            accent-color: var(--star-blue);
+            vertical-align: middle;
+            height: 1.1rem; /* Adjust size */
+            width: 1.1rem;
+        }
+        .form-group label.checkbox-label {
+             margin-bottom: 0; /* Remove bottom margin for checkbox label */
+             font-weight: normal; /* Normal weight for checkbox label */
+             color: var(--milky-white);
+        }
+
+        /* Sizes Section */
+        .sizes-section {
+            /* grid-column: 1 / -1; Already set above */
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px dashed rgba(0, 191, 255, 0.2);
+        }
+        .sizes-section > label { /* Style the main "Sizes" label */
+             display: block;
+             margin-bottom: 0.8rem;
+             color: var(--nebula-blue);
+             font-weight: bold;
+        }
+        .size-entry {
+            display: grid; /* Use grid for alignment within each size entry */
+            grid-template-columns: 1fr 100px auto; /* Name, Price (fixed width), Remove button */
+            gap: 0.8rem;
+            margin-bottom: 0.7rem;
+            align-items: center;
+        }
+        .size-entry input {
+            /* Inputs already styled above */
+        }
+        .size-entry button { /* Style for the remove button */
+            padding: 0.4rem 0.7rem;
+            font-size: 0.8rem;
+            background-color: #c0392b; /* Red */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            line-height: 1.2; /* Adjust line height */
+        }
+        #add-size-btn { /* Style for the "Add Size" button */
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            background-color: var(--star-blue);
+            color: var(--space-blue);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            font-weight: bold;
+        }
+
+        .submit-btn {
+            grid-column: 1 / -1; /* Span full width */
+            padding: 0.8rem 1.5rem;
+            background-color: var(--star-blue);
+            color: var(--space-blue);
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 1rem;
+            width: auto; /* Don't force full width */
+            justify-self: start; /* Align button to the start */
+        }
+        .submit-btn:hover {
+            background-color: var(--nebula-blue);
+        }
+
+        /* Modal Styles (Basic) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
+        }
+        .modal-content {
+            background-color: var(--space-blue);
+            margin: 10% auto; /* 10% from the top and centered */
+            padding: 25px;
+            border: 1px solid var(--star-blue);
+            border-radius: 10px;
+            width: 80%; /* Could be more or less, depending on screen size */
+            max-width: 700px; /* Maximum width */
+            color: var(--milky-white);
+            position: relative;
+        }
+        .close-btn {
+            color: #aaa;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close-btn:hover,
+        .close-btn:focus {
+            color: var(--milky-white);
+            text-decoration: none;
+        }
+
+    </style>
+</head>
+<body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    {# --- Header --- #}
+    <header role="banner">
+        <div class="header-container">
+             <div id="account-actions">
+                 {% if logged_in %}
+                     <a href="{{ url_for('account_dashboard') }}">View Account</a> | <a href="{{ url_for('logout') }}">Logout</a>
+                 {% else %}
+                     <a href="{{ url_for('account') }}">Login/Register</a>
+                 {% endif %}
+             </div>
+        </div>
+        <img class="logo" src="https://cosmic-crust-pizzeria.uc.r.appspot.com/static/images/ccpLogo.png" alt="Cosmic Crust Pizzeria Logo">
+        <nav aria-label="Main navigation" role="navigation">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/menu">Menu</a></li>
+                <li><a href="/order">Start Order/Cart<span id="cart-count">0</span></a></li>
+                {% if logged_in %}
+                    <li><a href="{{ url_for('account_dashboard') }}">View Account/Logout</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('account') }}">Login/Register</a></li>
+                {% endif %}
+                <li><a href="/contact">Contact Us</a></li>
+                 {# --- Conditional ADMIN Link (Moved After Contact Us) --- #}
+                {% if is_staff %}
+                <li> {# Removed class="nav-admin-link" #}
+                    <a href="{{ url_for('admin_menu') }}" style="color: var(--nebula-blue); font-weight: bold;">ADMIN</a>
+                </li>
+                {% endif %}
+                {# --- End Conditional ADMIN Link --- #}
+            </ul>
+        </nav>
+    </header>
+    {# --- End Header --- #}
+
+    <main id="main-content" class="admin-container">
+        <h2>Admin: Menu Management</h2>
+
+        {# --- Flash Messages Display --- #}
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <div id="flash-container" style="width: 90%; margin: 1rem auto;">
+              {% for category, message in messages %}
+                <div class="flash-message {{ category }}">{{ message }}</div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+        {# --- End Flash Messages --- #}
+
+        {# --- Display Existing Menu Items --- #}
+        <h3>Current Menu Items</h3>
+        <div style="overflow-x: auto;"> {# Make table horizontally scrollable on small screens #}
+            <table class="menu-table">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Sizes (Pizza)</th>
+                        <th>Dietary</th>
+                        <th>Customizable</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in menu_items %}
+                    <tr>
+                        <td>
+                            {% if item.imageLink %}
+                                <img src="{{ item.imageLink }}" alt="{{ item.name }}">
+                            {% else %}
+                                <span style="font-style: italic; color: #aaa;">No Image</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.description }}</td>
+                        <td>{{ item.category | capitalize }}</td>
+                        <td>
+                            {# Display base price if not pizza or pizza has no sizes #}
+                            {% if item.category != 'pizza' or not item.sizes %}
+                                ${{ "%.2f" | format(item.price | default(0.0)) }}
+                            {% else %}
+                                - {# Indicate price is per size #}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {# Display sizes if it's a pizza and sizes exist #}
+                            {% if item.category == 'pizza' and item.sizes %}
+                                <ul>
+                                {% for size, price in item.sizes.items() %}
+                                    <li>{{ size }}: ${{ "%.2f" | format(price) }}</li>
+                                {% endfor %}
+                                </ul>
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if item.dietary %}
+                                {{ item.dietary | join(', ') }}
+                            {% else %}
+                                None
+                            {% endif %}
+                        </td>
+                        <td>{{ 'Yes' if item.customizable else 'No' }}</td>
+                        <td class="actions">
+                            {# Edit Button: Opens the modal with item data #}
+                            <button class="edit-btn"
+                                    data-id="{{ item.id }}"
+                                    data-name="{{ item.name }}"
+                                    data-description="{{ item.description }}"
+                                    data-price="{{ item.price | default('') }}"
+                                    data-category="{{ item.category }}"
+                                    data-imageLink="{{ item.imageLink | default('') }}"
+                                    data-dietary="{{ item.dietary | join(',') }}"
+                                    data-customizable="{{ 'on' if item.customizable else '' }}"
+                                    data-sizes='{{ item.sizes | tojson | safe }}' {# Pass sizes as JSON #}
+                                    onclick="openEditModal(this)">
+                                Edit
+                            </button>
+                            {# Delete Form: Submits a POST request to delete #}
+                            <form action="{{ url_for('admin_menu') }}" method="POST" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                <input type="hidden" name="action" value="delete">
+                                <input type="hidden" name="item_id" value="{{ item.id }}">
+                                <button type="submit" class="delete-btn">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="9" style="text-align: center; font-style: italic;">No menu items found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {# --- Add New Menu Item Form (REVISED LAYOUT) --- #}
+        <div class="admin-form">
+            <h3>Add New Menu Item</h3>
+            <form action="{{ url_for('admin_menu') }}" method="POST" id="add-item-form">
+                <input type="hidden" name="action" value="add">
+                {# Use the revised 2-column grid #}
+                <div class="form-grid">
+                    {# Column 1 #}
+                    <div class="form-group">
+                        <label for="add-name">Name*:</label>
+                        <input type="text" id="add-name" name="name" required>
+                    </div>
+                     <div class="form-group">
+                        <label for="add-category">Category*:</label>
+                        <select id="add-category" name="category" required onchange="toggleAddSizes(this.value)">
+                            <option value="">Select Category...</option>
+                            <option value="pizza">Pizza</option>
+                            <option value="side">Side</option>
+                            <option value="drink">Drink</option>
+                            <option value="dessert">Dessert</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="add-price-group"> {# Price group for non-pizza #}
+                        <label for="add-price">Base Price*:</label>
+                        <input type="number" id="add-price" name="price" step="0.01" min="0" placeholder="Required if not Pizza">
+                    </div>
+                     <div class="form-group">
+                        <label for="add-dietary">Dietary (comma-separated):</label>
+                        <input type="text" id="add-dietary" name="dietary" placeholder="e.g., Vegan, Gluten-Free">
+                    </div>
+                    <div class="form-group full-width"> {# Description spans full width #}
+                        <label for="add-description">Description:</label>
+                        <textarea id="add-description" name="description"></textarea>
+                    </div>
+                     <div class="form-group full-width"> {# Image URL spans full width #}
+                        <label for="add-imageLink">Image URL:</label>
+                        <input type="url" id="add-imageLink" name="imageLink" placeholder="https://...">
+                    </div>
+                     <div class="form-group checkbox-group"> {# Checkbox group spans full width #}
+                         <input type="checkbox" id="add-customizable" name="customizable">
+                         <label for="add-customizable" class="checkbox-label">Customizable?</label>
+                    </div>
+
+                    {# --- Sizes Section (Spans full width, visibility toggled by JS) --- #}
+                    <div class="sizes-section" id="add-sizes-section" style="display: none;">
+                        <label>Sizes (Required for Pizza):</label>
+                        <div id="add-size-entries">
+                            {# JavaScript will add size entries here #}
+                        </div>
+                        <button type="button" id="add-size-btn" onclick="addSizeEntry('add')">Add Size</button>
+                    </div>
+                </div> {# End form-grid #}
+                <button type="submit" class="submit-btn">Add Item</button>
+            </form>
+        </div>
+
+    </main>
+
+    {# --- Edit Item Modal --- #}
+    <div id="editModal" class="modal">
+      <div class="modal-content">
+        <span class="close-btn" onclick="closeEditModal()">&times;</span>
+        <h3>Edit Menu Item</h3>
+        <form action="{{ url_for('admin_menu') }}" method="POST" id="edit-item-form">
+            <input type="hidden" name="action" value="edit">
+            <input type="hidden" id="edit-item_id" name="item_id"> {# Hidden field for item ID #}
+
+            {# Use the revised 2-column grid #}
+            <div class="form-grid">
+                 <div class="form-group">
+                    <label for="edit-name">Name*:</label>
+                    <input type="text" id="edit-name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-category">Category*:</label>
+                    <select id="edit-category" name="category" required onchange="toggleEditSizes(this.value)">
+                        <option value="">Select Category...</option>
+                        <option value="pizza">Pizza</option>
+                        <option value="side">Side</option>
+                        <option value="drink">Drink</option>
+                        <option value="dessert">Dessert</option>
+                    </select>
+                </div>
+                 <div class="form-group" id="edit-price-group"> {# Price group for non-pizza #}
+                    <label for="edit-price">Base Price*:</label>
+                    <input type="number" id="edit-price" name="price" step="0.01" min="0" placeholder="Required if not Pizza">
+                </div>
+                 <div class="form-group">
+                    <label for="edit-dietary">Dietary (comma-separated):</label>
+                    <input type="text" id="edit-dietary" name="dietary" placeholder="e.g., Vegan, Gluten-Free">
+                </div>
+                <div class="form-group full-width"> {# Description spans full width #}
+                    <label for="edit-description">Description:</label>
+                    <textarea id="edit-description" name="description"></textarea>
+                </div>
+                <div class="form-group full-width"> {# Image URL spans full width #}
+                    <label for="edit-imageLink">Image URL:</label>
+                    <input type="url" id="edit-imageLink" name="imageLink" placeholder="https://...">
+                </div>
+                 <div class="form-group checkbox-group"> {# Checkbox group spans full width #}
+                     <input type="checkbox" id="edit-customizable" name="customizable">
+                     <label for="edit-customizable" class="checkbox-label">Customizable?</label>
+                </div>
+
+                {# --- Sizes Section (Spans full width, visibility toggled by JS) --- #}
+                <div class="sizes-section" id="edit-sizes-section" style="display: none;">
+                    <label>Sizes (Required for Pizza):</label>
+                    <div id="edit-size-entries">
+                        {# Populated by JavaScript #}
+                    </div>
+                    <button type="button" id="edit-add-size-btn" onclick="addSizeEntry('edit')">Add Size</button>
+                </div>
+            </div> {# End form-grid #}
+            <button type="submit" class="submit-btn">Save Changes</button>
+        </form>
+      </div>
+    </div>
+    {# --- End Edit Item Modal --- #}
+
+
+    {# --- Footer --- #}
+    <footer role="contentinfo">
+        <address>
+            Contact us at:
+            <a href="tel:+11111111111" style="color: var(--star-blue);">(111) 111-1111</a><br>
+            42 Cosmic Crust Avenue, Nebula City, PC 11111
+        </address>
+        <p style="color: var(--nebula-blue);">&copy; 2025 Cosmic Crust Pizzeria. All rights reserved.</p>
+        <ul style="list-style: none; padding: 0; margin: 1rem 0; display: flex; justify-content: center; gap: 1rem;">
+            <li><a href="/disclaimer" aria-label="Disclaimer" style="color: var(--star-blue);">Disclaimer</a></li>
+            <li><a href="/privacy" aria-label="Privacy policy" style="color: var(--star-blue);">Privacy Policy</a></li>
+        </ul>
+    </footer>
+    {# --- End Footer --- #}
+
+    <script src="/static/cart.js"></script> {# For header cart count #}
+    <script>
+        // --- Modal Handling ---
+        const editModal = document.getElementById('editModal');
+
+        function openEditModal(button) {
+            const data = button.dataset;
+            document.getElementById('edit-item_id').value = data.id;
+            document.getElementById('edit-name').value = data.name;
+            document.getElementById('edit-description').value = data.description;
+            document.getElementById('edit-category').value = data.category;
+            document.getElementById('edit-imageLink').value = data.imageLink;
+            document.getElementById('edit-dietary').value = data.dietary;
+            document.getElementById('edit-customizable').checked = (data.customizable === 'on');
+
+            toggleEditSizes(data.category); // Show/hide size section first
+            if (data.category !== 'pizza') {
+                document.getElementById('edit-price').value = data.price;
+            } else {
+                 document.getElementById('edit-price').value = ''; // Clear base price for pizza
+            }
+
+            // Populate sizes
+            const sizesContainer = document.getElementById('edit-size-entries');
+            sizesContainer.innerHTML = ''; // Clear previous entries
+            sizeCounters.edit = 0; // Reset edit counter before populating
+            if (data.category === 'pizza' && data.sizes) {
+                try {
+                    const sizes = JSON.parse(data.sizes);
+                    // Use the counter from the JS scope
+                    for (const name in sizes) {
+                        addSizeEntry('edit', name, sizes[name]); // Let addSizeEntry handle index
+                    }
+                } catch (e) {
+                    console.error("Error parsing sizes JSON:", e);
+                }
+            }
+            editModal.style.display = 'block';
+        }
+
+        function closeEditModal() {
+            editModal.style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+          if (event.target == editModal) {
+            closeEditModal();
+          }
+        }
+
+        // --- Dynamic Size Field Handling ---
+        let sizeCounters = { add: 0, edit: 0 }; // Keep track of size indices
+
+        function addSizeEntry(formPrefix, name = '', price = '') {
+            const containerId = `${formPrefix}-size-entries`;
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            // Use the counter for the specific form
+            const i = sizeCounters[formPrefix];
+
+            const entryDiv = document.createElement('div');
+            entryDiv.classList.add('size-entry');
+            // Use the index 'i' for the name attributes
+            entryDiv.innerHTML = `
+                <input type="text" name="size_name_${i}" placeholder="Size Name (e.g., Large)" value="${name}" required>
+                <input type="number" name="size_price_${i}" placeholder="Price" step="0.01" min="0" value="${price}" required>
+                <button type="button" onclick="this.parentElement.remove()">Remove</button>
+            `;
+            container.appendChild(entryDiv);
+            sizeCounters[formPrefix]++; // Increment counter for the next entry
+        }
+
+        // Toggle visibility and requirement for ADD form
+        function toggleAddSizes(category) {
+            const sizesSection = document.getElementById('add-sizes-section');
+            const priceGroup = document.getElementById('add-price-group');
+            const priceInput = document.getElementById('add-price');
+            if (category === 'pizza') {
+                sizesSection.style.display = 'block';
+                priceGroup.style.display = 'none';
+                priceInput.required = false; // Base price not required
+                priceInput.value = ''; // Clear base price value
+            } else {
+                sizesSection.style.display = 'none';
+                document.getElementById('add-size-entries').innerHTML = ''; // Clear sizes
+                sizeCounters.add = 0; // Reset counter
+                priceGroup.style.display = 'block';
+                priceInput.required = true; // Base price required
+            }
+        }
+
+        // Toggle visibility and requirement for EDIT form
+        function toggleEditSizes(category) {
+            const sizesSection = document.getElementById('edit-sizes-section');
+            const priceGroup = document.getElementById('edit-price-group');
+            const priceInput = document.getElementById('edit-price');
+            if (category === 'pizza') {
+                sizesSection.style.display = 'block';
+                priceGroup.style.display = 'none';
+                priceInput.required = false;
+                // Don't clear value here, openEditModal handles it
+            } else {
+                sizesSection.style.display = 'none';
+                priceGroup.style.display = 'block';
+                priceInput.required = true;
+                // Don't clear sizes here, openEditModal handles population
+            }
+        }
+
+        // --- Flash Message Timeout ---
+        setTimeout(() => {
+            const flashContainer = document.getElementById('flash-container');
+            if (flashContainer) {
+                flashContainer.style.transition = 'opacity 0.5s ease';
+                flashContainer.style.opacity = '0';
+                setTimeout(() => flashContainer.style.display = 'none', 500);
+            }
+        }, 5000);
+
+        // --- Initial Setup ---
+        toggleAddSizes(document.getElementById('add-category').value);
+        if (typeof updateCartCountDisplay === 'function') {
+             updateCartCountDisplay();
+        }
+
+    </script>
+</body>
+</html>

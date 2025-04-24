@@ -81,13 +81,30 @@
             display: flex;
             justify-content: space-between; /* Space out order details and total */
             align-items: flex-start; /* Align items to the start (top) */
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+        }
+        /* Make the entire item clickable */
+        .order-history-item a {
+            text-decoration: none;
+            color: inherit; /* Inherit text color */
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
             flex-wrap: wrap;
+            width: 100%; /* Make link take full width */
+            transition: background-color 0.2s ease; /* Add hover effect */
+            padding: 0.5rem; /* Add some padding for hover */
+            border-radius: 5px; /* Rounded corners for hover */
+            margin: -0.5rem; /* Offset padding */
+        }
+        .order-history-item a:hover {
+            background-color: rgba(0, 191, 255, 0.1); /* Slight highlight on hover */
         }
 
         .order-details {
             flex: 1; /* Allow order details to take up available space */
             margin-right: 1rem; /* Add some margin to the right of details */
-            min-width: 200px;
+            min-width: 200px; /* Minimum width before wrapping */
         }
 
         .order-details h4{
@@ -95,12 +112,20 @@
             font-size: 1.2rem;
             margin-bottom: 0.5rem;
         }
+        .order-details p {
+            color: var(--milky-white); /* Ensure text color is appropriate */
+            font-size: 1rem; /* Adjust size as needed */
+            margin: 0.25rem 0; /* Add small vertical margin */
+        }
 
         .order-total {
             font-weight: bold;
             color: var(--star-blue);
             font-size: 1.2rem;
-            white-space: nowrap;
+            white-space: nowrap; /* Prevent total from wrapping */
+            text-align: right; /* Align total to the right */
+            margin-left: auto; /* Push total to the right within the flex container */
+            padding-left: 1rem; /* Add space if details wrap */
         }
 
         .actions-section ul {
@@ -129,15 +154,18 @@
             .details-grid {
                 grid-template-columns: 1fr; /* Stack labels and values on small screens */
             }
-            .order-history-item {
+            .order-history-item a {
                 flex-direction: column; /* Stack order details and total on small screens */
                 align-items: flex-start;
             }
             .order-total{
-                margin-top: 0.5rem;
+                margin-top: 0.5rem; /* Add space when stacked */
+                margin-left: 0; /* Reset margin */
+                text-align: left; /* Align left when stacked */
+                padding-left: 0;
             }
             .actions-section ul{
-                align-items: center;
+                align-items: center; /* Center actions on small screens */
             }
         }
     </style>
@@ -145,46 +173,62 @@
 <body>
     <a class="skip-link" href="#main-content">Skip to main content</a>
 
+    {# --- Header --- #}
     <header role="banner">
         <div class="header-container">
-            <div id="account-actions"></div>
+            <div id="account-actions">
+                 {# Uses logged_in variable from Flask #}
+                 {% if logged_in %}
+                     <a href="{{ url_for('account_dashboard') }}">View Account</a> | <a href="{{ url_for('logout') }}">Logout</a>
+                 {% else %}
+                     <a href="{{ url_for('account') }}">Login/Register</a>
+                 {% endif %}
+            </div>
         </div>
         <img class="logo" src="https://cosmic-crust-pizzeria.uc.r.appspot.com/static/images/ccpLogo.png"
             alt="Cosmic Crust Pizzeria Logo">
-        <nav aria-label="Main navigation" role="navigation">
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/menu" aria-current="page">Menu</a></li>
-                <li><a href="/order">Start Order/Cart<span id="cart-count">0</span></a></li>
-                {# --- Start Conditional Account Link --- #}
-                {% if logged_in %}
-                {# If logged in, show "View Account" and link to dashboard #}
-                <li><a href="{{ url_for('account_dashboard') }}">View Account/Logout</a></li>
-                {% else %}
-                {# If not logged in, show "Login/Register" and link to account page #}
-                <li><a href="{{ url_for('account') }}">Login/Register</a></li>
-                {% endif %}
-                {# --- End Conditional Account Link --- #}
-                <li><a href="/contact">Contact Us</a></li>
-            </ul>
-        </nav>
+            <nav aria-label="Main navigation" role="navigation">
+                <ul>
+                    {# Standard Links #}
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/menu">Menu</a></li>
+                    <li><a href="/order">Start Order/Cart<span id="cart-count">0</span></a></li>
+            
+                    {# --- Conditional Account Link --- #}
+                    {% if logged_in %}
+                        <li><a href="{{ url_for('account_dashboard') }}">View Account/Logout</a></li>
+                    {% else %}
+                        <li><a href="{{ url_for('account') }}">Login/Register</a></li>
+                    {% endif %}
+            
+                    {# Contact Us Link #}
+                    <li><a href="/contact">Contact Us</a></li>
+            
+                    {# --- Conditional ADMIN Link (Moved After Contact Us) --- #}
+                    {% if is_staff %} {# Check the is_staff variable passed from Flask #}
+                    <li> {# Removed class="nav-admin-link" #}
+                        <a href="{{ url_for('admin_menu') }}" style="color: var(--nebula-blue); font-weight: bold;">ADMIN</a>
+                    </li>
+                    {% endif %}
+                    {# --- End Conditional ADMIN Link --- #}
+            
+                </ul>
+            </nav>
     </header>
+    {# --- End Header --- #}
 
     <main id="main-content" role="main">
-        {# Added a container div for centering and styling the main dashboard block #}
         <div class="dashboard-container">
             <h2>Welcome to Your Account Dashboard!</h2>
 
+            {# Check if user data exists (passed from Flask) #}
             {% if user %}
-            {# Kept the welcome message paragraph #}
             <p>Hello, {{ user.first_name }} {{ user.last_name }}!</p>
 
-            {# Container for the Account Details section #}
+            {# --- Account Details Section --- #}
             <div class="account-details-section">
                 <h3>Account Details</h3>
-                {# Grid container for the detail rows #}
                 <div class="details-grid">
-                    {# Each detail is structured into a row with label and value divs #}
                     <div class="detail-row">
                         <div class="detail-label">Username:</div>
                         <div class="detail-value">{{ user.username }}</div>
@@ -201,49 +245,59 @@
                         <div class="detail-label">Phone Number:</div>
                         <div class="detail-value">{{ user.phone_number }}</div>
                     </div>
-                    {# Add other account details here following the same detail-row structure #}
                 </div> {# End details-grid #}
             </div> {# End account-details-section #}
 
-            {# Order History Section - NEW #}
+            {# --- Order History Section --- #}
             <div class="order-history-section">
                 <h3>Order History</h3>
+                {# Check if the 'orders' list (passed from Flask) exists and has items #}
                 {% if orders %}
+                    {# Loop through each 'order' dictionary in the 'orders' list #}
                     {% for order in orders %}
                         <div class="order-history-item">
-                            <div class="order-details">
-                                <h4>Order #{{ loop.index }}</h4>
-                                <p>Date: {{ order.order_date }}</p>
-                                <p>Status: {{ order.order_status }}</p>
-                            </div>
-                            <div class="order-total">Total: ${{ order.order_total }}</div>
+                            {# Link the entire item to the specific order tracking page #}
+                            <a href="{{ url_for('order_tracking', order_id=order.orderId) }}" aria-label="View details for order {{ order.orderId }}">
+                                <div class="order-details">
+                                    {# CORRECTED LINE: Use order.orderId instead of loop.index #}
+                                    <h4>Order {{ order.orderId }}</h4>
+                                    {# Display the formatted date string #}
+                                    <p>Date: {{ order.order_date_str }}</p>
+                                    {# Display the current status #}
+                                    <p>Status: {{ order.status }}</p>
+                                </div>
+                                <div class="order-total">
+                                    {# Display the total, formatted to 2 decimal places #}
+                                    Total: ${{ "%.2f" | format(order.orderTotal) }}
+                                </div>
+                            </a>
                         </div>
                     {% endfor %}
                 {% else %}
+                    {# Message displayed if 'orders' list is empty or doesn't exist #}
                     <p>You have no order history yet.</p>
                 {% endif %}
             </div> {# End order-history-section #}
 
-            {# Container for the Actions section #}
+            {# --- Actions Section --- #}
             <div class="actions-section">
                 <h3>Actions</h3>
-                {# Restructured action links into a ul list #}
                 <ul>
-                    <li><a href="/edit_profile">Edit Profile</a></li>
-                    <li><a href="/change_password">Change Password</a></li>
-                    {# Add other action links here as list items #}
-                    <li><a href="/logout">Logout</a></li> {# Added Logout link #}
+                    <li><a href="{{ url_for('edit_profile') }}">Edit Profile</a></li>
+                    <li><a href="{{ url_for('change_password') }}">Change Password</a></li>
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
                 </ul>
             </div> {# End actions-section #}
 
             {% else %}
-            {# Content for not logged in user - also inside dashboard-container for centering #}
+            {# Fallback content if user data is not available (e.g., not logged in) #}
             <p>You are not logged in.</p>
-            <a href="/account">Login</a>
+            <a href="{{ url_for('account') }}">Login</a>
             {% endif %}
         </div> {# End dashboard-container #}
     </main>
 
+    {# --- Footer --- #}
     <footer role="contentinfo">
         <address>
             Contact us at:
@@ -256,7 +310,10 @@
             <li><a href="/privacy" aria-label="Privacy policy" style="color: var(--star-blue);">Privacy Policy</a></li>
         </ul>
     </footer>
+    {# --- End Footer --- #}
 
+    {# Include shared cart script for header updates #}
     <script src="/static/cart.js"></script>
+    {# No page-specific JS needed for dashboard display #}
 </body>
 </html>

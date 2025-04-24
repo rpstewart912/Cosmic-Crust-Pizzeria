@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkout – Cosmic Crust Pizzeria</title>
     <link rel="stylesheet" href="/static/style.css">
-
-    <!-- checkout‑specific styling -->
     <style>
         /* wrapper box */
         .checkout-box{
@@ -24,6 +22,18 @@
             margin:0 0 2rem;
             font-weight:700;
         }
+        /* Flash messages styling */
+        .flash-message {
+            padding: 0.8rem;
+            border-radius: 5px;
+            text-align: center;
+            color: white;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+        .flash-message.success { background-color: #1f8b4c; }
+        .flash-message.error { background-color: #c0392b; }
+        .flash-message.info { background-color: #2980b9; }
 
         /* single column rows */
         .form-row{
@@ -45,11 +55,18 @@
             background:var(--deep-space);
             color:var(--milky-white);
             font-size:1rem;
+            box-sizing: border-box; /* Include padding and border in element's total width/height */
+        }
+        .form-row input::placeholder { /* Style placeholders */
+             color: rgba(224, 224, 244, 0.6); /* Lighter milky-white */
+             opacity: 1; /* Ensure placeholder is visible */
         }
 
-        /* submit */
+        /* submit button */
         .place-btn{
-            display:block;
+            display:inline-flex; /* Use inline-flex to align text and spinner */
+            align-items: center;
+            justify-content: center;
             width:100%;
             padding:14px;
             margin-top:.5rem;
@@ -60,11 +77,36 @@
             font-size:1.2rem;
             font-weight:700;
             cursor:pointer;
-            transition:background .25s, box-shadow .25s;
+            transition:background .25s, box-shadow .25s, opacity .25s;
         }
-        .place-btn:hover{
+        .place-btn:hover:not(:disabled){ /* Add :not(:disabled) */
             background:var(--nebula-blue);
             box-shadow:0 0 10px var(--star-blue);
+        }
+         /* Style for disabled button */
+        .place-btn:disabled {
+            background: var(--deep-space);
+            color: var(--nebula-blue);
+            cursor: not-allowed;
+            opacity: 0.6;
+            box-shadow: none; /* Remove hover shadow when disabled */
+        }
+        /* Loading indicator */
+        .loader {
+            border: 4px solid rgba(255, 255, 255, 0.3); /* Light border */
+            border-radius: 50%;
+            border-top: 4px solid var(--space-blue); /* Match button text color */
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-left: 10px;
+            vertical-align: middle;
+            display: none; /* Hidden by default */
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -73,69 +115,91 @@
 
 <header role="banner">
     <div class="header-container">
-        <div id="account-actions"></div>          
-        </div>
-        <img class="logo" src="https://cosmic-crust-pizzeria.uc.r.appspot.com/static/images/ccpLogo.png" alt="Cosmic Crust Pizzeria Logo">
-        <nav aria-label="Main navigation" role="navigation">
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/menu" aria-current="page">Menu</a></li>
-                <li><a href="/order">Start Order/Cart<span id="cart-count">0</span></a></li>
-                {# --- Start Conditional Account Link --- #}
-                {% if logged_in %}
-                    {# If logged in, show "View Account" and link to dashboard #}
-                    <li><a href="{{ url_for('account_dashboard') }}">View Account/Logout</a></li>
-                {% else %}
-                    {# If not logged in, show "Login/Register" and link to account page #}
-                    <li><a href="{{ url_for('account') }}">Login/Register</a></li>
-                {% endif %}
-                {# --- End Conditional Account Link --- #}
-                <li><a href="/contact">Contact Us</a></li>
-            </ul>
-        </nav>
+        <div id="account-actions"></div>
     </div>
-</header>
+    <img class="logo" src="https://cosmic-crust-pizzeria.uc.r.appspot.com/static/images/ccpLogo.png" alt="Cosmic Crust Pizzeria Logo">
+    <nav aria-label="Main navigation" role="navigation">
+        <ul>
+            {# Standard Links #}
+            <li><a href="/">Home</a></li>
+            <li><a href="/menu">Menu</a></li>
+            <li><a href="/order">Start Order/Cart<span id="cart-count">0</span></a></li>
+    
+            {# --- Conditional Account Link --- #}
+            {% if logged_in %}
+                <li><a href="{{ url_for('account_dashboard') }}">View Account/Logout</a></li>
+            {% else %}
+                <li><a href="{{ url_for('account') }}">Login/Register</a></li>
+            {% endif %}
+    
+            {# Contact Us Link #}
+            <li><a href="/contact">Contact Us</a></li>
+    
+            {# --- Conditional ADMIN Link (Moved After Contact Us) --- #}
+            {% if is_staff %} {# Check the is_staff variable passed from Flask #}
+            <li> {# Removed class="nav-admin-link" #}
+                <a href="{{ url_for('admin_menu') }}" style="color: var(--nebula-blue); font-weight: bold;">ADMIN</a>
+            </li>
+            {% endif %}
+            {# --- End Conditional ADMIN Link --- #}
+    
+        </ul>
+    </nav>
+    </header>
 
 <main id="main-content">
     <section class="checkout-box">
         <h2>Secure Checkout</h2>
 
-        <form method="POST" action="/checkout">
-            <!-- cardholder name -->
+        {# --- Display flash messages --- #}
+         {% with messages = get_flashed_messages(with_categories=true) %}
+           {% if messages %}
+             <div> {# Wrapper for messages #}
+               {% for category, message in messages %}
+                 <div class="flash-message {{ category }}">{{ message }}</div>
+               {% endfor %}
+             </div>
+           {% endif %}
+         {% endwith %}
+         {# --- End flash messages --- #}
+
+        <form method="POST" action="{{ url_for('checkout') }}" id="checkout-form">
+            {# --- Payment Details --- #}
+             <h3 style="color: var(--nebula-blue); margin-bottom: 1rem; margin-top: 1rem; border-top: 1px dashed var(--star-blue); padding-top: 1.5rem;">Payment Information</h3>
             <div class="form-row">
                 <label for="name_on_card">Name on Card</label>
                 <input type="text" id="name_on_card" name="name_on_card" autocomplete="cc-name" required>
             </div>
 
-            <!-- card number -->
             <div class="form-row">
                 <label for="card_number">Card Number</label>
                 <input type="text" id="card_number" name="card_number"
-                       maxlength="19" inputmode="numeric"
+                       maxlength="19" inputmode="numeric" placeholder="•••• •••• •••• ••••"
                        autocomplete="cc-number" required>
             </div>
 
-            <!-- expiry -->
             <div class="form-row">
                 <label for="exp_date">Expiry (MM/YY)</label>
                 <input type="text" id="exp_date" name="exp_date"
-                       maxlength="5" inputmode="numeric"
+                       maxlength="5" inputmode="numeric" placeholder="MM/YY"
                        autocomplete="cc-exp" required>
             </div>
 
-            <!-- cvv -->
             <div class="form-row">
                 <label for="cvv">CVV</label>
                 <input type="text" id="cvv" name="cvv"
-                       maxlength="4" inputmode="numeric"
+                       maxlength="4" inputmode="numeric" placeholder="•••"
                        autocomplete="cc-csc" required>
             </div>
+            {# --- End Payment Details --- #}
 
             <hr style="border:none; border-top:1px dashed var(--star-blue); margin:2rem 0;">
 
-            <!-- billing address -->
+            {# --- Billing Address --- #}
+             <h3 style="color: var(--nebula-blue); margin-bottom: 1rem;">Billing Address</h3>
+
             <div class="form-row">
-                <label for="addr1">Billing Address Line 1</label>
+                <label for="addr1">Address Line 1</label>
                 <input type="text" id="addr1" name="addr1" autocomplete="address-line1" required>
             </div>
 
@@ -165,11 +229,16 @@
                     <option value="">Select country…</option>
                     <option value="US">United States</option>
                     <option value="CA">Canada</option>
-                    <!-- add others as needed -->
-                </select>
+                    </select>
             </div>
+            {# --- End Billing Address --- #}
 
-            <button type="submit" class="place-btn">Place Order</button>
+            <input type="hidden" id="order_data" name="order_data">
+
+            <button type="submit" class="place-btn" id="place-order-btn">
+                <span>Place Order</span> {# Span to hold text separate from spinner #}
+                <span class="loader" id="loading-spinner"></span>
+            </button>
         </form>
     </section>
 </main>
@@ -177,16 +246,142 @@
 <footer role="contentinfo">
     <address>
         Contact us at:
-        <a href="tel:+11111111111" style="color:var(--star-blue)">111-111-1111</a><br>
+        <a href="tel:+11111111111" style="color:var(--star-blue)">(111) 111-1111</a><br>
         42 Cosmic Crust Avenue, Nebula City, PC 11111
     </address>
     <p style="color:var(--nebula-blue)">&copy; 2025 Cosmic Crust Pizzeria. All rights reserved.</p>
     <ul style="list-style:none; padding:0; margin:1rem 0; display:flex; gap:1rem; justify-content:center">
         <li><a href="/disclaimer" style="color:var(--star-blue)">Disclaimer</a></li>
-        <li><a href="/privacy"    style="color:var(--star-blue)">Privacy Policy</a></li>
+        <li><a href="/privacy"      style="color:var(--star-blue)">Privacy Policy</a></li>
     </ul>
 </footer>
 
 <script src="/static/cart.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const checkoutForm = document.getElementById('checkout-form');
+        const orderDataInput = document.getElementById('order_data');
+        const placeOrderButton = document.getElementById('place-order-btn');
+        const placeOrderButtonText = placeOrderButton.querySelector('span:not(.loader)'); // Get the text span
+        const loadingSpinner = document.getElementById('loading-spinner');
+
+        /**
+         * Retrieves order data from localStorage.
+         * @returns {Array|null} Parsed order array or null if empty/invalid.
+         */
+        function getOrderData() {
+            const orderString = localStorage.getItem('cosmicOrder');
+            if (!orderString || orderString === '[]' || orderString === '{}') {
+                console.warn("Cart data is empty or missing in localStorage.");
+                return null; // Return null for empty or non-existent cart
+            }
+            try {
+                 const order = JSON.parse(orderString);
+                 // Add basic check if it's an array
+                 if (!Array.isArray(order)) {
+                      console.error("Cart data in localStorage is not an array:", order);
+                      return null;
+                 }
+                 return order;
+            } catch (e) {
+                 console.error("Error parsing cart data from localStorage:", e);
+                 localStorage.removeItem('cosmicOrder'); // Clear invalid data
+                 return null; // Return null if parsing fails
+            }
+        }
+
+        /**
+         * Prepares the order data array into a JSON string suitable for form submission.
+         * @param {Array|null} order - The order array fetched from localStorage.
+         * @returns {string} JSON string representation of the order.
+         */
+        function prepareOrderData(order) {
+             if (!order || order.length === 0) {
+                 return JSON.stringify([]); // Send empty array if order is null/empty
+             }
+           // Map items, ensuring price and quantity are numbers and providing defaults
+           const orderData = order.map(item => ({
+                id: item.id || 'unknown', // Default ID if missing
+                cartId: item.cartId, // Include cartId if backend uses it
+                baseId: item.baseId, // For custom pizza base
+                name: item.name || 'Unknown Item', // Default name
+                quantity: Number(item.quantity) || 1, // Default to 1 if missing/invalid
+                price: Number(item.price) || 0, // Default to 0 if missing/invalid
+                selectedSize: item.selectedSize, // Include selected size
+                customizations: item.customizations || {} // Default to empty object
+            }));
+            return JSON.stringify(orderData);
+        }
+
+        // --- Event listener for form submission ---
+        checkoutForm.addEventListener('submit', (event) => {
+            event.preventDefault(); // Prevent the default form submission immediately
+
+            // --- Get current order ---
+            const order = getOrderData();
+
+            // --- Validate: Prevent submission if cart is empty or invalid ---
+             if (!order || order.length === 0) {
+                 // Use a more user-friendly notification if possible (e.g., a modal or inline message)
+                 alert("Your shopping cart is empty. Please add items from the menu before checking out.");
+                 // Optionally redirect back to the menu or order page
+                 // window.location.href = '/menu';
+                 return; // Stop the submission process
+             }
+
+            // --- Disable button and show loader ---
+            placeOrderButton.disabled = true;
+            loadingSpinner.style.display = 'inline-block';
+            if (placeOrderButtonText) {
+                placeOrderButtonText.textContent = "Processing..."; // Change button text
+            }
+
+
+            // --- Prepare and set hidden input value ---
+            const orderDataJson = prepareOrderData(order);
+            orderDataInput.value = orderDataJson;
+
+            // --- IMPORTANT: DO NOT clear localStorage here! ---
+            // The backend handles the order saving and redirection.
+            // Clearing the cart should happen *after* successful order placement,
+            // ideally on the order confirmation/tracking page.
+            // localStorage.removeItem('cosmicOrder'); // <<-- THIS LINE IS INTENTIONALLY REMOVED
+
+            // --- Programmatically submit the form ---
+            // This sends all form data (including the hidden 'order_data' field)
+            // to the backend '/checkout' route via POST.
+            console.log("Submitting form with order data:", orderDataJson); // For debugging
+            checkoutForm.submit();
+        });
+
+        // --- Initial Cart Count Update ---
+        // Call the function from cart.js to update the count in the header
+        if (typeof updateCartCountDisplay === 'function') {
+             updateCartCountDisplay();
+        } else {
+             console.warn("updateCartCountDisplay function not found (expected in cart.js). Cart count in header might not be updated.");
+        }
+
+        // Optional: Add client-side validation for card number format, expiry date, CVV etc.
+        // Example (very basic):
+        // const cardNumberInput = document.getElementById('card_number');
+        // cardNumberInput.addEventListener('input', (e) => {
+        //     e.target.value = e.target.value.replace(/[^\d]/g, '').replace(/(.{4})/g, '$1 ').trim();
+        // });
+    });
+</script>
 </body>
 </html>
+```
+
+**Important Considerations:**
+
+1.  **Security:** The provided code does *not* handle actual payment processing. You **must** integrate a secure payment gateway (like Stripe, Square, PayPal) on the backend (`main.py`) before processing real payments. Never handle raw credit card numbers directly on your server unless you are fully PCI compliant. The frontend form collects the data, but the backend should securely transmit it to the payment gateway.
+2.  **Error Handling:** The error handling is basic. You might want more specific error messages and potentially logging of failed payment attempts (without logging sensitive data).
+3.  **`order_tracking.html` Updates:** Remember that you will need to update `order_tracking.html` to correctly display the data fetched from Firestore (using variables like `order_id`, `order_items`, `status`, `order_time`, `ready_by_time`, `order_total`, `current_stage`). You'll loop through `order_items` to display them and use `current_stage` to highlight the correct step in the timeline.
+4.  **Clearing Local Storage:** As mentioned, add `localStorage.removeItem('cosmicOrder');` to the JavaScript in `order_tracking.html` (within a `DOMContentLoaded` listener) to clear the user's cart *after* they have successfully landed on the tracking page for their completed order.
+5.  **Dependencies:** Ensure `Flask`, `google-cloud-firestore`, and `Werkzeug` are listed in your `requirements.txt` and installed in your environment.
+6.  **Configuration:** Replace `"your_secret_key"` with a proper secret key, ideally loaded from environment variables. Ensure your Google Cloud authentication is set up correctly for Firestore access.
+
+Make sure to test this flow thoroughly in your development environment before deployi
